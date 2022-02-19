@@ -5,7 +5,7 @@
 安装的时候要注意版本否则会报getoptions is not functions 所以这里安装5版本
 npm install vue bootstrap-vue bootstrap  引入bootstrap模板
   目前登录页面是这样的
-  ![登录页]https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/5902d342247d8ffd3e0bbf7c1b380c9.png
+  ![登录页]public/Introduce image/5902d342247d8ffd3e0bbf7c1b380c9.png
   ![登录页]https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/ff6928a06d706a1bb6263c3771a9c26.png
  项目路由分析
  login:用户登录的主页面
