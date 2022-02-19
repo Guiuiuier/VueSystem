@@ -1,5 +1,5 @@
 # VueHRsystem
-基于vue人力资源管理系统  主要用<strong>HTML+CSS+LESS+AXIOS+VUEX+Boostarp vue+Vue rooter完成</strong></br>
+基于vue人力资源管理系统  主要用<strong>HTML+CSS+LESS+AXIOS+VUEX+Boostarp vue+Vue router完成</strong></br>
 依赖要安装<strong>webpack 以及node</strong></br>
  <bold>顺带说一下一定要安装less哈，这里为了方便提前编译了less变成css才没上传到的，如果没安装less依赖保证你打不开</bold>
 本项目采用 less 需要通过less、less-loader处理  </br>
