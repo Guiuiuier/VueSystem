@@ -14,6 +14,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
-  store,
+  store, //注册仓库
   render: h => h(App)
 }).$mount('#app')
