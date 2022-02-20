@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '../views/login/index.vue'
 import find from '../views/find/index.vue'
+import index from '../layout/index.vue'
 Vue.use(VueRouter)
 
 // 引入bootstarp
@@ -13,7 +14,11 @@ Vue.use(IconsPlugin)
 
 
 const routes = [
+  { path:'/',redirect:'/login/index'},  //重定向
+
   {
+    
+
     path:'/login/index',
     name:"login",
     component:login,
@@ -22,6 +27,11 @@ const routes = [
     path:'/find/index',
     name:'find',
     component:find,
+  },
+  {
+    path:'/index',
+    name:'index',
+    component:index,
   }
 ]
 

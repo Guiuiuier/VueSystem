@@ -117,8 +117,13 @@ export default {
         setTimeout(() => {
           this.errTips = false;
         }, 2000);
+      }else{
+            this.$router.push({
+              path:'../../layout/componets/index',
+              name:'index',
+            })
       }
-      alert(JSON.stringify(this.form));
+      // alert(JSON.stringify(this.form));
     },
 
     //   重置代码

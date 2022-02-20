@@ -31,6 +31,7 @@
         </b-form>
       </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -91,6 +92,7 @@
 }
 </style>
 <script>
+
 export default {
   data() {
     return {
@@ -137,6 +139,7 @@ export default {
         this.errTips = false;
       });
     }
-  }
+  },
 };
+
 </script>
