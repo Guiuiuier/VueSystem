@@ -14,6 +14,11 @@ export const login=(username,password)=>requests({
 export const getLoginLog=()=>requests({
      url:'/user/userlog',
      method:'get',
+});
+ //这个是管理员的联系方式
+export const administratorContact=()=>requests({
+  url:'/user/contact',
+  method:'get',
 })
 // export const personnelManagement =()=>{
 //      //发请求

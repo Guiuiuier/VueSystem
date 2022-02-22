@@ -62,27 +62,3 @@ export default axios; //暴露
 
 
 
-
-
-
-// //利用axios对象的方法创建一个axios实例
-//  const requests=axios.create({
-//       //基础路径 发送请求时会默认
-//     baseURL:"/api",
-//     //超时四秒取消
-//     timeout:4000,
-//  });
-//  //发送请求前 请求拦截器 在请求发出去前做一些事
-//  requests.interceptors.request.use((config)=>{
-//     return config;
-//  });
-//   //响应的拦截器
-//   requests.interceptors.response.use((res)=>{
-
-//   },(error)=>{
-//         //这里是失败的回调函数
-//       return Promise.reject(new Error('failure'));
-//   });
-
-//    //对外暴露 让外界知道这个api
-//    export default requests;

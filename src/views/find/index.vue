@@ -13,7 +13,7 @@
               placeholder="请输入管理员为您录入的ID信息"
             ></b-form-input>
           </b-form-group>
-          <span class="errorTips" v-if="infoTips">您的账号是:admin,密码是:admin</span>
+          <span class="errorTips" v-if="infoTips">您的账号是{{this.username}}密码是:{{this.userpass}}</span>
           <span class="errorTips" v-if="erroTips">都没这个号，乱输入？</span>
           <b-form-group id="input-group-4">
             <div class="register_right" style="float:right">
@@ -23,7 +23,7 @@
                 @click="controoter"
               >这都不知道？点这里联系管理员！</a>
             </div>
-            <span class="errorTips" v-show="rooter">管理员联系方式:123456789</span>
+            <span class="errorTips" v-show="rooter">管理员的联系方式:{{this.adminContact}}</span>
             <div class="clear" style="clear:both"></div>
           </b-form-group>
           <b-button type="submit" variant="primary">找回</b-button>
@@ -92,17 +92,23 @@
 }
 </style>
 <script>
-
+import { login,administratorContact} from "@/api";
 export default {
   data() {
     return {
       form: {
-        name: ""
+        name: "",
+        userpass: ""
       },
       show: true,
       infoTips: false,
       erroTips: false,
-      rooter: false
+      rooter: false,
+      //存储的账号和密码
+      username: "",
+      userpass: "",
+       //联系方式
+      adminContact:"",
     };
   },
   methods: {
@@ -112,18 +118,30 @@ export default {
     },
     controoter: function() {
       this.rooter = true;
+        administratorContact().then(res=>{
+           this.adminContact=res.data.number;
+        })
+       .catch(err => {
+          console.log(err);
+        });
     },
     // 提交代码
     onSubmit(evt) {
-      evt.preventDefault(); //防止发生默认行为
-      if (this.form.name == "admin") {
-        this.infoTips = true;
-        this.erroTips = false;
-      } else {
-        this.erroTips = true;
-        this.infoTips = false;
-      }
-      // alert(JSON.stringify(this.form));
+      var event = event || window.event;
+      event.preventDefault(); //防止发生默认行为
+      login().then(res => {
+        if (this.form.name == res.data.userinfo.username) {
+          this.infoTips = true;
+          this.erroTips = false;
+          this.username = res.data.userinfo.username;
+          this.userpass = res.data.userinfo.userpass;
+        } else {
+          this.erroTips = true;
+          this.infoTips = false;
+        }
+      })   .catch(err => {
+          console.log(err);
+        });
     },
 
     //   重置代码
@@ -139,7 +157,6 @@ export default {
         this.errTips = false;
       });
     }
-  },
+  }
 };
-
 </script>

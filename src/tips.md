@@ -33,4 +33,9 @@ Vue.use(IconsPlugin)
 
     bug2：在api模块 并不是说这个模块不对 而是引入后就不需要再this.$router 直接router.push 
 
-   
+   bug2:
+      login页面提交的时候  表单按钮第一次会失败axios 请求后续成功   这个bug是我debug最长的大约一个小时问题就出现在bootstarp框架自己的身上
+         每次提交的时候总要在网址处 出现个?才会生效 否则怎么样都不会生效的 这里如果只是想用他的样式而不是表单 建议改为div 否则axios请求then是不会进入的！！
+              曹 最新更新----
+                  取消一下默认事件就可以了。。妈的，，   已经改了三个消失了目前。。  event ||window.event 用来兼容ie的  preventdefault()方法取消就可以了。
+        
