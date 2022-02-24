@@ -3,19 +3,25 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex) 
  //刷新页面会丢失对象 所以存到本地后获取这个信息
+// JSON 转换成javascript对象
  let userinfo=JSON.parse((localStorage.getItem("user_info")));
-
+//  console.log(userinfo);
+ let weatherState=JSON.parse((sessionStorage.getItem("weather")));
+//  console.log(weatherState);
 export default new Vuex.Store({
   //state仓库存储数据的地方
   state: {
     userinfo, //这里不要改成空对象了 不然会出问题 存储信息token
+    weatherState, //天气的
   },
    //修改state的唯一手段
   mutations: {
       //更改userinfo
-  SET_USERINFO(state,payload){
-    state.userinfo=payload;
-  },
+  // SET_USERINFO(state,payload){
+  //   state.userinfo=payload;
+  // },
+  // SET_WEATHER(state){
+  // }
   },
   //处理action 可以书写自己的业务逻辑 也可以处理异步
   actions: {

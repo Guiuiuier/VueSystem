@@ -10,7 +10,7 @@ export const login=(username,password)=>requests({
       password,
  }
 });
- //登录日志
+ //登录日志 天气状态
 export const getLoginLog=()=>requests({
      url:'/user/userlog',
      method:'get',

@@ -1,57 +1,74 @@
 <template>
-    <div>
-  <b-navbar toggleable="lg" type="dark" variant="dark">
-    <b-navbar-brand href="#">NavBar</b-navbar-brand>
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="light">
+      <b-breadcrumb>
+        <b-breadcrumb-item href="#home">
+          <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>当前位置:Home
+        </b-breadcrumb-item>
+        <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
+        <b-breadcrumb-item href="#bar">Bar</b-breadcrumb-item>
+        <b-breadcrumb-item active>Baz</b-breadcrumb-item>
+      </b-breadcrumb>
 
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
-        <b-nav-item href="#">Link</b-nav-item>
-        <b-nav-item href="#" disabled>Disabled</b-nav-item>
-      </b-navbar-nav>
-
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-        <b-nav-form>
-          <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-          <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-        </b-nav-form>
-
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
-        </b-nav-item-dropdown>
-
-        <b-nav-item-dropdown right>
-          <!-- Using 'button-content' slot -->
-          
-          <template v-slot:button-content>
-            <em>User</em>
-          </template>
-          
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-        </b-nav-item-dropdown>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
 
-      </b-navbar-nav>
-          <b-button v-b-toggle.sidebar-variant>Toggle Sidebar</b-button>
-    <b-sidebar id="sidebar-variant" title="Sidebar" bg-variant="success" text-variant="light" shadow>
-      <div class="px-3 py-2">
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-          in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-        </p>
-        <!-- <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img> -->
-      </div>
-    </b-sidebar>
-    
-    </b-collapse>
-  </b-navbar>
-</div>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <ul class="list-group list-group-horizontal-sm">
+            <li class="list-group-item">{{weathers.date}}</li>
+            <li class="list-group-item">{{weathers.city}}</li>
+            <li class="list-group-item">{{weathers.temperature}}℃</li>
+            <li class="list-group-item">{{weathers.wea}}</li>
+          </ul>
+        </b-navbar-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <b-avatar src="../../public/img/head.jpg"></b-avatar>
+              <em class="userName">{{userinfo.name}}</em>
+            </template>
+            <!-- <b-dropdown-item href="#">Profile</b-dropdown-item> -->
+            <b-dropdown-item @click="quit">退出登录</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 <style scoped lang="less">
-    @import '/public/nav.less';
+@import "/public/nav.less";
 </style>
+<script>
+// 天气的api
+import { getLoginLog } from "@/api";
+import { mapState } from "vuex";
+export default {
+  props:{
+    //  天气组件
+    weathers:Object
+      },
+  data() {
+    return {
+    };
+  },
+  components: {},
+  methods: {
+    quit: function() {
+      localStorage.clear();
+      sessionStorage.clear();
+      this.$router.replace("../../login/index");
+    }
+  },
+  created() {
+
+  },
+  computed: {
+    ...mapState(["userinfo","weatherState"]),
+  }
+};
+</script>

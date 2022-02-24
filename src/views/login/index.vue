@@ -59,7 +59,7 @@
 .login {
   width: 100%;
   height: 100%;
-  background: #2d3a4b;
+  background: #343A40;
   position: absolute;
   .login-container {
     position: relative;
@@ -107,8 +107,8 @@
 }
 </style>
 <script>
-//这里引入已经封装好的api
-import { login } from "@/api";
+//这里引入已经封装好的api 
+import { login,getLoginLog } from "@/api";
 //映射
 import { mapMutations, mapState } from "vuex";
 import find from "../find/index";
@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     //映射
-    ...mapMutations(["SET_USERINFO"]),
+    // ...mapMutations(["SET_USERINFO"]),
     // 登录代码
     //  收集用户输入的username和password传递给后端
     //登录通过后将返回的token存到本地
@@ -166,21 +166,18 @@ export default {
               "user_info",
               JSON.stringify(res.data.userinfo)
             );
-            //更改vuex 的userinfo 的值
-            this.SET_USERINFO(res.data.userinfo);
+            //更改vuex 的userinfo 的值  这是为了某些跳转页面刷新丢失重新赋值 //其实这里我写的不好，在vuex中有兴趣的可以改一下，直接读取local就好
+            // this.SET_USERINFO(res.data.userinfo);
             //这里本来想着当没记住密码的时候要删除loacalstorage里的某项键值对的 但是目前还没有找到很好的办法 所以是有个bug先放着
             var isTrue = JSON.stringify(this.form.checked[0]);
-            // if (isTrue == "true") {
-            //   localStorage.removeItem('username');
-            //   console.log(isTrue);
-            // } else {
-            // }
             localStorage.setItem("ischecked",ischecked.checked);
-            
+               getLoginLog().then(res => {
+               sessionStorage.setItem("weather",JSON.stringify(res.data.weather));
+              });
             //登录定时器
             setTimeout(() => {
               this.progressMode = true;
-              this.$router.push({
+              this.$router.replace({
                 path: "../../layout/componets/index",
                 name: "index"
               });
@@ -210,7 +207,7 @@ export default {
     //注册组件
   },
   computed: {
-    ...mapState(["userinfo"])
+    ...mapState(["userinfo","weatherState"])
     //注意不要写到method中了。不然会有bug的
   },
   mounted() {

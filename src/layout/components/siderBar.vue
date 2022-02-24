@@ -25,7 +25,7 @@
               left:0;
               margin: 0;
               padding:0;
-              background:#304166;
+              background:#343A40;
               max-width: 220px;
             height:100% ;
           }
