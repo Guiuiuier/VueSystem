@@ -40,7 +40,7 @@
 .login {
   width: 100%;
   height: 100%;
-  background: #2d3a4b;
+  background: #343A40;
   position: absolute;
   .login-container {
     position: relative;

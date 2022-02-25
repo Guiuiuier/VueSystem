@@ -1,5 +1,78 @@
+.Maincontent{
+    
+    height: 100%!important;
+    position: absolute!important;
+    right: 0px!important;
+    left: 0px!important;
+}
+.siderMain {
+    width: 210px !important;
+    top: 0;
+    bottom: 0;
+    z-index: 999;
+    overflow: hidden;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    //  background: black;
+    .sider {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      left: 0;
+      margin: 0;
+      padding: 0;
+      background: #343a40;
+      max-width: 220px;
+      height: 100%;
+    }
+  }
+.btn-group-vertical{
+     width: 210px;
+ }
+ .btn.btn-secondary{
+width: 210px;
+text-align: left;
+border-top-width: 2px;
+border-left-width: 0px;
+border-bottom-width: 0px;
+border-right-width: 0px;
+border-radius: 0;
+height: 50px;
+// padding: 6px 44px 6px 54px;  //上右下左
+ }
+.btn.Childbutton.btn-secondary{
+        font-size: 12px;
+        // background:;
+        padding-left: 20px;
+}
+.bi-chevron-up,.bi-chevron-down{
+            margin-right: 0;
+                // padding-left:35px;
+                // padding-right:35px ;
+                width: 70px;
+                height: 15px;
+                padding-bottom: 5px;
+}
+ .btn-secondary:focus, .btn-secondary.focus{
+  box-shadow: none;
+ }
+ .mt-2{
+     margin-top: 0!important;
+     border-radius: 0;
+ }
+ .bi-files,.briefcase,.person,.iconstyle.b-icon.bi{
+ margin-right:15px;
+ }
+ .bi-person-check.iconstyle.b-icon.bi{
+     margin-right: 13px;
+     margin-left: 2px;
+ }
 @media only screen and (max-width: 992px) {
     .siderMain{
         display: none;
     };
+}
+@media only screen and (min-wdith:992px){
 }

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import login from '../views/login/index.vue'
 import find from '../views/find/index.vue'
 import index from '../layout/index.vue'
+import announcement from '../layout/components/The-siderBar/announcement.vue'
 Vue.use(VueRouter)
 
 // 引入bootstarp
@@ -32,6 +33,17 @@ const routes = [
     path:'/index',
     name:'index',
     component:index,
+    // 进入主页重定向
+    redirect: '/announcement',
+    children:[{path:'/announcement',component:announcement}]
+  },
+  {
+    path:'/'
+  },
+  {
+    path:'/announcement',
+    name:"announcement",
+    component:announcement
   }
 ]
 

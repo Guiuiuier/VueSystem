@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="Maincontent">
     <!-- <span @click="quit">退出</span> -->
     <!-- <span @click="quit2">登录</span> -->
     <div class="sider">
@@ -11,8 +11,12 @@
     <div class="sysmain">
       <sysMain></sysMain>
     </div>
+
   </div>
 </template>
+<style lang="less" scoped>
+@import "../../public/backmain.less";
+</style>
 <script>
 import { getLoginLog, login } from "@/api";
 import { mapState } from "vuex";
