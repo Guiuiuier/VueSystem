@@ -13,14 +13,15 @@
 export default {
     data(){
         return{
-
         }
-    }
-    ,
+        },
+
     methods: {
         topage:function(){
-            // this.$router.push('./announcement')
-        }
+            this.$router.push('/index/announcemain')
+        },
+
     },
+
 }
 </script>

@@ -1,7 +1,5 @@
 <template>
   <div class="Maincontent">
-    <!-- <span @click="quit">退出</span> -->
-    <!-- <span @click="quit2">登录</span> -->
     <div class="sider">
       <siderBar></siderBar>
     </div>
@@ -9,9 +7,9 @@
       <navigationBar :weathers="weathers"></navigationBar>
     </div>
     <div class="sysmain">
-      <sysMain></sysMain>
+      <sysMain>
+      </sysMain>
     </div>
-
   </div>
 </template>
 <style lang="less" scoped>
@@ -29,14 +27,14 @@ import sysMain from "@/layout/components/sysMain";
 export default {
   data() {
     return {
-      weathers:{}
+      weathers: {}
     };
   },
   components: {
     //注册侧边栏
     siderBar, //相当于siderBar:siderBar
     navigationBar,
-    sysMain,
+    sysMain
   },
   computed: {
     ...mapState(["userinfo", "weatherState"]) //映射 刷新后又会变成空对象 是因为在vuex中刷新会重新定义为store/index.js中的空对象 所以要在本地存一个对象
@@ -50,35 +48,13 @@ export default {
         "weather",
         JSON.stringify(res.data.weather)
       );
-      
     });
   },
   mounted() {
     // 返回一个对象给子组件
     //传值给子组件
-      this.weathers=JSON.parse(sessionStorage.getItem("weather"));
-
-    //  login.then(res=>{
-    //      let local=res.token;
-    //  })
-    // getLoginLog().then(res=>{
-    //     // let local=localStorage.setItem("user_name");
-    //     // console.log(local);
-    //     // console.log(res.data);
-    // })
+    this.weathers = JSON.parse(sessionStorage.getItem("weather"));
   },
-  methods: {
-    // quit2:function(){
-    //      console.log(this.$store.userinfo);
-    // },
-    //         quit:function(){
-    //             //退出登入 要清楚token和userinfo
-    //             //跳转到登录页
-    //             //删除所有本地存储
-    //             localStorage.clear();
-    //              //退出登录
-    //             this.$router.push("/login/index");
-    //         }
-  }
+  methods: {}
 };
 </script>

@@ -4,7 +4,9 @@
       <div class="sider">
         <b-button-group vertical>
           <!-- 公告管理 -->
-          <announcement to='/login'></announcement>
+          <announcement>
+
+          </announcement>
           <!-- 人员管理 -->
           <personal></personal>
           <!-- 考勤 -->
