@@ -7,7 +7,10 @@
     <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
       Dismissible Alert!
     </b-alert>
+          <div v-for="bar in bars" :key="bar.value">
 
+        <b-progress :value="bar.value" :variant="bar.variant" :key="bar.variant" style="height:5px"></b-progress>
+    </div>
     <b-alert
       :show="dismissCountDown"
       dismissible

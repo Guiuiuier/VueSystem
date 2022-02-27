@@ -49,6 +49,8 @@ export default {
     file,
     personal
   },
-  methods: {}
+  methods: {},
+  mounted() {
+  },
 };
 </script>

@@ -30,11 +30,11 @@ Vue.use(BootstrapVueIcons)
        }else {
            //如果没有 这个人访问的路径是登录页面 或者找回页面放行 
              //但是此时我认为还是有问题的 例如 假如有人修改token 不就直接进去了 所以这里加入服务器拦截！ 写到 api 中了
-            if(to.path==='/login/index'||to.path==='/find/index'){
+            if(to.path==='/login'||to.path==='/find'){
               // alert("大哥登录一下吧");
               next();
             }else{
-               next({path:'/login/index'});
+               next({path:'/login'});
             };
              
        } 

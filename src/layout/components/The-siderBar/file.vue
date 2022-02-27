@@ -19,6 +19,7 @@ export default {
   methods: {
     btnShow: function() {
       if (this.btnshowdown) {
+      // this.$router.push('/index/filemain')
         this.btnshowdown = false;
         this.btnshow = true;
       } else {

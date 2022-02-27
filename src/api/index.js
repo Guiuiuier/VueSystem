@@ -20,11 +20,9 @@ export const administratorContact=()=>requests({
   url:'/user/contact',
   method:'get',
 })
-// export const personnelManagement =()=>{
-//      //发请求
-//      return requests({url:'',method:'post'});
-// };
-// export const loginCheck =params=>{
-//      //发请求
-//      return requests({url:'/login/index',method:'post'});
-// };
+
+// 获取后端人员管理信息
+ export const personnelInfo=()=>requests({
+    url:'https://localhost/PHPapi/personnel.php',
+    method:'get',
+ })

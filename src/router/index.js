@@ -24,18 +24,16 @@ VueRouter.prototype.push = function push(location) {
 }
 const routes = [{
     path: '/',
-    redirect: '/login/index'
+    redirect: '/login'
   }, //重定向
 
   {
-
-
-    path: '/login/index',
+    path: '/login',
     name: "login",
     component: login,
   },
   {
-    path: '/find/index',
+    path: '/find',
     name: 'find',
     component: find,
   },
@@ -44,46 +42,68 @@ const routes = [{
     name: 'index',
     component: index,
     // 进入主页重定向
-    redirect: 'index/announcemain',
-
+    // redirect: '/index/announcemain',
+    meta: {
+      title: "主页",
+    },
     // 路由懒加载 解决首次过慢的问题 
-    children: [{
+    children: [
+      {
         path: 'announcemain',
         // component:announcemain,
         component: resolve => (require(['@/views/announceMain/index'], resolve)),
         name: "announcemain",
+        meta: {
+          title: "公司公告"
+        }
       },
+
+
+
       {
         path: 'personalmain',
         component: resolve => (require(['@/views/personalMain/index'], resolve)),
         name: "personalmain",
+        meta: {
+          title: "人员管理",
+        },
+
       },
       {
         path: 'attendancemain',
         component: resolve => (require(['@/views/attendanceMain/index'], resolve)),
         name: "attendancemain",
+        meta: {
+          title: "考勤管理",
+        },
       },
+
       {
-        // path: 'filemain',
-        // component: resolve => (require(['@/views/fileMain'], resolve)),
-        // name: 'filemain',
-        // children: [{
-            path: 'fileMain/contract',
+        path: 'filemain',
+        redirect:'/index/filemain/emcontract',
+        component: resolve => (require(['@/views/fileMain/index.vue'], resolve)),
+        name: 'filemain',
+        meta:{
+          title:"文件管理"
+        },
+        children: [{
+            path: 'contract',
             component: resolve => (require(['@/views/fileMain/contract/index'], resolve)),
             name: 'contract',
+            meta: {
+              title: "合同模板",
+            },
           },
           {
-            path: 'fileMain/emcontract',
+            path: 'emcontract',
             component: resolve => (require(['@/views/fileMain/Emcontract/index'], resolve)),
             name: 'emcontract',
-          }
-        // ]
-      // }
-
-
-
-
-
+            meta: {
+              title: "在职员工合同",
+            },
+          },
+        ]
+      }
     ]
   },
 

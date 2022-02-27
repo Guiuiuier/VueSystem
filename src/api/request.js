@@ -2,7 +2,9 @@
 import axios from "axios";
 //引入路由
 import router from "../router";
-// Vue.use(router);  //要使用路由 不然找这个bug找半天找不到对象
+// 引入进度条
+import Nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
 //判断环境如果是developement 用api 如果是上线则用右边的地址请求
 axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? "/api" : "http://rap2api.taobao.org/app/mock/298235"
 
@@ -10,7 +12,9 @@ axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? "/api" : "http
 //功能就是 如果你第一次登录的时候登录上了就会返回一个token 第二次退出登录的时候就不用再登录了 直接将第一次的token拿来用 节省了服务器资源
 //登录和注册是不需要携带token的 直接用这个登录就OK 
 axios.interceptors.request.use(config => {
-  //config是每个请求对象 相当于axios请求来的
+  //config是每个请求对象 相当于axios请求  request发送请求
+  // 路由进度条api调用的时候就运行
+ Nprogress.start()
   if (config.url == '/user') {
     //  如果已经有本地存储的token 这时候就不需要携带token user是服务器接口请求
     //放行
@@ -29,6 +33,9 @@ axios.interceptors.request.use(config => {
 //进行服务器校验 如果校验的token是和服务器的一样则进入
 
 axios.interceptors.response.use(config => {
+  // 路由进度条api调用的时候就运行
+    //response响应请求
+     Nprogress.done()
   //   console.log(config);
   let {
     data

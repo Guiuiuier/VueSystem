@@ -114,7 +114,7 @@ export default {
   methods: {
     // 返回上一页
     back: function() {
-      this.$router.push("../login/index");
+      this.$router.push("../login");
     },
     controoter: function() {
       this.rooter = true;

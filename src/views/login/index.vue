@@ -1,17 +1,7 @@
 <template>
   <div>
     <div class="login">
-      <!-- 进度条 -->
-      <div class="progress" style="height:5px;" v-if="progressMode">
-        <div
-          class="progress-bar progress-bar-striped progress-bar-animated"
-          role="progressbar"
-          style="width: 95%;"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        ></div>
-      </div>
+
       <div class="login-container">
         <div class="login-container-title">欢迎登录</div>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
@@ -36,11 +26,11 @@
           </b-form-group>
           <b-form-group id="input-group-4">
             <b-form-checkbox-group v-model="form.checked" id="checkboxes-4" style="float:left">
-              <b-form-checkbox >记住密码</b-form-checkbox>
+              <b-form-checkbox>记住密码</b-form-checkbox>
             </b-form-checkbox-group>
 
             <div class="register_right" style="float:right">
-              <router-link to="../find/index" style="text-decoration:none">忘记密码了?点击这里！</router-link>
+              <router-link to="../find" style="text-decoration:none">忘记密码了?点击这里！</router-link>
             </div>
             <div class="clear" style="clear:both"></div>
           </b-form-group>
@@ -59,7 +49,7 @@
 .login {
   width: 100%;
   height: 100%;
-  background: #343A40;
+  background: #343a40;
   position: absolute;
   .login-container {
     position: relative;
@@ -107,8 +97,8 @@
 }
 </style>
 <script>
-//这里引入已经封装好的api 
-import { login,getLoginLog } from "@/api";
+//这里引入已经封装好的api
+import { login, getLoginLog } from "@/api";
 //映射
 import { mapMutations, mapState } from "vuex";
 import find from "../find/index";
@@ -116,7 +106,10 @@ import find from "../find/index";
 export default {
   data() {
     return {
-      progressMode: false, //进度条
+      progressMode: false,
+      //进度条
+      bars: [ { variant: 'success', value: 75 },],
+      timer:null,
       form: {
         name: "",
         password: "",
@@ -136,13 +129,14 @@ export default {
     //展示token校验成功的数据
     //校验不通过，跳转到登录页
     onSubmit(evt) {
-      let ischecked=document.getElementsByClassName('custom-control-input')[0];
+      let ischecked = document.getElementsByClassName(
+        "custom-control-input"
+      )[0];
       //  这句不写你可以试试 还能运行不 哈哈 兼容ie系列！
- var event = event | window.event;
+      var event = event | window.event;
       window.event.preventDefault();
       let username = this.form.name;
       let password = this.form.password;
-      this.progressMode = true; //加载条
       //  调用api 发送请求
       login(username, password)
         .then(res => {
@@ -151,7 +145,6 @@ export default {
             username != res.data.userinfo.username
           ) {
             setTimeout(() => {
-              this.progressMode = false;
               this.errTips = true; //错误提示框
               setTimeout(() => {
                 this.errTips = false; //错误提示框
@@ -170,16 +163,20 @@ export default {
             // this.SET_USERINFO(res.data.userinfo);
             //这里本来想着当没记住密码的时候要删除loacalstorage里的某项键值对的 但是目前还没有找到很好的办法 所以是有个bug先放着
             var isTrue = JSON.stringify(this.form.checked[0]);
-            localStorage.setItem("ischecked",ischecked.checked);
-               getLoginLog().then(res => {
-               sessionStorage.setItem("weather",JSON.stringify(res.data.weather));
-              });
+            localStorage.setItem("ischecked", ischecked.checked);
+            getLoginLog().then(res => {
+              sessionStorage.setItem(
+                "weather",
+                JSON.stringify(res.data.weather)
+              );
+            });
             //登录定时器
             setTimeout(() => {
               this.progressMode = true;
-              this.$router.replace({
+              this.$router.push({
                 path: "../../layout/componets/index",
-                name: "index"
+                name: "index",
+                replace: true
               });
             }, 1000);
           }
@@ -207,19 +204,23 @@ export default {
     //注册组件
   },
   computed: {
-    ...mapState(["userinfo","weatherState"])
+    ...mapState(["userinfo", "weatherState"])
     //注意不要写到method中了。不然会有bug的
   },
   mounted() {
     // 判断是否记住密码？
-    let ischeckedstate=JSON.parse(localStorage.getItem("ischecked"));
-    let ischecked=document.getElementsByClassName('custom-control-input')[0];
+    let ischeckedstate = JSON.parse(localStorage.getItem("ischecked"));
+    let ischecked = document.getElementsByClassName("custom-control-input")[0];
     let userInfo = localStorage.getItem("user_info");
-       if(ischeckedstate==true){
-         ischecked.checked=true;
-        this.form.name = this.$store.state.userinfo.username;
-        this.form.password = this.$store.state.userinfo.userpass;
-       }
+    if (ischeckedstate == true) {
+      ischecked.checked = true;
+      this.form.name = this.$store.state.userinfo.username;
+      this.form.password = this.$store.state.userinfo.userpass;
+    }
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+    this.timer = null;
   }
 };
 </script>

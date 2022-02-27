@@ -7,7 +7,7 @@
       <navigationBar :weathers="weathers"></navigationBar>
     </div>
     <div class="sysmain">
-      <sysMain>
+      <sysMain :infoName="infoName">
       </sysMain>
     </div>
   </div>
@@ -27,7 +27,9 @@ import sysMain from "@/layout/components/sysMain";
 export default {
   data() {
     return {
-      weathers: {}
+      weathers: {},
+      // 主页名字
+      infoName:{},
     };
   },
   components: {
@@ -54,6 +56,10 @@ export default {
     // 返回一个对象给子组件
     //传值给子组件
     this.weathers = JSON.parse(sessionStorage.getItem("weather"));
+
+
+    //传给主页内容
+    this.infoName=JSON.parse(localStorage.getItem("user_info"));
   },
   methods: {}
 };

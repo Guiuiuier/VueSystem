@@ -2,15 +2,15 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="light">
       <b-breadcrumb>
-        <b-breadcrumb-item href="#index">
-          <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true" active to="/index"></b-icon>当前位置:主页
-        </b-breadcrumb-item>
-        <!-- <b-breadcrumb-item >Baz</b-breadcrumb-item> -->
+        当前位置:
+        <b-breadcrumb-item
+          :href="`#`+breadCrumbItem.path"
+          v-for="breadCrumbItem in breadCrumbList"
+          :key="breadCrumbItem.path"
+        >{{breadCrumbItem.meta.title}}</b-breadcrumb-item>
       </b-breadcrumb>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -40,13 +40,12 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props:{
+  props: {
     //  天气组件
-    weathers:Object
-      },
+    weathers: Object
+  },
   data() {
-    return {
-    };
+    return {};
   },
   components: {},
   methods: {
@@ -54,14 +53,17 @@ export default {
     quit: function() {
       localStorage.clear();
       sessionStorage.clear();
-      this.$router.replace("../../login/index");
+      this.$router.push("../../login/index");
     }
   },
-  created() {
-
-  },
+  created() {},
   computed: {
     ...mapState(["userinfo"]),
-  }
+    // 是个对象哦
+    breadCrumbList() {
+      return this.$route.matched;
+    }
+  },
+  mounted() {}
 };
 </script>
