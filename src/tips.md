@@ -39,6 +39,8 @@ Vue.use(IconsPlugin)
               曹 最新更新----
                   取消一下默认事件就可以了。。妈的，，   已经改了三个消失了目前。。  event ||window.event 用来兼容ie的  preventdefault()方法取消就可以了。
         
+        bug3:
+        如果安装好环境请求的网络出错的话。大概率是你安装环境的端口不对你再看看 算了自己写的php接口不知道为什么报axios network error 解决了一晚上解决不了放着
 
   
   注册组件 使用components注册的组件接收的是一组对象 只不过是简化的语法 相当于 componentsa:compoentsa  组件

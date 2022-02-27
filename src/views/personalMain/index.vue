@@ -58,7 +58,8 @@
 </template>
 
 <script>
-import {personnelInfo} from '@/api';
+import {personnelInfo} from '@/api2';
+import axios from "axios"
 import Navsearch from "@/layout/components/navSearch/index";
 import Pagination from "@/layout/components/pagination/index";
 export default {
@@ -70,10 +71,11 @@ export default {
     Pagination
   },
   created() {
-      personnelInfo().then(res=>{
-          console.log(res);
-      })
-  },
+     personnelInfo().then(res=>{
+       console.log(res);
+     })
+
+  }
 };
 </script>
 <style lang="less" scoped>

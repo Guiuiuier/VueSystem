@@ -10,7 +10,7 @@ export const login=(username,password)=>requests({
       password,
  }
 });
- //登录日志 天气状态
+ //登录日志天气状态
 export const getLoginLog=()=>requests({
      url:'/user/userlog',
      method:'get',
@@ -20,9 +20,3 @@ export const administratorContact=()=>requests({
   url:'/user/contact',
   method:'get',
 })
-
-// 获取后端人员管理信息
- export const personnelInfo=()=>requests({
-    url:'https://localhost/PHPapi/personnel.php',
-    method:'get',
- })
