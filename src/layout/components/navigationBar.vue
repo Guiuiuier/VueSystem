@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="light">
+    <b-navbar toggleable="lg" type="dark" variant="light" class="backcolor">
       <b-breadcrumb>
         当前位置:
         <b-breadcrumb-item

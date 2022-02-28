@@ -2,57 +2,8 @@
   <div>
     <Navsearch></Navsearch>
     <!-- <div style="width:100%;position:absolute"> -->
-    <b-list-group horizontal="md">
-      <b-list-group-item>#</b-list-group-item>
-      <b-list-group-item>员工编号</b-list-group-item>
-      <b-list-group-item>姓名</b-list-group-item>
-      <b-list-group-item>性别</b-list-group-item>
-      <b-list-group-item>年龄</b-list-group-item>
-      <b-list-group-item>部门</b-list-group-item>
-      <b-list-group-item>地址</b-list-group-item>
-      <b-list-group-item>联系方式</b-list-group-item>
-      <b-list-group-item>在职状态</b-list-group-item>
-      <b-list-group-item>功能</b-list-group-item>
-    </b-list-group>
-    <b-list-group horizontal="md">
-      <b-list-group-item>#</b-list-group-item>
-      <b-list-group-item>员工编号</b-list-group-item>
-      <b-list-group-item>姓名</b-list-group-item>
-      <b-list-group-item>性别</b-list-group-item>
-      <b-list-group-item>年龄</b-list-group-item>
-      <b-list-group-item>部门</b-list-group-item>
-      <b-list-group-item>地址</b-list-group-item>
-      <b-list-group-item>联系方式</b-list-group-item>
-      <b-list-group-item>在职状态</b-list-group-item>
-      <b-list-group-item>功能</b-list-group-item>
-    </b-list-group>
-    <b-list-group horizontal="md">
-      <b-list-group-item>#</b-list-group-item>
-      <b-list-group-item>员工编号</b-list-group-item>
-      <b-list-group-item>姓名</b-list-group-item>
-      <b-list-group-item>性别</b-list-group-item>
-      <b-list-group-item>年龄</b-list-group-item>
-      <b-list-group-item>部门</b-list-group-item>
-      <b-list-group-item>地址</b-list-group-item>
-      <b-list-group-item>联系方式</b-list-group-item>
-      <b-list-group-item>在职状态</b-list-group-item>
-      <b-list-group-item>功能</b-list-group-item>
-    </b-list-group>
-    <b-list-group horizontal="md">
-      <b-list-group-item>#</b-list-group-item>
-      <b-list-group-item>员工编号</b-list-group-item>
-      <b-list-group-item>姓名</b-list-group-item>
-      <b-list-group-item>性别</b-list-group-item>
-      <b-list-group-item>年龄</b-list-group-item>
-      <b-list-group-item>部门</b-list-group-item>
-      <b-list-group-item>地址</b-list-group-item>
-      <b-list-group-item>联系方式</b-list-group-item>
-      <b-list-group-item>在职状态</b-list-group-item>
-      <b-list-group-item>功能</b-list-group-item>
-    </b-list-group>
-
     <b-table></b-table>
-    <Pagination></Pagination>
+    <personPagination :personnelInfors="personnelInfors"></personPagination>
   </div>
   <!-- </div> -->
 </template>
@@ -61,21 +12,28 @@
 import {personnelInfo} from '@/api2';
 import axios from "axios"
 import Navsearch from "@/layout/components/navSearch/index";
-import Pagination from "@/layout/components/pagination/index";
+import personPagination from "@/layout/components/personpagination/index";
 export default {
   data() {
-    return {};
+    return {
+      personnelInfors:[],
+    };
   },
   components: {
     Navsearch,
-    Pagination
+    personPagination
   },
   created() {
      personnelInfo().then(res=>{
-       console.log(res);
+      //  转化为对象
+        let infors=Object.values(res.data)
+         this.personnelInfors=infors;
      })
 
-  }
+  },
+  mounted() {
+     
+  },
 };
 </script>
 <style lang="less" scoped>

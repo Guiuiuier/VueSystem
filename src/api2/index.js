@@ -6,3 +6,19 @@ import requests from './request';
     url:'/personnel.php',
     method:"get",
  })
+
+// 新增人员
+ export const newPer=()=>requests({
+   url:'/newPer.php?&perId="1"&&perName="2"',
+   method:"post",
+   data:{
+      // perId,
+      // perName,
+      // gender,
+      // age,
+      // part,
+      // address,
+      // contact,
+      // perState,
+   }
+})

@@ -4,7 +4,17 @@ include "database/config.inc.php";
 header("Content-type:text/html; charset=utf-8");
 header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-$sql ="select *  from personnel";
+
+// $perName=$_POST['perName'];
+// $age=$_POST['age'];
+// $address=$_POST['address'];
+// $perState=$_POST['perState'];
+// $gender=$_POST['gender'];
+$perId=$_GET['perId'];
+// $part=$_POST['part'];
+$sql ="INSERT INTO `personnel`(`员工编号`)VALUES ('{$perId}')";
+
+
 
 if ($mysqli -> connect_error) {
        die("连接错误：".$mysqli -> connect_error);
@@ -16,16 +26,14 @@ $result=$mysqli ->query($sql);
 
 
  //创建一个数组去接收
-while ($row = $result -> fetch_assoc()) {
-    $rows[] = $row;   //$rows中保存personnel表中所有记录
-      }
+// while ($row = $result -> fetch_assoc()) {
+//     $rows[] = $row;   //$rows中保存personnel表中所有记录
+//       }
 // encode 对象
 // json_encode()
 //该函数主要用来将数组和对象，转换为json格式。
 // json_decode()
 // 该函数用于将json文本转换为相应的PHP数据结构。
 // 输出接口
-echo json_encode($rows);
+// echo json_encode($rows);
 // return json_encode($rows);
-
-?>
