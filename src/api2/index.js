@@ -8,17 +8,21 @@ import requests from './request';
  })
 
 // 新增人员
- export const newPer=()=>requests({
-   url:'/newPer.php?&perId="1"&&perName="2"',
+// 曹难怪一直报错
+ export const newPer=(perId,perName,gender,age,part,address,contact,perState)=>requests({
+   url:'/newPer.php',
    method:"post",
+   // post传参才要data其余的可以要可以不要
+   // 因为params是添加到url的请求字符串中的，用于get请求。 
+// 而data是添加到请求体（body）中的， 用于post请求。
    data:{
-      // perId,
-      // perName,
-      // gender,
-      // age,
-      // part,
-      // address,
-      // contact,
-      // perState,
+      perId,
+      perName,
+      gender,
+      age,
+      part,
+      address,
+      contact,
+      perState,
    }
 })

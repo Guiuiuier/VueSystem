@@ -17,10 +17,10 @@
        foot-clone
     >
     <!-- 插槽 -->
-      <template #cell(功能)> 
+      <template v-slot:cell(actions)="row"> 
     <b-button-group>
       <b-button variant="warning">编辑</b-button>
-      <b-button variant="danger">删除</b-button>
+      <b-button variant="danger" @click="perDelet(row.item,row.index,$event.target)">删除</b-button>
       <!-- <b-button variant="info">Info</b-button> -->
     </b-button-group>
       </template>
@@ -39,6 +39,7 @@
 
 <script>
 // 兄弟间传值
+var index="";
 import searchPerTravel from "../navSearch/personsearch";
 
 export default {
@@ -58,20 +59,24 @@ export default {
       items: [],
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
       fields: [
-        "#",
-        "员工编号",
+        "id",
+        {key:"员工编号",label:"员工编号",sortable:true},
         "姓名",
         "性别",
-        "年龄",
+        {key:"年龄",label:"年龄",sortable:true},
         "部门",
         "地址",
         "联系方式",
-        "在职状态",
-        { key: '功能' }
+        {key:"在职状态",label:"在职状态",sortable:true},
+        { key: 'actions',label:"操作",tdClass:"align-middle"}
       ]
     };
   },
   methods: {
+    perDelet:function(item,index,target){
+      console.log(index);
+      
+    },
     // 接收兄弟组件内容
     getPassInfo() {
       const that = this;

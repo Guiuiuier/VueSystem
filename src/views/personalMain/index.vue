@@ -26,9 +26,10 @@ export default {
   created() {
      personnelInfo().then(res=>{
       //  转化为对象
-       console.log(res);
+      //  console.log(res);
         let infors=Object.values(res.data)
          this.personnelInfors=infors;
+          // console.log(infors);
      })
 
   },

@@ -45,13 +45,15 @@ export default {
     // //  获取天气请求 存入vuex
     // //因为vuex里的数据是保存在运行内存中的，当页面刷新时，页面会重新加载vue实例，vuex里面的数据就会被重新赋值。
     // //同时为了保证用户的体验这里才用sessionstorage 这样安全性会稍微高些
-     
+    //  这里修复了一个bug一定要加判断
+     if(!sessionStorage.getItem("weather")){
     getLoginLog().then(res => {
       let c = sessionStorage.setItem(
         "weather",
         JSON.stringify(res.data.weather)
       );
     });
+     }
   },
   mounted() {
     // 返回一个对象给子组件

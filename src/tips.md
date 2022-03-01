@@ -18,7 +18,7 @@ Vue.use(IconsPlugin)
    bug1：
    1.如果对象是一个null值则json不会转换
    2.在vuex中state在刷新后会重新定义为一个空对象 所以要获取一个本地存储的对象在其中然后在vuex中保存
-    ：在api模块 并不是说这个模块不对 而是引入后就不需要再this.$router 直接router.push 
+   3：在api模块 引入后就不需要再this.$router 直接router.push 
 
    bug2:
       login页面提交的时候  表单按钮第一次会失败axios 请求后续成功   这个bug是我debug最长的大约一个小时问题就出现在bootstarp框架自己的身上
@@ -43,8 +43,29 @@ Vue.use(IconsPlugin)
 
  即可
           bug5: Error in created hook: "TypeError: _layout_components_navSearch_personsearch__WEBPACK_IMPORTED_MODULE_2___default.a.$on is not a function"
-
+         
      记得引入的文件要加入大括号 {}  import {searchPerTravel} from '@/layout/components/navSearch/personsearch'
 
+    bug6：在天气板块因为是组件的缘故会在每一次点击页面的时候就进行网络请求这样当跳转到其他子路由时候，因为这个组件也包含在父组件里的 子路由里的子组件和天气板块是同级关系 会重复调用。如果这时候换了api地址的话 天气板块就无法请求成功 一直后台报错 尽管不影响使用，因为实现已经存进session中了 但还是在天气板块加了一个判断这样就不再报错了。
+     
+     bug7：偶尔出现登录的时候不显示加载的名字 这是因为api那段的请求网络并不好 亦或者说是我这边挂了代理（用git上传和管理版本的代码 总是因为dns污染的缘故无法请求） 这是偶现的。导致的报错 重新刷新一下即可。 又或者说是组件调用session的时候。 session模块还未创建。 这应该是网络问题。报错 error name   所以。这个问题的解决办法是进入页面加载时间变的稍微长一些。但是这样损失了用户体验。 因为不影响使用暂不进行更改。
   
+
+  bug8：
+   post请求难怪一直报错忘了写形参只在data中写了。。 
+     这里注意 data是post parmas是get 否则请求不到的哦
+   export const newPer=(形参)=>requests({
+       突然间忘写了。。。。 找了半天错误。 还以为是后端的问题。明明后端比前端更熟悉些。我还。可恶。
+    
+    bug9:Vue 传值到后台的时候是接收不到的刚开始使用vue对接后端接口时，PHP后端一直接受不到前端传的参数。找了很久，发现vue请求接口传参的形式是流的方式，因此后端要在接受数据的方面做一些改变。这里我用的是PHP原生方法file_get_contents。
+    $v=(file_get_contents("php://input"));
+   var_dump(json_decode($v,true));
+
+    bug10:
+     新增用户页面中没有添加对后端验证和前端输入验证的判断 目前先不更新先完成功能再修改 
+     provide / inject 组合 实现无刷
+
+    方法二：axios默认使用payload形式提交数据，通过payload形式的数据php $_post无法接受前端提交的数据，要想后端接受post提交的数据，就要进行参数设置：
+     改成Form Data流即可
+     
       注册组件 使用components注册的组件接收的是一组对象 只不过是简化的语法 相当于 componentsa:compoentsa  组件

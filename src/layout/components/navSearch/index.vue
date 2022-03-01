@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="onSubmit">
+    <b-form>
       <b-modal v-model="show" title="新增人员">
         <b-container fluid>
           <b-row class="mb-1 text-center">
@@ -13,7 +13,7 @@
           <b-row class="mb-1">
             <b-col cols="3">
               <b-form-group>
-                <!-- <b-form-input id="input-1" v-model="newforms.perId"></b-form-input> -->
+                <b-form-input id="input-group-1" v-model="newforms.perId"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col cols="3">
@@ -24,7 +24,7 @@
 
             <b-col cols="3">
               <b-form-group>
-                <b-form-select v-model="headerTextVariant" :options="variants"></b-form-select>
+                <b-form-select v-model="newforms.gender" :options="variants"></b-form-select>
               </b-form-group>
             </b-col>
 
@@ -56,13 +56,13 @@
 
             <b-col cols="3">
               <b-form-group>
-                <b-form-select v-model="headerTextVariant" :options="variants"></b-form-select>
+                <b-form-select v-model="newforms.perState" :options="variantsState"></b-form-select>
               </b-form-group>
             </b-col>
 
             <b-col cols="3">
               <b-form-group>
-                <b-form-select v-model="headerTextVariant" :options="variants"></b-form-select>
+                <b-form-select v-model="newforms.part" :options="variantsPart"></b-form-select>
               </b-form-group>
             </b-col>
           </b-row>
@@ -71,8 +71,16 @@
         <template #modal-footer>
           <div class="w-100">
             <p class="float-left">请确认无误再添加！</p>
-            <b-button type="submit" variant="primary" @click="dd">Submit</b-button>
-        <!-- @click="show=false" -->
+                      <b-button
+                      type="submit"
+            variant="primary"
+            size="sm"
+            class="float-right"
+            @click="sub"
+          >
+           确定
+          </b-button>
+            <!-- @click="show=false" -->
           </div>
         </template>
       </b-modal>
@@ -96,7 +104,6 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <b-form-input v-model="form.field" size="sm" class="mr-sm-2" placeholder="请输入员工姓名或者ID"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="emptyInfo">清空</b-button>
             <b-button
               size="sm"
               class="my-2 my-sm-0"
@@ -104,6 +111,7 @@
               type="submit"
               @click="searchBtn"
             >查询内容</b-button>
+            <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="emptyInfo">清空</b-button>
           </b-nav-form>
         </b-navbar-nav>
       </b-collapse>
@@ -122,53 +130,49 @@
  
  <script>
 //  兄弟间传值
-import {newPer} from "@/api2";
+import { newPer } from "@/api2";
 
 import searchPerTravel from "./personsearch.js";
 export default {
   data() {
     return {
       show: false,
-      variants: [
-        "primary",
-        "secondary",
-        "success",
-        "warning",
-        "danger",
-        "info",
-        "light",
-        "dark"
-      ],
-      headerTextVariant: "light",
       newforms: {
         perName: "",
         age: "",
         address: "",
         contact: "",
-        perState: "",
-        gender: "",
+        perState: null,
+        gender: null,
         // perId: "",
-        part: ""
+        part: null,
+        perId: ""
       },
+      variants: [{text:"男",value:'男'},'女','其他'],
+      variantsState: [{text:"在职",value:'在职'},'辞职','待入职'],
+      variantsPart: [{text:"开发部",value:'开发部'},'管理部','资源部','销售部'],
       form: {
         field: ""
       }
     };
   },
+  // 注入reload方法实现无刷
   methods: {
-    onSubmit(){
-      // event.preventDefault();
-      // this.show = false;
-      // alert(JSON.stringify(this.newforms))
-      // newPer(perId,perName,gender,age,part,address,contact,perState).then(res=>{
-          
-      // })
-       
-    },
-    dd:function(){
-          newPer().then(res=>{
-           console.log(res);
+    sub: function() {
+      event.preventDefault();
+        // 解构一下
+      let {perId,perName,gender,age,part,address,contact,perState}=this.newforms
+
+      newPer(perId,perName,gender,age,part,address,contact,perState).then(res=>{
+        //  跳转到空白页面回退
+         alert("添加成功")
+      }).catch(err=>{
+         console.log(err);
+         
       })
+      this.show = false;
+      // alert(JSON.stringify(this.newforms));
+      this.newforms={};
     },
 
     searchBtn: function() {
@@ -183,7 +187,10 @@ export default {
       var event = event || window.event;
       event.preventDefault();
       searchPerTravel.$emit("empty-info", empty);
-    }
+    },
+    mounted() {
+        
+    },
   }
 };
 </script>
