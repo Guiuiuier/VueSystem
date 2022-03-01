@@ -10,10 +10,20 @@
       :filter="filter"
       empty-filtered-text="emptyFilteredText"
       empty-text
+      :fields="fields"
+       responsive="sm"
+       striped
+       head-variant='dark'
+       foot-clone
     >
-    <template>
-     <b-button size="sm" >Hide Details</b-button>
-    </template>
+    <!-- 插槽 -->
+      <template #cell(功能)> 
+    <b-button-group>
+      <b-button variant="warning">编辑</b-button>
+      <b-button variant="danger">删除</b-button>
+      <!-- <b-button variant="info">Info</b-button> -->
+    </b-button-group>
+      </template>
     </b-table>
     <b-pagination
       align="center"
@@ -45,7 +55,20 @@ export default {
       bordered: true,
       filter: "",
       fixed: true,
-      items: []
+      items: [],
+      //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
+      fields: [
+        "#",
+        "员工编号",
+        "姓名",
+        "性别",
+        "年龄",
+        "部门",
+        "地址",
+        "联系方式",
+        "在职状态",
+        { key: '功能' }
+      ]
     };
   },
   methods: {
@@ -56,10 +79,10 @@ export default {
         that.filter = val;
       });
     },
-    getEmptyInfo(){
-      const that=this;
-      searchPerTravel.$on("empty-info",function(val){
-        that.filter=val;
+    getEmptyInfo() {
+      const that = this;
+      searchPerTravel.$on("empty-info", function(val) {
+        that.filter = val;
       });
     }
   },
@@ -85,3 +108,9 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+  .thead-dark.dd{
+    background: coral!important;
+  }
+</style>
