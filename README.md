@@ -14,18 +14,17 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
    npm install --save nprogress  
    代码使用：Nprogress start()开始进度条
             Nprogress done()  关闭进度条
-    //本作者遇到的bug 修复后在 src文件夹下的 tips.md中 有意的朋友可以查看
-  以下是登录模块的逻辑
-  ![登录逻辑](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91.png)
-  目前登录页面是这样的
-  ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/5902d342247d8ffd3e0bbf7c1b380c9.png)
-  ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/ff6928a06d706a1bb6263c3771a9c26.png)
-  </br>
- 项目路由分析
- login:用户登录的主页面
- find:用户找回密码的页面  
+    //本作者遇到的bug 修复后在 src文件夹下的 tips.md中 有意的朋友可以查看  
+  以下是登录模块的逻辑  
+  ![登录逻辑](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91.png)  
+  目前登录页面是这样的  
+  ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/5902d342247d8ffd3e0bbf7c1b380c9.png)  
+  ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/ff6928a06d706a1bb6263c3771a9c26.png)  
+ 项目路由分析  
+ login:用户登录的主页面  
+ find:用户找回密码的页面    
     
-    增加了了登录验证功能，例如添加了路由守卫 防止用户恶意进行token修改或者不通过token就进入后端</br>
+    增加了了登录验证功能，例如添加了路由守卫 防止用户恶意进行token修改或者不通过token就进入后端  
 
 
 
