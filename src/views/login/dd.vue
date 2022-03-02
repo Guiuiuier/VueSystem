@@ -1,54 +1,32 @@
 <template>
-  <div>
-    <b-alert show>Default Alert</b-alert>
-
-    <b-alert variant="success" show>Success Alert</b-alert>
-
-    <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
-      Dismissible Alert!
-    </b-alert>
-
-    <b-alert
-      :show="dismissCountDown"
-      dismissible
-      variant="warning"
-      @dismissed="dismissCountDown=0"
-      @dismiss-count-down="countDownChanged"
-    >
-      <p>This alert will dismiss after {{ dismissCountDown }} seconds...</p>
-      <b-progress
-        variant="warning"
-        :max="dismissSecs"
-        :value="dismissCountDown"
-        height="4px"
-      ></b-progress>
-    </b-alert>
-
-    <b-button @click="showAlert" variant="info" class="m-1">
-      Show alert with count-down timer
-    </b-button>
-    <b-button @click="showDismissibleAlert=true" variant="info" class="m-1">
-      Show dismissible alert ({{ showDismissibleAlert ? 'visible' : 'hidden' }})
-    </b-button>
+  <div  @click="btnShow">
+    <b-icon icon="files" class="iconstyle"></b-icon>考勤管理
+    <b-icon icon="chevron-up" class="Childiconstyle" v-show="btnshow"></b-icon>
+    <b-icon icon="chevron-down" class="Childiconstyle" v-show="btnshowdown"></b-icon>
   </div>
 </template>
-
+<style lang="less" scoped>
+@import "/public/sider.less";
+</style>
 <script>
-  export default {
-    data() {
-      return {
-        dismissSecs: 10,
-        dismissCountDown: 0,
-        showDismissibleAlert: false
-      }
-    },
-    methods: {
-      countDownChanged(dismissCountDown) {
-        this.dismissCountDown = dismissCountDown
-      },
-      showAlert() {
-        this.dismissCountDown = this.dismissSecs
+export default {
+  data() {
+    return {
+      btnshow:false,
+      btnshowdown: true
+    };
+  },
+  methods: {
+    btnShow: function() {
+      if (this.btnshowdown) {
+      this.$router.push('/index/attendancemain/')
+        this.btnshowdown = false;
+        this.btnshow = true;
+      } else {
+        this.btnshowdown = true;
+        this.btnshow = false;
       }
     }
   }
+};
 </script>

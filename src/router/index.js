@@ -71,16 +71,23 @@ const routes = [{
       },
       {
         path: 'attendancemain',
-        component: resolve => (require(['@/views/attendanceMain/index'], resolve)),
+        component:resolve=>(require(['@/views/attendanceMain/myattendance/index'],resolve)),
         name: "attendancemain",
         meta: {
           title: "考勤管理",
         },
+        children:[{
+           path:'myattendance',
+           component: resolve => (require(['@/views/attendanceMain/myattendance/index'], resolve)),
+           name:'myattendance',
+           meta:{
+             title:"我的考勤",
+           }
+        }]
       },
 
       {
         path: 'filemain',
-        redirect:'/index/filemain/emcontract',
         component: resolve => (require(['@/views/fileMain/index.vue'], resolve)),
         name: 'filemain',
         meta:{

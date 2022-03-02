@@ -1,16 +1,20 @@
 <template>
   <div>
+    <!-- 侧边栏以一种不知名的逻辑跑出来了。。。。。。。。就这吧。麻了 -->
     <div class="siderMain">
       <div class="sider">
         <b-button-group vertical>
           <!-- 公告管理 -->
-          <announcement>
-
-          </announcement>
+          <announcement></announcement>
           <!-- 人员管理 -->
           <personal></personal>
-          <!-- 考勤 -->
-          <attendance></attendance>
+          <b-button v-b-toggle.collapse-myattend>
+            <!-- 考勤 -->
+            <attendance></attendance>
+          </b-button>
+
+          <!-- 我的考勤 -->
+          <myattendance></myattendance>
           <!-- 折叠管理 -->
           <b-button v-b-toggle.collapse-a.collapse-b>
             <!-- 文件管理 -->
@@ -20,9 +24,7 @@
           <Emcontract></Emcontract>
           <!-- 员工合同 -->
           <contract></contract>
-          
         </b-button-group>
-        
       </div>
     </div>
   </div>
@@ -34,9 +36,10 @@
 import announcement from "./The-siderBar/announcement";
 import attendance from "./The-siderBar/attendance";
 import personal from "./The-siderBar/personal";
-import file from "./The-siderBar/file";
-import contract from "./The-siderBar/contract";
-import Emcontract from "./The-siderBar/Emcontract";
+import file from "./The-siderBar/file.vue";
+import contract from "./The-siderBar/file/contract";
+import Emcontract from "./The-siderBar/file/Emcontract";
+import myattendance from "./The-siderBar/attendance/myattendance";
 export default {
   data() {
     return {};
@@ -47,10 +50,10 @@ export default {
     contract,
     Emcontract,
     file,
-    personal
+    personal,
+    myattendance
   },
   methods: {},
-  mounted() {
-  },
+  mounted() {}
 };
 </script>

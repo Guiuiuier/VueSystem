@@ -1,5 +1,5 @@
 <template>
-  <div  @click="btnShow">
+    <div @click="btnShow" >
     <b-icon icon="files" class="iconstyle"></b-icon>文件管理
     <b-icon icon="chevron-up" class="Childiconstyle" v-show="btnshow"></b-icon>
     <b-icon icon="chevron-down" class="Childiconstyle" v-show="btnshowdown"></b-icon>
@@ -19,7 +19,6 @@ export default {
   methods: {
     btnShow: function() {
       if (this.btnshowdown) {
-      // this.$router.push('/index/filemain')
         this.btnshowdown = false;
         this.btnshow = true;
       } else {
