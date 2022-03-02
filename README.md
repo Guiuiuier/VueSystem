@@ -26,8 +26,11 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
   ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/ff6928a06d706a1bb6263c3771a9c26.png)  
 ### 人员管理页面
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%BA%BA%E5%91%98%E6%A8%A1%E5%9D%97.png)   
+#### 搜索
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%90%9C%E7%B4%A2%E6%9D%BF%E5%9D%97.png)   
+#### 添加
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B7%BB%E5%8A%A0%E6%9D%BF%E5%9D%97.png)   
+#### 编辑
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E7%BC%96%E8%BE%91%E6%9D%BF%E5%9D%97.png)   
 ####
     
