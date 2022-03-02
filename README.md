@@ -16,9 +16,10 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
             Nprogress done()  关闭进度条
     //本作者遇到的bug 修复后在 src文件夹下的 tips.md中 有意的朋友可以查看  
 ****
-##以下是项目流程图  
+
+## 项目流程图
    ![流程图](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B5%81%E7%A8%8B.png)  
-  以下是登录模块的逻辑  
+### 以下是登录模块的逻辑  
   ![登录逻辑](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91.png)  
   目前登录页面是这样的  
   ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/5902d342247d8ffd3e0bbf7c1b380c9.png)  
