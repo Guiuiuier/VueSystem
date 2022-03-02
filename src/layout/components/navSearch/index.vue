@@ -98,8 +98,8 @@
           type="submit"
           @click="show=true"
         >新增用户</b-button>
-        <b-col sm="1" style="font-size:10px;color:red">添加成功!</b-col>
-        <b-col sm="1" style="font-size:10px;color:red">失败!重新添加</b-col>
+        <b-col sm="1" style="font-size:10px;color:red" v-show="sucessShow">添加成功!</b-col>
+        <!-- <b-col sm="1" style="font-size:10px;color:red">失败!重新添加</b-col> -->
 
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
@@ -137,6 +137,7 @@ export default {
   data() {
     return {
       show: false,
+      sucessShow:false,
       newforms: {
         perName: "",
         age: "",
@@ -156,23 +157,27 @@ export default {
       }
     };
   },
-  // 注入reload方法实现无刷
   methods: {
     sub: function() {
+      var event=event||window.event;
       event.preventDefault();
         // 解构一下
       let {perId,perName,gender,age,part,address,contact,perState}=this.newforms
 
       newPer(perId,perName,gender,age,part,address,contact,perState).then(res=>{
         //  跳转到空白页面回退
-         alert("添加成功")
+        //  alert("添加成功")
       }).catch(err=>{
          console.log(err);
          
       })
       this.show = false;
+      this.sucessShow=true;
       // alert(JSON.stringify(this.newforms));
       this.newforms={};
+        setTimeout(()=>{
+           this.sucessShow=false;
+        },3000)
     },
 
     searchBtn: function() {

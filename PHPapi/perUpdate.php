@@ -9,10 +9,16 @@ $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 $v=(file_get_contents("php://input"));
 // var_dump(json_decode($v,true));
 $c=json_decode($v,true);
-// var_dump($c['Id']);
-$Id=$c['Id'];
-$sql ="DELETE FROM `personnel` WHERE id in ({$Id})";
-
+$Id=$c['id'];
+$perId=$c['perId'];
+$perName=$c['perName'];
+$gender=$c['gender'];
+$age=$c['age'];
+$part=$c['part'];
+$address=$c['address'];
+$contact=$c['contact'];
+$perState=$c['perState'];
+$sql ="UPDATE `personnel` SET `idPer`='{$perId}',`namePer`='{$perName}',`genderPer`='{$gender}',`agePer`='{$age}',`partPer`='{$part}',`addressPer`='{$address}',`contactPer`='{$contact}',`statePer`='{$perState}' WHERE id={$Id}";
 if ($mysqli -> connect_error) {
        die("连接错误：".$mysqli -> connect_error);
 }
