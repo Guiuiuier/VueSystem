@@ -1,5 +1,5 @@
 # VueHRsystem
-这个可以用来做新手入门Vue项目 </br>
+这个可以用来做新手入门Vue项目  
 基于vue人力资源管理系统  </br>
  本项目基于 less+axios+webpack+vue+vue bootstrap+vuex技术进行开发</br>
 本项目采用 less 需要通过less、less-loader处理  </br>
