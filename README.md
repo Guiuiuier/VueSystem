@@ -10,24 +10,34 @@
 bootstrap的版本要4.5.3的否则会样式冲突
 npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板 
 
- 请下载nprogress进度条插件 0.2.0版本 https://github.com/rstacruz/nprogress作为依赖
+ 请下载nprogress进度条插件 0.2.0版本  https://github.com/rstacruz/nprogress  作为依赖
    npm install --save nprogress  
    代码使用：Nprogress start()开始进度条
             Nprogress done()  关闭进度条
     //本作者遇到的bug 修复后在 src文件夹下的 tips.md中 有意的朋友可以查看  
-  以下是登录模块的逻辑  
+****
+
+## 项目流程图
+   ![流程图](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B5%81%E7%A8%8B.png)  
+## 以下是登录模块的逻辑  
   ![登录逻辑](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91.png)  
-  目前登录页面是这样的  
+### 登录页面 
   ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/5902d342247d8ffd3e0bbf7c1b380c9.png)  
   ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/ff6928a06d706a1bb6263c3771a9c26.png)  
- 项目路由分析  
- login:用户登录的主页面  
- find:用户找回密码的页面    
+### 人员管理页面
+ ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%BA%BA%E5%91%98%E6%A8%A1%E5%9D%97.png)   
+#### 搜索
+ ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%90%9C%E7%B4%A2%E6%9D%BF%E5%9D%97.png)   
+#### 添加
+ ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B7%BB%E5%8A%A0%E6%9D%BF%E5%9D%97.png)   
+#### 编辑
+ ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E7%BC%96%E8%BE%91%E6%9D%BF%E5%9D%97.png)   
+####
     
     增加了了登录验证功能，例如添加了路由守卫 防止用户恶意进行token修改或者不通过token就进入后端  
 
 
-
+## tips
  package.json中  浏览器自动打开  
 {  </br>
   "name": "demoproject",  
