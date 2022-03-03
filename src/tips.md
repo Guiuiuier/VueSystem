@@ -65,8 +65,17 @@ Vue.use(IconsPlugin)
      新增用户页面中没有添加对后端验证和前端输入验证的判断 目前先不更新先完成功能再修改 
      provide / inject 组合 实现无刷
 
+
+
+
      bug11:api引入的方法名要和api写的一样啊。大小写都要区分
 
+     bug12: 同一个页面如果设置了默认的axios地址的话 可能会有冲突把默认的修改就不会出现 /api/api2这种情况了
+
+
+      bug13：某公司的数据返回接口是真的。。。。。。
+       'var returnCitySN = {"cip":xxx};'
+       要转换一下 匹配第一个{ 和最后一个 取出来键值对}
     方法二：axios默认使用payload形式提交数据，通过payload形式的数据php $_post无法接受前端提交的数据，要想后端接受post提交的数据，就要进行参数设置：
      改成Form Data流即可
      

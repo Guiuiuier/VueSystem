@@ -6,7 +6,7 @@ import router from "../router";
 import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 //判断环境如果是developement 用api 如果是上线则用右边的地址请求
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? "/api" : "http://rap2api.taobao.org/app/mock/298235"
+// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? "/api" : "http://rap2api.taobao.org/app/mock/298235"
 
 //创建请求拦截器  可以给每个请求到携带想要传递的内容 为啥要这样写呢 总不能每次请求登录都要发一个token吧 先保存到本地然后通过拦截 返回一个config值
 //功能就是 如果你第一次登录的时候登录上了就会返回一个token 第二次退出登录的时候就不用再登录了 直接将第一次的token拿来用 节省了服务器资源

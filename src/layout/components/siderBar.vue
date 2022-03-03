@@ -24,6 +24,10 @@
           <Emcontract></Emcontract>
           <!-- 员工合同 -->
           <contract></contract>
+            <b-button v-b-toggle.collapse-mysystemmange>
+          <systemmanage></systemmanage>
+                    </b-button>
+                    <LoginLog></LoginLog>
         </b-button-group>
       </div>
     </div>
@@ -40,6 +44,8 @@ import file from "./The-siderBar/file.vue";
 import contract from "./The-siderBar/file/contract";
 import Emcontract from "./The-siderBar/file/Emcontract";
 import myattendance from "./The-siderBar/attendance/myattendance";
+import systemmanage from "./The-siderBar/systemManage"
+import LoginLog from "./The-siderBar/systemmange/loginLog";
 export default {
   data() {
     return {};
@@ -51,7 +57,9 @@ export default {
     Emcontract,
     file,
     personal,
-    myattendance
+    myattendance,
+    systemmanage,
+    LoginLog
   },
   methods: {},
   mounted() {}

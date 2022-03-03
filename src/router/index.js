@@ -88,7 +88,7 @@ const routes = [{
 
       {
         path: 'filemain',
-        component: resolve => (require(['@/views/fileMain/index.vue'], resolve)),
+        component: resolve => (require(['@/views/fileMain/Emcontract/index'], resolve)),
         name: 'filemain',
         meta:{
           title:"文件管理"
@@ -109,8 +109,25 @@ const routes = [{
               title: "在职员工合同",
             },
           },
-        ]
-      }
+        ],
+        
+      },
+      {
+        path: 'systemmanage',
+        component: resolve => (require(['@/views/systemManage/loginLog/index'], resolve)),
+        name: "systemmanage",
+        meta: {
+          title: "系统管理",
+        },
+          children:[{
+            path: 'loginlog',
+            component: resolve => (require(['@/views/systemManage/loginLog/index'], resolve)),
+            name: 'loginlog',
+            meta: {
+              title: "登录日志",
+            },
+          }]
+      },
     ]
   },
 

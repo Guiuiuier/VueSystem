@@ -127,7 +127,8 @@ import searchPerTravel from "../navSearch/personsearch";
 import { deletPer, updatePer } from "@/api2";
 export default {
   props: {
-    personnelInfors: {
+    //查询所有的职员
+    perInformations: {
       type: Array,
       default: () => []
     }
@@ -182,7 +183,7 @@ export default {
     sub: function() {
      updatePer(this.newforms.id,this.newforms.perId,this.newforms.perName,this.newforms.gender,this.newforms.age,this.newforms.part,this.newforms.address,this.newforms.contact,this.newforms.perState)
       .then(res=>{
-        console.log(res);
+        // console.log(res);
       }).catch(err=>{
         console.log(res);
         
@@ -235,13 +236,13 @@ export default {
       if (this.filter != "") {
         return this.filter.length;
       } else {
-        return this.personnelInfors.length;
+        return this.perInformations.length;
       }
     }
   },
   // 监控一个props动态
   watch: {
-    personnelInfors(val) {
+    perInformations(val) {
       this.items = val;
     }
   },
@@ -254,7 +255,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// @import "../../../../public/backmain.less";
 
 
 </style>

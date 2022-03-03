@@ -2,21 +2,22 @@
   <div>
     <Navsearch></Navsearch>
     <!-- <div style="width:100%;position:absolute"> -->
-    <b-table></b-table>
-    <personPagination :perInformations="perInformations"></personPagination>
+    <b-table>adasdas</b-table>
+    <!-- 查询 -->
+    <personPagination :theLogs="theLogs"></personPagination>
   </div>
   <!-- </div> -->
 </template>
 
 <script>
-import {personnelInfo} from '@/api2';
-import axios from "axios"
-import Navsearch from "@/layout/components/navSearch/index";
-import personPagination from "@/layout/components/personpagination/index";
+import {LoginLogInfors} from '@/api2';
+import Navsearch from "@/layout/components/navSearch/loginLog";
+import personPagination from "@/layout/components/personpagination/loginLog";
+
 export default {
   data() {
     return {
-      perInformations:[],
+theLogs:[],
     };
   },
   components: {
@@ -24,12 +25,11 @@ export default {
     personPagination
   },
   created() {
-     personnelInfo().then(res=>{
+  LoginLogInfors().then(res=>{
       //  转化为对象
       //  console.log(res);
         let infors=Object.values(res.data)
-         this.perInformations=infors;
-          // console.log(infors);
+         this.theLogs=infors;
      })
 
   },

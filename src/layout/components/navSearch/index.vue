@@ -129,9 +129,9 @@
 </style>
  
  <script>
-//  兄弟间传值
 import { newPer } from "@/api2";
-
+// 通过中间间 传入搜索信息
+//  兄弟间传值
 import searchPerTravel from "./personsearch.js";
 export default {
   data() {

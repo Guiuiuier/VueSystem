@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="login">
-
       <div class="login-container">
         <div class="login-container-title">欢迎登录</div>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
@@ -99,6 +98,8 @@
 <script>
 //这里引入已经封装好的api
 import { login, getLoginLog } from "@/api";
+import { loginInfors } from "@/api3";
+import { searchLogInfors } from "@/api2";
 //映射
 import { mapMutations, mapState } from "vuex";
 import find from "../find/index";
@@ -108,8 +109,8 @@ export default {
     return {
       progressMode: false,
       //进度条
-      bars: [ { variant: 'success', value: 75 },],
-      timer:null,
+      bars: [{ variant: "success", value: 75 }],
+      timer: null,
       form: {
         name: "",
         password: "",
@@ -151,6 +152,56 @@ export default {
               }, 2000);
             }, 1000);
           } else {
+            // 进行IP信息请求 请求ip信息并保存
+            loginInfors()
+              .then(loginInfos => {
+                // 搜狐这个接口真XX了。  这里要转换一下
+                let infors = loginInfos.data.substring(
+                  loginInfos.data.indexOf("{"),
+                  loginInfos.data.lastIndexOf("}") + 1
+                );
+                let inforsObj = JSON.parse(infors);
+                let myIp = inforsObj.cip;
+                //登录的账户名
+                let uname = res.data.userinfo.username;
+                // console.log(inforsObj);
+                //当前时间是:
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var day = date.getDate();
+                var hour = date.getHours();
+                var minutes = date.getMinutes();
+                var second = date.getSeconds();
+                let currentTime =
+                  year +
+                  "-" +
+                  month +
+                  "-" +
+                  day +
+                  " " +
+                  hour +
+                  ":" +
+                  minutes +
+                  ":" +
+                  second +
+                  "";
+                console.log(uname);
+                console.log(myIp);
+                console.log(currentTime);
+                //查询数据库有没有这个id名 检索用户的登陆时间
+                searchLogInfors(uname)
+                  .then(userlog => {
+                    console.log(userlog);
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
+              })
+              .catch(err => {
+                console.log(err);
+              });
+
             // 这里用数组作为一个标识是否记住密码，为什么是数组 因为bootstrap这个框架。。。 实际上是我懒
             //已经映射好token了。  当密码正确的时候才保存账号token 为了挺高用户体验
             //这是账号唯一的token 不要放入istrue判断中
