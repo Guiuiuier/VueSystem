@@ -67,3 +67,16 @@ export const updatePer=(id,perId,perName,gender,age,part,address,contact,perStat
        user,
     }
  })
+ export const insertLog=(user,lastIp,lastTime,thisIp,thisTime)=>requests({
+
+  url:"/personnelInfo/loginLog/insertLog.php",
+  method:"post",
+  data:{
+     user,
+     lastIp,
+     lastTime,
+     thisIp,
+     thisTime,
+  }
+
+ })

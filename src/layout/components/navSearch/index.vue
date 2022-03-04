@@ -13,7 +13,7 @@
           <b-row class="mb-1">
             <b-col cols="3">
               <b-form-group>
-                <b-form-input id="input-group-1" v-model="newforms.perId"></b-form-input>
+                <b-form-input id="input-1" v-model="newforms.perId"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col cols="3">

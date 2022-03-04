@@ -99,7 +99,7 @@
 //这里引入已经封装好的api
 import { login, getLoginLog } from "@/api";
 import { loginInfors } from "@/api3";
-import { searchLogInfors } from "@/api2";
+import { searchLogInfors,insertLog } from "@/api2";
 //映射
 import { mapMutations, mapState } from "vuex";
 import find from "../find/index";
@@ -186,14 +186,16 @@ export default {
                   ":" +
                   second +
                   "";
-                console.log(uname);
-                console.log(myIp);
-                console.log(currentTime);
                 //查询数据库有没有这个id名 检索用户的登陆时间
                 searchLogInfors(uname)
                   .then(userlog => {
-                    console.log(userlog);
-                  })
+                    let lastTime = userlog.data[0].thisTime;
+                    let lastIP = userlog.data[0].thisIp;
+                    let thisTime=userlog.data[0].thisTime;
+                    let thisIP=userlog.data[0].thisIp;
+                    insertLog(uname,lastIP,lastTime,myIp,currentTime).then(insert=>{
+                    })
+                 })
                   .catch(err => {
                     console.log(err);
                   });
