@@ -67,6 +67,8 @@ export const updatePer=(id,perId,perName,gender,age,part,address,contact,perStat
        user,
     }
  })
+
+//  插入日志信息
  export const insertLog=(user,lastIp,lastTime,thisIp,thisTime)=>requests({
 
   url:"/personnelInfo/loginLog/insertLog.php",
@@ -79,4 +81,16 @@ export const updatePer=(id,perId,perName,gender,age,part,address,contact,perStat
      thisTime,
   }
 
- })
+});
+
+  //上传文件
+  export const uploadFile=(formData)=>requests({
+     method:"post",
+     url:"/personnelInfo/contract/upload.php",
+     headers: { 'Content-Type': 'multipart/form-data' },
+     data:{
+      //   fileName,
+      //   part,
+        formData
+     }
+  })

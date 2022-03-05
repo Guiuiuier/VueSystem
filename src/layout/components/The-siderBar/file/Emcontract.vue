@@ -12,13 +12,10 @@
 </style>
 <script>
 export default {
-
-        methods: {
-        topage:function(){
-            this.$router.push('/index/filemain/emcontract')
-        },
-
-    },
-
-}
+  methods: {
+    topage: function() {
+      this.$router.push("/index/filemain/emcontract");
+    }
+  }
+};
 </script>

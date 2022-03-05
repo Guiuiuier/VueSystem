@@ -78,5 +78,77 @@ Vue.use(IconsPlugin)
        要转换一下 匹配第一个{ 和最后一个 取出来键值对}
     方法二：axios默认使用payload形式提交数据，通过payload形式的数据php $_post无法接受前端提交的数据，要想后端接受post提交的数据，就要进行参数设置：
      改成Form Data流即可
+
+
+     bug14 解决vue多个路由共用一个页面的问题
+     watch:{
+ "$route":function(to,from){
+   //from 对象中包含当前地址
+   //to 对象中包含目标地址
+   //其实还有一个next参数的，这个参数是控制路由是否跳转的，如果没写，可以不用写next()来代表允许路由跳转，如果写了就必须写next(),否则路由是不会生效的。
+ }
+}
+     官方给出的方法是通过 watch 监听路由变化，做判断路由路径然后调用响应的方法
      
+
+
+     // var 是全局或者是函数级的
+          先 let 后 var
+        var a=v
+         fn(){
+            let a=v
+         }
+         会报错 因为这var a 作用于整个函数 和let冲突了
+        先 var 后let    大->小 没问题
+
+         普通函数this指向全局
+         对象函数 哪个函数调用就是那个
+          let boj{
+             id:1
+             func(){
+                console.log(this.id)
+                 是指向obj的
+             }
+          }
+
+          /*需要注意的情况*/
+let obj1={
+    a:111
+}
+let obj2={
+    a:222,
+    fn:function(){
+        console.log(this.a);
+    }
+}
+obj1.fn=obj2.fn;
+obj1.fn();  //111
+虽然 obj1.fn 是从 obj2.fn 赋值而来，但是调用函数的是 obj1 ，所以 this 指向 obj1 。
+let subClass1=new structureClass();
+subClass.name='成才';
+console.log(subClass.name);
+在构造函数里面返回一个对象，会直接返回这个对象，而不是执行构造函数后创建的对象
+
+apply和call简单来说就是会改变传入函数的this。
+
+let obj1={
+    name:'程新松'
+};
+let obj2={
+    name:'saucxs',
+    fn:function(){
+        console.log(this.name);
+    }
+}
+obj2.fn.call(obj1); //指向obj1
+
+
+首先不得不说，ES6 提供了箭头函数，增加了我们的开发效率，但是在箭头函数里面，没有 this ，箭头函数里面的 this 是继承外面的环境。
+  如果里面没有会向上查找
+
+直接打印formdata 只会显示formdata原生方法 你要看数据要用formdata.get(key)
+
+bug15：
+在上传板块中 由于axios默认是payload的 要改成form data 格式就要在axios 请求头中添加formdata格式
+
       注册组件 使用components注册的组件接收的是一组对象 只不过是简化的语法 相当于 componentsa:compoentsa  组件

@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import login from '../views/login/index.vue'
-import find from '../views/find/index.vue'
 import index from '../layout/index.vue'
 //此时路由懒加载不用再这样加载了
 // import announcemain from '@/views/announceMain/index'
@@ -30,12 +28,15 @@ const routes = [{
   {
     path: '/login',
     name: "login",
-    component: login,
+    component: () => import('@/views/login/index.vue'),
+
   },
   {
     path: '/find',
     name: 'find',
     component: find,
+    component: () => import('@/views/find/index.vue'),
+
   },
   {
     path: '/index',
@@ -51,7 +52,7 @@ const routes = [{
       {
         path: 'announcemain',
         // component:announcemain,
-        component: resolve => (require(['@/views/announceMain/index'], resolve)),
+        component: () => import('@/views/announceMain/index'),
         name: "announcemain",
         meta: {
           title: "公司公告"
@@ -62,7 +63,7 @@ const routes = [{
 
       {
         path: 'personalmain',
-        component: resolve => (require(['@/views/personalMain/index'], resolve)),
+        component: () => import('@/views/personalMain/index'),
         name: "personalmain",
         meta: {
           title: "人员管理",
@@ -71,14 +72,14 @@ const routes = [{
       },
       {
         path: 'attendancemain',
-        component:resolve=>(require(['@/views/attendanceMain/myattendance/index'],resolve)),
+        component: () => import('@/views/attendanceMain/index'),
         name: "attendancemain",
         meta: {
           title: "考勤管理",
         },
         children:[{
            path:'myattendance',
-           component: resolve => (require(['@/views/attendanceMain/myattendance/index'], resolve)),
+           component: () => import('@/views/attendanceMain/myattendance/index'),
            name:'myattendance',
            meta:{
              title:"我的考勤",
@@ -88,14 +89,15 @@ const routes = [{
 
       {
         path: 'filemain',
-        component: resolve => (require(['@/views/fileMain/Emcontract/index'], resolve)),
+        component: () => import('@/views/fileMain/index'),
+        redirect: '@/views/fileMain/Emcontract/index',
         name: 'filemain',
         meta:{
           title:"文件管理"
         },
         children: [{
             path: 'contract',
-            component: resolve => (require(['@/views/fileMain/contract/index'], resolve)),
+            component: () => import('@/views/fileMain/contract/index'),
             name: 'contract',
             meta: {
               title: "合同模板",
@@ -103,7 +105,7 @@ const routes = [{
           },
           {
             path: 'emcontract',
-            component: resolve => (require(['@/views/fileMain/Emcontract/index'], resolve)),
+            component: () => import('@/views/fileMain/Emcontract/index'),
             name: 'emcontract',
             meta: {
               title: "在职员工合同",
@@ -114,14 +116,14 @@ const routes = [{
       },
       {
         path: 'systemmanage',
-        component: resolve => (require(['@/views/systemManage/loginLog/index'], resolve)),
+        component: () => import('@/views/systemManage/loginLog/index'),
         name: "systemmanage",
         meta: {
           title: "系统管理",
         },
           children:[{
             path: 'loginlog',
-            component: resolve => (require(['@/views/systemManage/loginLog/index'], resolve)),
+            component: () => import('@/views/systemManage/loginLog/index'),
             name: 'loginlog',
             meta: {
               title: "登录日志",
