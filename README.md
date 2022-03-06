@@ -32,8 +32,10 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B7%BB%E5%8A%A0%E6%9D%BF%E5%9D%97.png)   
 #### 编辑
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E7%BC%96%E8%BE%91%E6%9D%BF%E5%9D%97.png)   
-####
-    
+#### 上传
+  ![上传](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8A%E4%BC%A0.png)   
+####登陆日志  
+  ！[denglu](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8A%E4%BC%A0.png)  
     增加了了登录验证功能，例如添加了路由守卫 防止用户恶意进行token修改或者不通过token就进入后端  
 
 
