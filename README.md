@@ -15,8 +15,7 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
    代码使用：Nprogress start()开始进度条
             Nprogress done()  关闭进度条
     //本作者遇到的bug 修复后在 src文件夹下的 tips.md中 有意的朋友可以查看  
-****
-
+**** 
 ## 项目流程图
    ![流程图](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B5%81%E7%A8%8B.png)  
 ## 以下是登录模块的逻辑  
@@ -35,7 +34,6 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E7%BC%96%E8%BE%91%E6%9D%BF%E5%9D%97.png)   
 #### 上传
   ![上传](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8A%E4%BC%A0.png)  
-  ![s](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8A%E4%BC%A0.png)  
     增加了了登录验证功能，例如添加了路由守卫 防止用户恶意进行token修改或者不通过token就进入后端  
 
 
