@@ -1,4 +1,28 @@
 module.exports = {
+
+
+  //打包策略
+  // 发布阶段
+   chainWebpack:config=>{
+     config.when(process.env.NODE_ENV==='production',config=>{
+       config.entry('app').clear().add('./src/main-prod.js')
+     })
+
+
+     config.when(process.env.NODE_ENV==='development',config=>{
+      config.entry('app').clear().add('./src/main.js')
+    })
+
+
+   },
+
+
+
+
+
+
+
+
   lintOnSave: false,
   devServer:{
   // port:8080,//设置项目端口号

@@ -24,7 +24,7 @@
               <b-col cols="12">
                 <b-form-group>
                   <b-form-file
-                    ref="file-input"
+                    ref="fileinput"
                     type="file"
                     class="mb-2"
                     name="uploadfile"
@@ -32,7 +32,6 @@
                     placeholder="在这里上传文件"
                     required
                     @change="getFile"
-                    accept="application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf"
                   ></b-form-file>
                   <span class="mt-2">
                     <small>仅允许pdf,docx格式文件</small>
@@ -130,28 +129,48 @@ export default {
   },
   methods: {
     getFile() {
-      let fileinput = this.$refs["file-input"].files[0];
-      this.files = fileinput;
+       let that = this;
+       let fileinput = that.$refs.fileinput
+       let fileinputs =fileinput.files[0];
+       
+       console.log(fileinput);
+      // that.files=fileinput;
+      // console.log(fileinput);
+      let formData = new window.FormData();
+     formData.append("File", fileinputs); //指向全局中的files
+      console.log(formData.getAll("File"));
+      // let c=formData.get('File');
+      let c=formData.getAll("File");
+      console.log(c);
+       uploadFile(c).then(res => {
+          // console.log(res);
+      }).catch(err=>{
+        console.log(err)
+      });
+      // console.log(that.formData);  //指向全局对象的此时全局对象中没有 undefined 直接打印formdata 只会显示formdata原生方法 你要看数据要用formdata.get(key)
     },
     //上传文件
     fileSub: function() {
-      let that = this;
-      let fileinput = that.$refs["file-input"].files[0];
-      this.files = fileinput;
-      let size = Math.floor(that.files.size / 1024);
-      if (size > 20 * 1024 * 1024) {
-        alert("超过20M的图片,docx,pdf不允许上传！");
-        return false;
-      }
+      // let that = this;
+      // let fileinput = that.$refs["file-input"].files[0];
+      // this.files = fileinput;
+      // let size = Math.floor(that.files.size / 1024);
+      // if (size > 20 * 1024 * 1024) {
+      //   alert("超过20M的图片,docx,pdf不允许上传！");
+      //   return false;
+      // }
     //   console.log(that.files);
-      let formData = new window.FormData();
-      formData.append("File", that.files); //指向全局中的files
-      console.log(formData.get("File"));
-      let c=formData.get('File');
+      // let formData = new window.FormData();
+      // formData.append("File", that.files); //指向全局中的files
+      // console.log(formData.get("File"));
+      // let c=formData.get('File');
+      // console.log(c)
+      // console.log(c[0].lastModified);
+      // console.log(c[0].name);
       // console.log(that.formData);  //指向全局对象的此时全局对象中没有 undefined 直接打印formdata 只会显示formdata原生方法 你要看数据要用formdata.get(key)
-      uploadFile(c.name).then(res => {
-          
-      });
+      // uploadFile(formData).then(res => {
+      //     console.log(res);
+      // });
 
       //   alert(JSON.stringify(this.newforms));
     },

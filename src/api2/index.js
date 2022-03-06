@@ -1,6 +1,6 @@
 //导入api
 import requests from './request';
-
+import qs from 'qs';
 // 获取后端人员管理信息
  export const personnelInfo=()=>requests({
     url:'/personnelInfo/persons/personnel.php',
@@ -87,10 +87,11 @@ export const updatePer=(id,perId,perName,gender,age,part,address,contact,perStat
   export const uploadFile=(formData)=>requests({
      method:"post",
      url:"/personnelInfo/contract/upload.php",
-     headers: { 'Content-Type': 'multipart/form-data' },
+     headers: { "Content-Type": "multipart/form-data" },
      data:{
       //   fileName,
       //   part,
         formData
+
      }
   })

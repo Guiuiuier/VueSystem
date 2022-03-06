@@ -9,7 +9,7 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 // 导入 Bootstrap 和 BootstrapVue CSS 文件（顺序很重要）
 import  'bootstrap/dist/css/bootstrap.css' 
 import  'bootstrap-vue/dist/bootstrap-vue.css'
-import '../public/login.less'
+import '../public/login.css'
 
 // 使 BootstrapVue 在整个项目中可用
 Vue.use(BootstrapVue)

@@ -151,4 +151,21 @@ obj2.fn.call(obj1); //指向obj1
 bug15：
 在上传板块中 由于axios默认是payload的 要改成form data 格式就要在axios 请求头中添加formdata格式
 
+
+
+安装打包依赖  babel-plugin-transform-remove-consle 会移除所有consle
+babel.config 设置
+通过vue.config.js 修改webpack默认配置 隐藏所有webpack默认的配置项 
+
+
+module.exports={
+
+   //选项  可以参考官方文档
+}
+
+使用chainwebpack 可以修改默认打包入口 在vue.config.js中  默认是src/main.js  可以设定两种模式 开发模式为src/main-dev.js
+发布模式为 src/main-prod.js  chainwebpack通过链式编程  configurewebpack通过操作对象的方式 来修改
+
+优化依赖项 通过externals 加载外部cdn资源
+
       注册组件 使用components注册的组件接收的是一组对象 只不过是简化的语法 相当于 componentsa:compoentsa  组件
