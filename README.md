@@ -9,7 +9,7 @@
 请安装依赖 cnpm install --save less less-loader@5 在文件根目录下输入这个命令 进行处理  
 
 安装的时候要注意版本否则会报getoptions is not functions 所以这里安装5版本  
-bootstrap的版本要4.5.3的否则会样式冲突
+bootstrap的版本要4.5.3的否则会样式冲突  
 npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板 
 
  请下载nprogress进度条插件 0.2.0版本  https://github.com/rstacruz/nprogress  作为依赖
