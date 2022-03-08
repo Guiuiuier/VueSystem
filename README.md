@@ -12,6 +12,7 @@
 bootstrap的版本要4.5.3的否则会样式冲突  
 npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板 
 
+上传模块不太会。磨一下
  请下载nprogress进度条插件 0.2.0版本  https://github.com/rstacruz/nprogress  作为依赖
    npm install --save nprogress  
    代码使用：Nprogress start()开始进度条
