@@ -87,11 +87,8 @@ export const updatePer=(id,perId,perName,gender,age,part,address,contact,perStat
   export const uploadFile=(formData)=>requests({
      method:"post",
      url:"/personnelInfo/contract/upload.php",
-     headers: { "Content-Type": "multipart/form-data" },
-     data:{
-      //   fileName,
-      //   part,
-        formData
-
-     }
+     headers: { 'Content-Type': 'multipart/form-data'},
+     data:{formData}, //formdata本身就是一个对象千万别他妈的加了大括号了 整整三天啊整整三天
   })
+
+//   真他吗超级大坑！！！！

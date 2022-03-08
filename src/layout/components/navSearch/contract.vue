@@ -2,7 +2,7 @@
   <div>
     <!-- 内容框 -->
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-form enctype="multipart/form-data">
+      <b-form >
         <b-modal v-model="show" title="上传合同模板">
           <b-container fluid>
             <b-row class="mb-1 text-center">
@@ -23,16 +23,16 @@
               </b-col>
               <b-col cols="12">
                 <b-form-group>
-                  <b-form-file
-                    ref="fileinput"
+                  <!-- <b-form-file
+                    ref="file-input"
                     type="file"
                     class="mb-2"
                     name="uploadfile"
                     style="margin:0 !important"
                     placeholder="在这里上传文件"
                     required
-                    @change="getFile"
-                  ></b-form-file>
+                  ></b-form-file> -->
+                  <p>上传文件<input  ref="fileinput" name="uploadfile" type="file"  value="" /></p>
                   <span class="mt-2">
                     <small>仅允许pdf,docx格式文件</small>
                   </span>
@@ -103,6 +103,7 @@
  
  <script>
 //  兄弟间传值
+import axios from 'axios'
 import { newPer, uploadFile } from "@/api2";
 import searchPerTravel from "./personsearch.js";
 export default {
@@ -110,7 +111,7 @@ export default {
     return {
       show: false,
       sucessShow: false,
-      files: "", //文件数据
+      //files: "", //文件数据
       newforms: {
         fileName: "",
         part: null,
@@ -128,51 +129,57 @@ export default {
     };
   },
   methods: {
-    getFile() {
-       let that = this;
-       let fileinput = that.$refs.fileinput
-       let fileinputs =fileinput.files[0];
-       
-       console.log(fileinput);
-      // that.files=fileinput;
-      // console.log(fileinput);
-      let formData = new window.FormData();
-     formData.append("File", fileinputs); //指向全局中的files
-      console.log(formData.getAll("File"));
-      // let c=formData.get('File');
-      let c=formData.getAll("File");
-      console.log(c);
-       uploadFile(c).then(res => {
-          // console.log(res);
-      }).catch(err=>{
-        console.log(err)
-      });
-      // console.log(that.formData);  //指向全局对象的此时全局对象中没有 undefined 直接打印formdata 只会显示formdata原生方法 你要看数据要用formdata.get(key)
-    },
+    // getFile() {
+    //    let that = this;
+        
+    //   let formdata = new window.FormData();
+    //    let fileinput = that.$refs.fileinput
+    //    let fileinputs =fileinput.files[0];     
+    //    console.log(typeof fileinputs);  
+    //   //  console.log(fileinputs);
+    //  formdata.append("file", fileinputs); //指向全局中的files
+
+    // console.log(formdata.get('file'));
+    //        uploadFile(fileinputs).then(res=>{
+    //          console.log(res);
+    //        })
+    //   // console.log(that.formData);  //指向全局对象的此时全局对象中没有 undefined 直接打印formdata 只会显示formdata原生方法 你要看数据要用formdata.get(key)
+    // },
     //上传文件
     fileSub: function() {
-      // let that = this;
-      // let fileinput = that.$refs["file-input"].files[0];
-      // this.files = fileinput;
-      // let size = Math.floor(that.files.size / 1024);
+      let that = this;
+      let fileinput = that.$refs.fileinput.files[0];
+      console.log(fileinput);
+      console.log(typeof fileinput)
+      // let size = Math.floor(fileinput.size / 1024);
+      // console.log(size);
       // if (size > 20 * 1024 * 1024) {
       //   alert("超过20M的图片,docx,pdf不允许上传！");
       //   return false;
       // }
-    //   console.log(that.files);
-      // let formData = new window.FormData();
-      // formData.append("File", that.files); //指向全局中的files
+        
+              const j1 =new Object();
+              j1.name='11';
+              j1.age="22";
+              console.log(j1)
+      let formData = new window.FormData();
+      formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
       // console.log(formData.get("File"));
-      // let c=formData.get('File');
-      // console.log(c)
-      // console.log(c[0].lastModified);
-      // console.log(c[0].name);
-      // console.log(that.formData);  //指向全局对象的此时全局对象中没有 undefined 直接打印formdata 只会显示formdata原生方法 你要看数据要用formdata.get(key)
-      // uploadFile(formData).then(res => {
-      //     console.log(res);
-      // });
-
-      //   alert(JSON.stringify(this.newforms));
+      uploadFile(formData).then(res => {
+          console.log(res);
+      });
+        
+        // axios({
+        //   method:'post',
+        //   url:'/personnelInfo/contract/upload.php',
+        //   data:formData,
+        //    headers: {
+        //   'Content-Type': 'multipart/form-data', // 关键
+        // },
+        // }).then(res=>{
+        //    console.log(res);
+        // })
+        // alert(JSON.stringify(this.newforms));
     },
     clearFiles() {
       this.$refs["file-input"].reset();

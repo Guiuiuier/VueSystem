@@ -163,9 +163,31 @@ module.exports={
    //选项  可以参考官方文档
 }
 
-使用chainwebpack 可以修改默认打包入口 在vue.config.js中  默认是src/main.js  可以设定两种模式 开发模式为src/main-dev.js
+使用chainwebpack 可以修改默认打包入口 在vue.config.js中  默认是src/main.js  可以设定两种模式 开发模式为src/main.js
 发布模式为 src/main-prod.js  chainwebpack通过链式编程  configurewebpack通过操作对象的方式 来修改
 
 优化依赖项 通过externals 加载外部cdn资源
 
       注册组件 使用components注册的组件接收的是一组对象 只不过是简化的语法 相当于 componentsa:compoentsa  组件
+
+
+      bug 17 史诗级bug 折磨了我3天。   如果传递的是对象 data那边绝对不可以加{} 因为这个就表示对象如果加了  还出现{{}}输出的控制台
+
+            uploadFile(formData).then(res => {
+          console.log(res);
+      });
+        
+        // axios({
+        //   method:'post',
+        //   url:'/personnelInfo/contract/upload.php',
+        //   data:formData,
+        //    headers: {
+        //   'Content-Type': 'multipart/form-data', // 关键
+        // },
+        // }).then(res=>{
+        //    console.log(res);
+        // })
+      //   alert(JSON.stringify(this.newforms));
+      这样都是可以写的
+
+      邪门得很 总之要是有二进制的文件就不要加{{对象}} 要data：formdata
