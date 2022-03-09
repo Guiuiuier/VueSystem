@@ -44,7 +44,7 @@
           <b-row class="mb-1">
             <b-col cols="3">
               <b-form-group>
-                <b-form-input id="input-group-1" v-model="newforms.perId"></b-form-input>
+                <b-form-input id="input-1" v-model="newforms.perId"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col cols="3">
@@ -183,13 +183,15 @@ export default {
     sub: function() {
      updatePer(this.newforms.id,this.newforms.perId,this.newforms.perName,this.newforms.gender,this.newforms.age,this.newforms.part,this.newforms.address,this.newforms.contact,this.newforms.perState)
       .then(res=>{
-        // console.log(res);
-      }).catch(err=>{
         console.log(res);
+      }).catch(err=>{
+        console.log(err);
         
       })
        this.show = false;
     },
+
+    // 获取编辑内容
     perUpdate: function(item) {
       var event = event || window.event;
       event.preventDefault();

@@ -1,10 +1,9 @@
 
 <?php
 include "../database/config.inc.php";
-header("Content-type:text/html; charset=utf-8");
+// header("Content-type:text/html; charset=utf-8");
 header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-
 // 解决前端的问题
 $v=(file_get_contents("php://input"));
 // var_dump(json_decode($v,true));

@@ -58,8 +58,29 @@ Vue.use(IconsPlugin)
        突然间忘写了。。。。 找了半天错误。 还以为是后端的问题。明明后端比前端更熟悉些。我还。可恶。
     
     bug9:Vue 传值到后台的时候是接收不到的刚开始使用vue对接后端接口时，PHP后端一直接受不到前端传的参数。找了很久，发现vue请求接口传参的形式是流的方式，因此后端要在接受数据的方面做一些改变。这里我用的是PHP原生方法file_get_contents。
+    1.php://input 可以读取http entity body中指定长度的值,由Content-Length指定长度,不管是POST方式或者GET方法提交过来的数据。但是，一般GET方法提交数据 时，http request entity body部分都为空。 
+2.php://input 与$HTTP_RAW_POST_DATA读取的数据是一样的，都只读取Content-Type不为multipart/form-data的数据。
+3.Coentent-Type仅在取值为application/x-www-data-urlencoded和multipart/form-data两种情况下，PHP才会将http请求数据包中相应的数据填入全局变量$_POST 
+4.PHP不能识别的Content-Type类型的时候，会将http请求包中相应的数据填入变量$HTTP_RAW_POST_DATA 
+5. 只有Coentent-Type为multipart/form-data的时候，PHP不会将http请求数据包中的相应数据填入php://input，否则其它情况都会。填入的长度，由Coentent-Length指定。 
+6.只有Content-Type为application/x-www-data-urlencoded时，php://input数据才跟$_POST数据相一致。 
+7.php://input数据总是跟$HTTP_RAW_POST_DATA相同，但是php://input比$HTTP_RAW_POST_DATA更凑效，且不需要特殊设置php.ini 
+8.PHP会将PATH字段的query_path部分，填入全局变量$_GET。通常情况下，GET方法提交的http请求，body为空。
     $v=(file_get_contents("php://input"));
    var_dump(json_decode($v,true));
+
+   //php://output
+//php://output 是一个只写的数据流， 允许你以 print 和 echo 一样的方式 写入到输出缓冲区。
+//php://input 是个可以访问请求的原始数据的只读流。 enctype="multipart/form-data" 的时候 php://input 是无效的。
+
+
+
+enctype: 表单数据提交时使用的编码类型，默认使用"pplication/x-www-form-urlencoded"，如果是使用POST请求，则请求头中的content-type指定值就是该值。如果表单中有上传文件，编码类型需要使用"multipart/form-data"，类型，才能完成传递文件数据。
+7、file_get_contents("php://input")就可以获取非enctype="multipart/form-data"提交过来的数据
+
+php://input 是个可以访问请求的原始数据的只读流。 POST 请求的情况下，最好使用php://input 来代替 $HTTP_RAW_POST_DATA，因为它不依赖于特定的php.ini指令。 而且，这样的情况下 $HTTP_RAW_POST_DATA 默认没有填充， 比激活 always_populate_raw_post_data 潜在需要更少的内存。 enctype="multipart/form-data" 的时候 php://input 是无效的。
+
+
 
     bug10:
      新增用户页面中没有添加对后端验证和前端输入验证的判断 目前先不更新先完成功能再修改 
@@ -191,3 +212,19 @@ module.exports={
       这样都是可以写的
 
       邪门得很 总之要是有二进制的文件就不要加{{对象}} 要data：formdata
+
+
+              
+        // axios({
+        //   method:'post',
+        //   url:'/personnelInfo/contract/upload.php',
+        //   data:formData,
+        //    headers: {
+        //   'Content-Type': 'multipart/form-data', // 关键
+        // },
+        // }).then(res=>{
+        //    console.log(res);
+        // })
+
+        bug18:
+        php中eregi,php – 函数eregi()已弃用  使用preg_match

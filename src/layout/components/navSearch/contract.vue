@@ -2,18 +2,18 @@
   <div>
     <!-- 内容框 -->
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-form >
+      <b-form>
         <b-modal v-model="show" title="上传合同模板">
           <b-container fluid>
             <b-row class="mb-1 text-center">
-              <b-col cols="6">文件名</b-col>
+              <b-col cols="6">文件用途</b-col>
               <b-col cols="6">文件所属部门</b-col>
             </b-row>
             <b-col style="margin:0 auto"></b-col>
             <b-row class="mb-1">
               <b-col cols="6">
                 <b-form-group>
-                  <b-form-input id="input-1" v-model="newforms.fileName"></b-form-input>
+                  <b-form-input v-model="newforms.fileContent"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col cols="6">
@@ -23,29 +23,31 @@
               </b-col>
               <b-col cols="12">
                 <b-form-group>
-                  <!-- <b-form-file
-                    ref="file-input"
+                  <b-form-file
+                    ref="fileinput"
                     type="file"
                     class="mb-2"
                     name="uploadfile"
                     style="margin:0 !important"
                     placeholder="在这里上传文件"
                     required
-                  ></b-form-file> -->
-                  <p>上传文件<input  ref="fileinput" name="uploadfile" type="file"  value="" /></p>
+                    v-model="fileinputName"
+                    accept=".pdf, .docx, .png, .jpg"
+                  ></b-form-file>
+                  <!-- <p>上传文件<input  ref="fileinput" name="uploadfile" type="file"  value="" /></p> -->
                   <span class="mt-2">
-                    <small>仅允许pdf,docx格式文件</small>
+                    <small>仅允许pdf,docx,png,jpg格式文件</small>
                   </span>
                   <span class="mt-2">
                     上传的文件是:
-                    <b>{{newforms.file ? newforms.file.name : '' }}</b>
+                    <b>{{fileinputName?fileinputName.name:''}}</b>
                   </span>
                 </b-form-group>
               </b-col>
 
               <b-col cols="12">
                 <b-form-group>
-                  <b-button @click="file = null" style>重置上传内容</b-button>
+                  <b-button @click="clearFiles">重置上传内容</b-button>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -103,7 +105,7 @@
  
  <script>
 //  兄弟间传值
-import axios from 'axios'
+import axios from "axios";
 import { newPer, uploadFile } from "@/api2";
 import searchPerTravel from "./personsearch.js";
 export default {
@@ -111,11 +113,11 @@ export default {
     return {
       show: false,
       sucessShow: false,
+      fileinputName: null,
       //files: "", //文件数据
       newforms: {
-        fileName: "",
         part: null,
-        file: null
+        fileContent: null
       },
       variants: [
         { text: "开发部", value: "开发部" },
@@ -129,60 +131,60 @@ export default {
     };
   },
   methods: {
-    // getFile() {
-    //    let that = this;
-        
-    //   let formdata = new window.FormData();
-    //    let fileinput = that.$refs.fileinput
-    //    let fileinputs =fileinput.files[0];     
-    //    console.log(typeof fileinputs);  
-    //   //  console.log(fileinputs);
-    //  formdata.append("file", fileinputs); //指向全局中的files
-
-    // console.log(formdata.get('file'));
-    //        uploadFile(fileinputs).then(res=>{
-    //          console.log(res);
-    //        })
-    //   // console.log(that.formData);  //指向全局对象的此时全局对象中没有 undefined 直接打印formdata 只会显示formdata原生方法 你要看数据要用formdata.get(key)
-    // },
     //上传文件
     fileSub: function() {
-      let that = this;
-      let fileinput = that.$refs.fileinput.files[0];
-      console.log(fileinput);
-      console.log(typeof fileinput)
-      // let size = Math.floor(fileinput.size / 1024);
-      // console.log(size);
-      // if (size > 20 * 1024 * 1024) {
-      //   alert("超过20M的图片,docx,pdf不允许上传！");
-      //   return false;
-      // }
-        
-              const j1 =new Object();
-              j1.name='11';
-              j1.age="22";
-              console.log(j1)
-      let formData = new window.FormData();
-      formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
-      // console.log(formData.get("File"));
-      uploadFile(formData).then(res => {
+      if (
+        (this.newforms.part != undefined || this.newforms.part != null) &&
+        this.fileinputName != null &&
+        (this.newforms.fileContent != undefined ||
+          this.newforms.fileContent != null)
+      ) {
+        let that = this;
+        let fileinput = that.$refs.fileinput.files[0];
+        let size = Math.floor(fileinput.size / 1024);
+        console.log(size);
+        if (size > 20 * 1024 * 1024) {
+          alert("超过20M的图片,docx,pdf不允许上传！");
+          return false;
+        }
+        let formData = new window.FormData();
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        var second = date.getSeconds();
+        let currentTime =
+          year +
+          "-" +
+          month +
+          "-" +
+          day +
+          " " +
+          hour +
+          ":" +
+          minutes +
+          ":" +
+          second +
+          "";
+        formData.append("currentTime", currentTime);
+        formData.append("fileContent", this.newforms.fileContent);
+        formData.append("part", that.newforms.part);
+        formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
+        console.log(formData.get("part"));
+        uploadFile(formData).then(res => {
           console.log(res);
-      });
-        
-        // axios({
-        //   method:'post',
-        //   url:'/personnelInfo/contract/upload.php',
-        //   data:formData,
-        //    headers: {
-        //   'Content-Type': 'multipart/form-data', // 关键
-        // },
-        // }).then(res=>{
-        //    console.log(res);
-        // })
+        });
+        this.show=false;
+        this.sucessShow=true;
         // alert(JSON.stringify(this.newforms));
+      } else {
+        alert("请填完所有信息");
+      }
     },
     clearFiles() {
-      this.$refs["file-input"].reset();
+      this.$refs["fileinput"].reset();
     },
     //   查询的内容
     searchBtn: function() {

@@ -7,7 +7,7 @@ header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 
 $v=(file_get_contents("php://input"));
-// var_dump(json_decode($v,true));
+var_dump(json_decode($v,true));
 $c=json_decode($v,true);
 // 取最近的一条 这个id信息
 // var_dump($c);
@@ -28,11 +28,6 @@ $result=$mysqli ->query($sql);
 
 // var_dump($result);
  //创建一个数组去接收
-while ($row = $result -> fetch_assoc()) {
-    $rows[] = $row;   //$rows中保存personnel表中所有记录
-      }
-
-echo json_encode($rows);
 
 $mysqli->close();    
 ?>

@@ -1,6 +1,6 @@
 
 <?php
-include "database/config.inc.php";
+include "../database/config.inc.php";
 header("Content-type:text/html; charset=utf-8");
 header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
