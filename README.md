@@ -18,7 +18,9 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
             Nprogress done()  关闭进度条
 **** 
 ## 项目流程图
-   由于目前还在更新阶段 侧边栏的状态是不固定。 固图片信息有稍微的出入   
+   由于目前还在更新阶段 侧边栏的状态是不固定。 固图片信息有稍微的出入 
+   截止至目前 
+   ![asdasd](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%BE%A7%E8%BE%B9%E6%A0%8F%E7%8A%B6%E6%80%81.png)  
    ![流程图](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B5%81%E7%A8%8B.png)  
 ## 以下是登录模块的逻辑  
   ![逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B5%81%E7%A8%8B%E5%9B%BE.jpg)  
