@@ -4,12 +4,12 @@
 
  项目上有很多代码逻辑或者说是目录结构设置的并不是特别完好，但总的来说模板是好了的，后期有需要再补上这些坑。  
   
- //遇到的bug 修复后在 src文件夹下的 tips.md中 有意的朋友可以查看   
+ //遇到的bug 修复后在 src文件夹下的 https://github.com/Guiuiuier/VueSystem/blob/main/src/tips.md 中 有意的朋友可以查看   
  
 请安装依赖 cnpm install --save less less-loader@5 在文件根目录下输入这个命令 进行处理  
 
 安装的时候要注意版本否则会报getoptions is not functions 所以这里安装5版本  
-bootstrap的版本要4.5.3的否则会样式冲突
+bootstrap的版本要4.5.3的否则会样式冲突  
 npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板 
 
  请下载nprogress进度条插件 0.2.0版本  https://github.com/rstacruz/nprogress  作为依赖
