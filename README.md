@@ -22,6 +22,9 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
 ## 以下是登录模块的逻辑  
   ![逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B5%81%E7%A8%8B%E5%9B%BE.jpg)  
   ![登录逻辑](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91.png)  
+  
+      增加了了登录验证功能，例如添加了路由守卫 防止用户恶意进行token修改或者不通过token就进入后端  
+
 ### 登录页面 
   ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/5902d342247d8ffd3e0bbf7c1b380c9.png)  
   ![登录页](https://github.com/Guiuiuier/VueHRsystem/blob/main/public/Introduce%20image/ff6928a06d706a1bb6263c3771a9c26.png)  
@@ -33,14 +36,15 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%B7%BB%E5%8A%A0%E6%9D%BF%E5%9D%97.png)   
 #### 编辑
  ![登录逻辑](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E7%BC%96%E8%BE%91%E6%9D%BF%E5%9D%97.png)   
-#### 上传
-  ![上传](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8A%E4%BC%A0.png)  
-    增加了了登录验证功能，例如添加了路由守卫 防止用户恶意进行token修改或者不通过token就进入后端  
+
 ### 合同模板
- #### 上传模板
- ![ads](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%BF%AE%E6%94%B9%E4%B8%8B%E8%BD%BD%E4%BF%A1%E6%81%AF.png)  
  #### 编辑
+ ![ads](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%BF%AE%E6%94%B9%E4%B8%8B%E8%BD%BD%E4%BF%A1%E6%81%AF.png)  
+ #### 下载模板
   ![ads](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8B%E8%BD%BD.png)   
+  
+  #### 上传模板
+  ![上传](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8A%E4%BC%A0.png)  
 
 ## tips
  package.json中  浏览器自动打开  
