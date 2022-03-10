@@ -1,5 +1,6 @@
 <template>
     <div>
-        asdasdasdsadadasldkaslkdajdslkadshsadjalka神盾局阿斯加德卡萨来得及as记录卡sdjlajdlk
+        功能比较简单,先不写， 展现这里的只是模板。 没想好怎么布局这个公告<br>
+        //大概思路就是上传一个文本。展现到本页面。但是要注意用后端接收数据库里的文本的时候要把空格给解析出来。不然呈现到本页面的字体互相贴贴
     </div>
 </template>

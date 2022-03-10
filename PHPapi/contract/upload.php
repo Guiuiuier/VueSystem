@@ -22,8 +22,15 @@ include "../database/configupload.inc.php";
     // var_dump($file_type);
     $file_location="../File/";
     //这里不做保存分类了。直接放一起。
+     //文件路径
+    $file_path="$file_location$file_name";
+     //如果有这个文件改名 并上传
+    if(file_exists($file_path)){
+          $file_name=rand(0,1000).$file_name;
+          $file_path="$file_location$file_name";
+    }
     // if($_FILES['File']['error']==0){
-    move_uploaded_file($_FILES['File']['tmp_name'],$file_location.$_FILES["File"]["name"]);
+    move_uploaded_file($_FILES['File']['tmp_name'],$file_path);
 
     //上传的存储地址
     $src=$file_location.$file_name;
@@ -43,5 +50,5 @@ include "../database/configupload.inc.php";
       // }else{
       //   echo "上传失败!";
       // };
-
+      $mysqli->close();    
   ?>

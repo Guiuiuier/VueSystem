@@ -108,6 +108,11 @@ export const downloadFile=(fileName)=>requests({
     },
 })
 
-// export const DeletFile=()=>requests({
-//    url:"/personnelInfo/contract/fileUpdate.php"
-// })
+export const DeletFile=(id,fileName)=>requests({
+   url:"/personnelInfo/contract/fileDelet.php",
+   method:"post",
+   data:{
+         id,
+         fileName,
+   }
+})

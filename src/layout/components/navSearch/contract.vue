@@ -32,11 +32,11 @@
                     placeholder="在这里上传文件"
                     required
                     v-model="fileinputName"
-                    accept=".pdf, .docx, .png, .jpg"
+                    accept=".txt, .docx"
                   ></b-form-file>
                   <!-- <p>上传文件<input  ref="fileinput" name="uploadfile" type="file"  value="" /></p> -->
                   <span class="mt-2">
-                    <small>仅允许pdf,docx,png,jpg格式文件</small>
+                    <small>仅允许docx.txt格式文件</small>
                   </span>
                   <span class="mt-2">
                     上传的文件是:

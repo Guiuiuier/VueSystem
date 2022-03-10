@@ -75,7 +75,7 @@
 // 兄弟间传值
 var index = "";
 import searchPerTravel from "../navSearch/personsearch";
-import { deletFile, updateFile, downloadFile } from "@/api2";
+import { DeletFile, updateFile, downloadFile } from "@/api2";
 export default {
   props: {
     theFiles: {
@@ -138,17 +138,17 @@ export default {
     
     downloadFile: function(item) {
       downloadFile(item.fileName).then(res => {
-         console.log(res);
+        //  console.log(res);
          //返回blob对象里的url
         const fileUrl=window.URL.createObjectURL(res.data);
-        console.log(fileUrl);
+        // console.log(fileUrl);
         // 创建一个标签
          const fileLink = document.createElement('a');
           fileLink.href = fileUrl;
         //定义下载的文件名称  可以改为接收到的参数
         fileLink.download =item.fileName;
         fileLink.click();
-      this.newforms.id = item.id;
+       this.newforms.id = item.id;
       // console.log(item.fileName);
     })
     },
@@ -164,14 +164,15 @@ export default {
       this.newforms.tips = item.tip;
       this.newforms.id = item.id;
     },
-    // 调用方法
-    // fileDelet: function(Ids) {
-    //   var event = event || window.event;
-    //   event.preventDefault();
-    //   deletPer(Ids).then(res => {
-    //     console.log(res);
-    //   });
-    // },
+    // 调用方法 删除
+    fileDelet: function(item) {
+      var event = event || window.event;
+      event.preventDefault();
+      // console.log(item.id,item.fileName);
+       DeletFile(item.id,item.fileName).then(res=>{
+
+       })
+    },
     // 接收兄弟组件内容 //查询过滤的信息
     getPassInfo() {
       const that = this;
