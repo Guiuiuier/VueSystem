@@ -116,19 +116,30 @@ const routes = [{
       },
       {
         path: 'systemmanage',
-        component: () => import('@/views/systemManage/loginLog/index'),
+        component: () => import('@/views/systemManage/index'),
+        redirect: '@/views/systemManage/loginLog/index',
         name: "systemmanage",
         meta: {
           title: "系统管理",
         },
-          children:[{
+          children:[
+            {
             path: 'loginlog',
             component: () => import('@/views/systemManage/loginLog/index'),
             name: 'loginlog',
             meta: {
               title: "登录日志",
             },
-          }]
+          },
+          {
+            path: 'updatepass',
+            component: () => import('@/views/systemManage/updatePass/index'),
+            name: 'updatepass',
+            meta: {
+              title: "更改密码",
+            },
+          },
+        ]
       },
     ]
   },

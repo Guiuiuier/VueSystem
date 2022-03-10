@@ -24,10 +24,14 @@
           <Emcontract></Emcontract>
           <!-- 员工合同 -->
           <contract></contract>
+          <!-- 系统管理 -->
             <b-button v-b-toggle.collapse-mysystemmange>
           <systemmanage></systemmanage>
                     </b-button>
+                    <!-- 登陆日志 -->
                     <LoginLog></LoginLog>
+                  <!-- 更改密码 -->
+                    <updatePass></updatePass>
         </b-button-group>
       </div>
     </div>
@@ -46,6 +50,7 @@ import Emcontract from "./The-siderBar/file/Emcontract";
 import myattendance from "./The-siderBar/attendance/myattendance";
 import systemmanage from "./The-siderBar/systemManage"
 import LoginLog from "./The-siderBar/systemmange/loginLog";
+import updatePass from "./The-siderBar/systemmange/updatePass";
 export default {
   data() {
     return {};
@@ -59,9 +64,10 @@ export default {
     personal,
     myattendance,
     systemmanage,
-    LoginLog
+    LoginLog,
+    updatePass,
   },
   methods: {},
-  mounted() {}
+  mounted() {},
 };
 </script>
