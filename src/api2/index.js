@@ -100,11 +100,12 @@ export const Fileinfors=()=>requests({
 
 export const downloadFile=(fileName)=>requests({
     url:"/personnelInfo/contract/downloadFile.php",
-    headers:{   'Content-Type': 'application/x-www-form-urlencoded'},
+   responseType: 'blob',
+    headers:{   'Content-Type': 'file'},
     method:"get",
     params:{
        fileName
-    }
+    },
 })
 
 // export const DeletFile=()=>requests({

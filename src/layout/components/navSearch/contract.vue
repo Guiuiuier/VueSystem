@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     //上传文件
-    fileSub: function() {
+     fileSub:function() {
       if (
         (this.newforms.part != undefined || this.newforms.part != null) &&
         this.fileinputName != null &&

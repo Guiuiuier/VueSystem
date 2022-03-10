@@ -132,24 +132,29 @@ export default {
     },
 
     // 下载
+
+
+
+    
     downloadFile: function(item) {
       downloadFile(item.fileName).then(res => {
-        console.log(res);
-      });
-
-
-
-
-
-
-
-
+         console.log(res);
+         //返回blob对象里的url
+        const fileUrl=window.URL.createObjectURL(res.data);
+        console.log(fileUrl);
+        // 创建一个标签
+         const fileLink = document.createElement('a');
+          fileLink.href = fileUrl;
+        //定义下载的文件名称  可以改为接收到的参数
+        fileLink.download =item.fileName;
+        fileLink.click();
       this.newforms.id = item.id;
       // console.log(item.fileName);
+    })
     },
 
     //传值到编辑里面
-    fileUpdate: function(item) {
+    fileUpdate:function(item) {
       var event = event || window.event;
       event.preventDefault();
       // this.newforms.perId=item.perId;

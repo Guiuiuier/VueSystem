@@ -228,3 +228,24 @@ module.exports={
 
         bug18:
         php中eregi,php – 函数eregi()已弃用  使用preg_match
+
+        bug19:
+        下载bug
+        
+        // createObjectURL 函数，接受的参数是blob 类型或者是File 类型。 
+//  因为res.data 响应头是blob 已经是一个blob Object 了，完
+// 全不需要再像 let url = window.URL.createObjectURL(new Blob([res.data]))载入
+//或者是使用百度所说的base64 转码。
+//  这种写法繁杂了
+        // let blob=new Blob([res],{type:'file'});
+        // const downloadElement =document.createElement('a');
+        // const href=window.URL.createObjectURL(blob);
+        // console.log(blob,downloadElement,href);
+        // downloadElement.href=href;
+        // console.log(downloadElement.href)
+        // downloadElement.download=`想问的问题.docx`;
+        // document.body.appendChild(downloadElement)
+        // downloadElement.click();
+        // document.body.removeChild(downloadElement);
+        // window.URL.revokeObjectURL(href);
+
