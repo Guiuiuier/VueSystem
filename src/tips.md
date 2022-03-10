@@ -249,3 +249,11 @@ module.exports={
         // document.body.removeChild(downloadElement);
         // window.URL.revokeObjectURL(href);
 
+
+
+bug20
+          console.log(res);
+        let infors=Object.values(res.data)
+         this.perInformations=infors;
+
+         如果前端再转换对象的时候 不成功记得看一下后端的输出控制台给注销掉没 否则无法转换 有多于数据干扰

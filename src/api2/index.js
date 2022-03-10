@@ -1,5 +1,24 @@
 //导入api
 import requests from './request';
+
+
+// 更改api 自写数据库
+export const login=(username,password)=>requests({
+   url:'/personnelInfo/login/user.php',
+   method:'post',
+   data:{
+          //这里是请求的内容 看服务器要求  不是必选可以不写
+        username,
+        password,
+   }
+  });
+
+
+
+
+
+
+
 // 获取后端人员管理信息
  export const personnelInfo=()=>requests({
     url:'/personnelInfo/persons/personnel.php',
@@ -98,6 +117,7 @@ export const Fileinfors=()=>requests({
   method:"get",
 })
 
+//下载文件
 export const downloadFile=(fileName)=>requests({
     url:"/personnelInfo/contract/downloadFile.php",
    responseType: 'blob',
@@ -108,11 +128,23 @@ export const downloadFile=(fileName)=>requests({
     },
 })
 
+//删除文件
 export const DeletFile=(id,fileName)=>requests({
    url:"/personnelInfo/contract/fileDelet.php",
    method:"post",
    data:{
          id,
          fileName,
+   }
+})
+
+//更改用户密码
+export const updatePass=(username,userpass,token)=>requests({
+   url:"/personnelInfo/login/updatepass.php",
+   method:'post',
+   data:{
+      username,
+      userpass,
+      token
    }
 })

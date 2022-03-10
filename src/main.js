@@ -22,9 +22,8 @@ Vue.use(BootstrapVueIcons)
   //  console.log(from);  //来自的页面 很简单别问
        
      //这里的项目逻辑就是用户登录之后 如果有本地的token 则直接登录 没有则跳回到登录页面
-      let token=localStorage.getItem("user_token");
       let userInfo=localStorage.getItem("user_info");
-       if(token||userInfo){
+       if(userInfo){
           //如果是登录页面 直接放行 如果是进入后台则异步token
             next()
        }else {

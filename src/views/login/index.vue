@@ -97,9 +97,9 @@
 </style>
 <script>
 //这里引入已经封装好的api
-import { login, getLoginLog } from "@/api";
+import {  getLoginLog } from "@/api";
 import { loginInfors } from "@/api3";
-import { searchLogInfors,insertLog } from "@/api2";
+import {login, searchLogInfors,insertLog } from "@/api2";
 //映射
 import { mapMutations, mapState } from "vuex";
 import find from "../find/index";
@@ -141,9 +141,13 @@ export default {
       //  调用api 发送请求
       login(username, password)
         .then(res => {
+          // 返回一个对象 转换json 数据对象  
+        //  console.log(res);
+        let infors=Object.values(res.data)
+         let userdata=infors[0];
           if (
-            password != res.data.userinfo.userpass ||
-            username != res.data.userinfo.username
+            username!= userdata.username ||
+            password!= userdata.userpass
           ) {
             setTimeout(() => {
               this.errTips = true; //错误提示框
@@ -163,7 +167,7 @@ export default {
                 let inforsObj = JSON.parse(infors);
                 let myIp = inforsObj.cip;
                 //登录的账户名
-                let uname = res.data.userinfo.username;
+                let uname = userdata.username;
                 // console.log(inforsObj);
                 //当前时间是:
                 var date = new Date();
@@ -207,11 +211,12 @@ export default {
             // 这里用数组作为一个标识是否记住密码，为什么是数组 因为bootstrap这个框架。。。 实际上是我懒
             //已经映射好token了。  当密码正确的时候才保存账号token 为了挺高用户体验
             //这是账号唯一的token 不要放入istrue判断中
-            localStorage.setItem("user_token", res.data.info.token);
+            // localStorage.setItem("user_token", res.data.info.token);
             localStorage.setItem(
               "user_info",
-              JSON.stringify(res.data.userinfo)
+              JSON.stringify(userdata)
             );
+            // console.log(localStorage.getItem("user_info"));
             //更改vuex 的userinfo 的值  这是为了某些跳转页面刷新丢失重新赋值 //其实这里我写的不好，在vuex中有兴趣的可以改一下，直接读取local就好
             // this.SET_USERINFO(res.data.userinfo);
             //这里本来想着当没记住密码的时候要删除loacalstorage里的某项键值对的 但是目前还没有找到很好的办法 所以是有个bug先放着

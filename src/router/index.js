@@ -73,6 +73,7 @@ const routes = [{
       {
         path: 'attendancemain',
         component: () => import('@/views/attendanceMain/index'),
+        redirect:'attendanceMain/myattendance',
         name: "attendancemain",
         meta: {
           title: "考勤管理",
@@ -90,7 +91,7 @@ const routes = [{
       {
         path: 'filemain',
         component: () => import('@/views/fileMain/index'),
-        redirect: '@/views/fileMain/Emcontract/index',
+        redirect: 'fileMain/Emcontract',
         name: 'filemain',
         meta:{
           title:"文件管理"
@@ -117,7 +118,7 @@ const routes = [{
       {
         path: 'systemmanage',
         component: () => import('@/views/systemManage/index'),
-        redirect: '@/views/systemManage/loginLog/index',
+        redirect: 'systemManage/loginLog',
         name: "systemmanage",
         meta: {
           title: "系统管理",
