@@ -39,7 +39,6 @@ export default {
     sysMain
   },
   computed: {
-    ...mapState(["userinfo", "weatherState"]) //映射 刷新后又会变成空对象 是因为在vuex中刷新会重新定义为store/index.js中的空对象 所以要在本地存一个对象
   },
   created() {
     // //  获取天气请求 存入vuex

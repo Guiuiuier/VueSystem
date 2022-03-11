@@ -5,21 +5,33 @@ Vue.use(Vuex)
  //刷新页面会丢失对象 所以存到本地后获取这个信息
 // JSON 转换成javascript对象
  let userinfo=JSON.parse((localStorage.getItem("user_info")));
-//  console.log(userinfo);
+//  console.log(userinfo); 
  let weatherState=JSON.parse((sessionStorage.getItem("weather")));
 //  console.log(weatherState);
-export default new Vuex.Store({
+ //读取标志
+ let afterWorkFlag=JSON.parse((sessionStorage.getItem("afterFlag")));
+let toWorkFlag=JSON.parse((sessionStorage.getItem("toWorkFlag")))
+ export default new Vuex.Store({
   //state仓库存储数据的地方
   state: {
     userinfo, //这里不要改成空对象了 不然会出问题 存储信息token
     weatherState, //天气的
+     //创建一个下班打卡flag
+    afterWorkFlag,
+    toWorkFlag,
   },
    //修改state的唯一手段
   mutations: {
       //更改userinfo
-  // SET_USERINFO(state,payload){
-  //   state.userinfo=payload;
-  // },
+  SET_USERINFO(state,payload){
+    state.userinfo.name=payload;
+  },
+  SET_AFTERWORKFLAG(state,payload){
+    state.afterWorkFlag=payload;
+  },
+  SET_TOWORKFLAG(state,payload){
+    state.toWorkFlag=payload;
+  }
   // SET_WEATHER(state){
   // }
   },

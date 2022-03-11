@@ -148,3 +148,18 @@ export const updatePass=(username,userpass,token)=>requests({
       token
    }
 })
+
+
+//考勤打卡
+export const clockIn=(idPer,namePer,clockTime,clockState,clockType)=>requests({
+   url:"/personnelInfo/attendance/clockTime.php",
+   method:"post",
+   data:{
+      idPer,
+      namePer,
+      clockTime,
+      clockState,
+      // monthlateness,
+      clockType,
+   }
+})

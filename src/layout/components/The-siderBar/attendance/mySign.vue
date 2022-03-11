@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-collapse id="collapse-myfile" class="mt-2 childclass">
+    <b-collapse id="collapse-myattend" class="mt-2 childclass">
       <b-button class="Childbutton" @click="topage">
-        <b-icon icon="file-earmark-text-fill" class="iconstyle"></b-icon>合同模板
+        <b-icon icon="emoji-laughing-fill" class="iconstyle"></b-icon>前往签到
       </b-button>
     </b-collapse>
   </div>
@@ -14,7 +14,7 @@
 export default {
   methods: {
     topage: function() {
-      this.$router.push("/index/filemain/contract");
+      this.$router.push("/index/attendancemain/mysign");
     }
   }
 };

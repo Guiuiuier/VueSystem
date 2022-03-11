@@ -9,13 +9,16 @@
 请安装依赖 cnpm install --save less less-loader@5 在文件根目录下输入这个命令 进行处理  
 
 安装的时候要注意版本否则会报getoptions is not functions 所以这里安装5版本  
-bootstrap的版本要4.5.3的否则会样式冲突  
+bootstrap的版本要4.5.3的否则会样式冲突   
 npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板 
 
- 请下载nprogress进度条插件 0.2.0版本  https://github.com/rstacruz/nprogress  作为依赖
+ 请下载nprogress进度条插件 0.2.0版本  https://github.com/rstacruz/nprogress  作为依赖  
    npm install --save nprogress  
-   代码使用：Nprogress start()开始进度条
-            Nprogress done()  关闭进度条
+   代码使用：Nprogress start()开始进度条  
+            Nprogress done()  关闭进度条  
+
+//打卡逻辑这个需要根据用户当月的排班来设计不同的打卡逻辑 这里只设计了一个 正常上下班 即早班的规则 9:30 18:30 是上下班时间  并且各种情况都有可能发生 例如 （提早下班？等等 请假？ 等） 
+ //逻辑如果最近一次打卡大于前一天打卡 重新设置上下班flag 
 **** 
 ## 项目流程图
    由于目前还在更新阶段 侧边栏的状态是不固定。 固图片信息有稍微的出入 

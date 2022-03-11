@@ -14,9 +14,10 @@
           </b-button>
 
           <!-- 我的考勤 -->
+          <mySign></mySign>
           <myattendance></myattendance>
           <!-- 折叠管理 -->
-          <b-button v-b-toggle.collapse-a.collapse-b>
+          <b-button v-b-toggle.collapse-myfile>
             <!-- 文件管理 -->
             <file></file>
           </b-button>
@@ -51,6 +52,7 @@ import myattendance from "./The-siderBar/attendance/myattendance";
 import systemmanage from "./The-siderBar/systemManage"
 import LoginLog from "./The-siderBar/systemmange/loginLog";
 import updatePass from "./The-siderBar/systemmange/updatePass";
+import mySign from "./The-siderBar/attendance/mySign"
 export default {
   data() {
     return {};
@@ -66,6 +68,7 @@ export default {
     systemmanage,
     LoginLog,
     updatePass,
+    mySign,
   },
   methods: {},
   mounted() {},

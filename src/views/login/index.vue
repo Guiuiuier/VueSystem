@@ -122,7 +122,7 @@ export default {
   },
   methods: {
     //映射
-    // ...mapMutations(["SET_USERINFO"]),
+    ...mapMutations(["SET_USERINFO"]),
     // 登录代码
     //  收集用户输入的username和password传递给后端
     //登录通过后将返回的token存到本地
@@ -217,8 +217,8 @@ export default {
               JSON.stringify(userdata)
             );
             // console.log(localStorage.getItem("user_info"));
-            //更改vuex 的userinfo 的值  这是为了某些跳转页面刷新丢失重新赋值 //其实这里我写的不好，在vuex中有兴趣的可以改一下，直接读取local就好
-            // this.SET_USERINFO(res.data.userinfo);
+            //更改vuex 的userinfo 的值 实现动态改变
+            this.SET_USERINFO(userdata.name);
             //这里本来想着当没记住密码的时候要删除loacalstorage里的某项键值对的 但是目前还没有找到很好的办法 所以是有个bug先放着
             var isTrue = JSON.stringify(this.form.checked[0]);
             localStorage.setItem("ischecked", ischecked.checked);
@@ -263,7 +263,6 @@ export default {
   },
   computed: {
     ...mapState(["userinfo", "weatherState"])
-    //注意不要写到method中了。不然会有bug的
   },
   mounted() {
     // 判断是否记住密码？

@@ -78,14 +78,24 @@ const routes = [{
         meta: {
           title: "考勤管理",
         },
-        children:[{
+        children:[
+          {
+            path:'mysign',
+            component: () => import('@/views/attendanceMain/mySign/index'),
+            name:'mysign',
+            meta:{
+              title:"前往签到",
+            }
+         },
+          {
            path:'myattendance',
            component: () => import('@/views/attendanceMain/myattendance/index'),
            name:'myattendance',
            meta:{
              title:"我的考勤",
            }
-        }]
+        }
+      ]
       },
 
       {

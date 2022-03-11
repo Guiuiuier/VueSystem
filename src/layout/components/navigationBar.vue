@@ -38,7 +38,7 @@
 @import "/public/nav.less";
 </style>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   props: {
     //  天气组件
@@ -55,6 +55,8 @@ export default {
       sessionStorage.clear();
       this.$router.push("../../login/index");
     }
+
+    
   },
   created() {},
   computed: {
@@ -64,6 +66,8 @@ export default {
       return this.$route.matched;
     }
   },
-  mounted() {}
+  mounted() {
+
+  }
 };
 </script>
