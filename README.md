@@ -1,8 +1,8 @@
 # 人力资源管理系统
   
- //遇到的bug 修复后在 src文件夹下的
+ 遇到的bug 修复后在 src文件夹下的
 
- https://github.com/Guiuiuier/VueSystem/blob/main/src/tips.md 
+   https://github.com/Guiuiuier/VueSystem/blob/main/src/tips.md 
  
  
 请安装依赖  在文件根目录下输入这个命令 进行处理    
