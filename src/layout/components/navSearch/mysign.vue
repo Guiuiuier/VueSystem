@@ -101,7 +101,7 @@ export default {
       }
       var hourMinutes = hour + "" + minutes; //两个数字会加起来 加个引号就变成字符串了
       var clockTime = year + "" + month + "" + day;
-      if (hourMinutes >= "1730" && hourMinutes <= "2400") {
+      if (hourMinutes >= "0930" && hourMinutes <= "1000") {
         if (this.toWorkFlag != "1") {
           // console.log(this.currentTime);
           let local = localStorage.getItem("user_info");

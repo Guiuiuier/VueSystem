@@ -163,3 +163,13 @@ export const clockIn=(idPer,namePer,clockTime,clockState,clockType)=>requests({
       clockType,
    }
 })
+
+//查询打卡列表
+export const Clocklists=(idPer,clockState)=>requests({
+    url:"/personnelInfo/attendance/clockLists.php",
+    method:"post",
+    data:{
+      idPer,
+      clockState,
+    }
+})

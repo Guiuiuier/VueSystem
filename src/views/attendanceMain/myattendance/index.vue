@@ -4,20 +4,21 @@
     <!-- <div style="width:100%;position:absolute"> -->
     <b-table>adasdas</b-table>
     <!-- 查询 -->
-    <personPagination :theLogs="theLogs"></personPagination>
-  </div>
+    <personPagination :theLists="theLists" v-if="theshow"></personPagination>  </div>
   <!-- </div> -->
 </template>
 
 <script>
-import {LoginLogInfors} from '@/api2';
+import { Clocklists } from "@/api2";
 import Navsearch from "@/layout/components/navSearch/loginLog";
-import personPagination from "@/layout/components/personpagination/loginLog";
-
+import personPagination from "@/layout/components/personpagination/clocklists";
+// import personpaginationUnormal from "@/layout/components/personpagination/UnormalLocklists"
 export default {
   data() {
     return {
-theLogs:[],
+      //留着做上下班打卡正常异常的模块
+      theshow: true,
+      theLists: []
     };
   },
   components: {
@@ -25,17 +26,18 @@ theLogs:[],
     personPagination
   },
   created() {
-  LoginLogInfors().then(res=>{
+    let local = localStorage.getItem("user_info");
+    let id = JSON.parse(local).idPer;
+    let clockstate = "正常";
+    Clocklists(id, clockstate).then(res => {
       //  转化为对象
       //  console.log(res);
-        let infors=Object.values(res.data)
-         this.theLogs=infors;
-     })
-
+      let infors = Object.values(res.data);
+      this.theLists = infors;
+      console.log(this.theLists);
+    });
   },
-  mounted() {
-     
-  },
+  mounted() {}
 };
 </script>
 <style lang="less" scoped>
