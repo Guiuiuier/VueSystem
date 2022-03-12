@@ -1,23 +1,25 @@
 # 人力资源管理系统
-这个可以用来做新手入门Vue项目 
-虽然写的一般的。但好歹功能还是实现了....
-
   
  //遇到的bug 修复后在 src文件夹下的 https://github.com/Guiuiuier/VueSystem/blob/main/src/tips.md 中 有意的朋友可以查看   
  
-请安装依赖 cnpm install --save less less-loader@5 在文件根目录下输入这个命令 进行处理  
+请安装依赖  在文件根目录下输入这个命令 进行处理    
 
-安装的时候要注意版本否则会报getoptions is not functions 所以这里安装5版本  
-bootstrap的版本要4.5.3的否则会样式冲突   
-npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板 
+  cnpm install --save less less-loader@5  
 
- 请下载nprogress进度条插件 0.2.0版本  https://github.com/rstacruz/nprogress  作为依赖  
-   npm install --save nprogress  
+ 安装的时候要注意版本否则会报getoptions is not functions 所以这里安装5版本  
+  bootstrap的版本要4.5.3的否则会样式冲突   
+ 引入bootstrap模板 
+
+  npm install vue bootstrap-vue bootstrap@4.5.3
+
+     请下载nprogress进度条插件 0.2.0版本  
+    https://github.com/rstacruz/nprogress 
+    npm install --save nprogress  
    代码使用：Nprogress start()开始进度条  
-            Nprogress done()  关闭进度条  
+      Nprogress done()  关闭进度条  
 
 //打卡逻辑这个需要根据用户当月的排班来设计不同的打卡逻辑 这里只设计了一个 正常上下班 即早班的规则 9:30 18:30 是上下班时间  并且各种情况都有可能发生 例如 （提早下班？等等 请假？ 等） 
- //逻辑如果最近一次打卡大于前一天打卡 重新设置上下班flag 
+ //逻辑如果最近一次打卡大于前一天打卡 重新设置上下班flag  
 **** 
 ## 项目流程图
    由于目前还在更新阶段 侧边栏的状态是不固定。 固图片信息有稍微的出入 
@@ -51,30 +53,4 @@ npm install vue bootstrap-vue bootstrap@4.5.3  引入bootstrap模板
   #### 上传模板
   ![上传](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8A%E4%BC%A0.png)  
 
-## tips
- package.json中  浏览器自动打开  
-{  </br>
-  "name": "demoproject",  
-  "version": "0.1.0",  
-  "private": true,  
-  "scripts": {  
-    "serve": "vue-cli-service serve  --open",  
-    "build": "vue-cli-service build", 
-    "lint": "vue-cli-service lint"  
-  },  
 
-
-在main.js中引入  
-  import less from 'less' //引入less  
-  Vue.use(less); //引入less 
-  import 'bootstrap/dist/css/bootstrap.css'  
-import 'bootstrap-vue/dist/bootstrap-vue.css'  
-  
-// app.vue中写入  
-import Vue from 'vue'  
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'  
-
-//在 index.js中写入 
-Vue.use(BootstrapVue)  
-Vue.use(IconsPlugin)  
-  

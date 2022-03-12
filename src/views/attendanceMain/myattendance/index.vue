@@ -31,10 +31,11 @@ export default {
     let clockstate = "正常";
     Clocklists(id, clockstate).then(res => {
       //  转化为对象
-      //  console.log(res);
+       console.log(res);
       let infors = Object.values(res.data);
       this.theLists = infors;
-      console.log(this.theLists);
+      console.log(infors);
+
     });
   },
   mounted() {}

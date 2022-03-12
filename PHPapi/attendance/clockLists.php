@@ -24,11 +24,10 @@ $result=$mysqli ->query($sql);
 // var_dump($result);
  //创建一个数组去接收
  while ($row = $result -> fetch_assoc()) {
-        if($row!=''){
        $rows[] = $row;   //$rows中保存personnel表中所有记录
          }
          echo json_encode($rows);
-       }
+       
        
 
 $mysqli->close();    
