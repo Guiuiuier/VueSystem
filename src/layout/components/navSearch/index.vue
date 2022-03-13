@@ -177,7 +177,7 @@ export default {
       this.newforms={};
         setTimeout(()=>{
            this.sucessShow=false;
-        },3000)
+        },3000);
     },
 
     searchBtn: function() {

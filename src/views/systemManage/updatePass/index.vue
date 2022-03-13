@@ -78,7 +78,15 @@ import {updatePass} from '@/api2';
             updatePass(this.form.username,this.form.userpass,token).then(res=>{
                 // console.log(res);
             })
-            alert("修改成功 请重新登录!将在下次登录中生效");
+            setTimeout(()=>{
+              alert("修改成功 请重新登录");
+              
+                  localStorage.clear();
+                  sessionStorage.clear();
+                  this.$router.replace("@/views/login/index");
+
+            },1000)
+
                 //修改密码
 
         }

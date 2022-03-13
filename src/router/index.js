@@ -20,17 +20,23 @@ const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-const routes = [{
+const routes = [
+  {
     path: '/',
     redirect: '/login'
   }, //重定向
-
+  // {
+  //     path:'/dd',
+  //     name:"dd",
+  //     component:()=>import('@/views/login/dd.vue'),
+  // },
   {
     path: '/login',
     name: "login",
     component: () => import('@/views/login/index.vue'),
 
   },
+  //空白页
   {
     path: '/find',
     name: 'find',
@@ -68,8 +74,8 @@ const routes = [{
         meta: {
           title: "人员管理",
         },
-
       },
+      
       {
         path: 'attendancemain',
         component: () => import('@/views/attendanceMain/index'),
