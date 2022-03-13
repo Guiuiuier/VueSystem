@@ -53,4 +53,5 @@
   #### 上传模板
   ![上传](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E4%B8%8A%E4%BC%A0.png)  
 
-
+ ### 数据库表
+  ![上传](https://github.com/Guiuiuier/VueSystem/blob/main/public/Introduce%20image/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8.png)
