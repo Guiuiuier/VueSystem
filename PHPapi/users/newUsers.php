@@ -1,0 +1,28 @@
+
+<?php
+include "../database/configlogin.inc.php";
+// header("Content-type:text/html; charset=utf-8");
+header('Access-Control-Allow-Origin: *');
+$mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+// 解决前端的问题
+$v=(file_get_contents("php://input"));
+// var_dump(json_decode($v,true));
+$c=json_decode($v,true);
+ $perId=$c['idPer'];
+$perName=$c['perName'];
+$part=$c['part'];
+$role=$c['role'];
+$userName=$c['username'];
+$userPass=$c['userpass'];
+$sql ="INSERT INTO `userlists`(`idPer`, `username`, `userpass`, `name`, `part`,`role`) VALUES('{$perId}','{$userName}','{$userPass}','{$perName}','{$part}','{$role}')";
+
+if ($mysqli -> connect_error) {
+       die("连接错误：".$mysqli -> connect_error);
+}
+// 转换字符集
+$mysqli -> set_charset(DB_CHARSET);
+// 连接数据库并执行
+$result=$mysqli ->query($sql);
+// var_dump($result);
+// var_dump($sql);
+$mysqli->close();

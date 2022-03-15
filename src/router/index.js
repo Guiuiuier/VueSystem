@@ -156,6 +156,22 @@ const routes = [
               title: "更改密码",
             },
           },
+          {
+            path: 'release',
+            component: () => import('@/views/systemManage/release/index'),
+            name: 'release',
+            meta: {
+              title: "公告发布",
+            },
+          },
+          {
+            path: 'users',
+            component: () => import('@/views/systemManage/Users/index'),
+            name: 'users',
+            meta: {
+              title: "用户管理",
+            },
+          },
         ]
       },
     ]

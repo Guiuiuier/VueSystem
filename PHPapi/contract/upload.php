@@ -9,10 +9,11 @@ include "../database/configupload.inc.php";
     $uploadTime=$_POST['currentTime'];
     // var_dump($uploadTime);
     $file=$_FILES['File'];
-    // var_dump($_FILES);
+    var_dump($_FILES);
     //部门
     $part=$_POST['part'];
     //文件用途名
+    $username=$_POST['username'];
     $fileContent=$_POST['fileContent'];
     // var_dump($part);
     // 文件信息
@@ -44,7 +45,7 @@ include "../database/configupload.inc.php";
     
        }
 
-       $uploadSql="INSERT INTO `uploadfile`(`user`, `partment`, `fileName`, `uploadTime`, `tip`, `src`) VALUES ('admin','{$part}','{$file_name}','{$uploadTime}','{$fileContent}','{$src}')";
+       $uploadSql="INSERT INTO `uploadfile`(`user`, `partment`, `fileName`, `uploadTime`, `tip`, `src`) VALUES ('{$username}','{$part}','{$file_name}','{$uploadTime}','{$fileContent}','{$src}')";
        $result = $mysqli -> query($uploadSql);
         var_dump($result);
       // }else{

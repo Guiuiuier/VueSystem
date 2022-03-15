@@ -32,6 +32,8 @@
                     <!-- 登陆日志 -->
                     <LoginLog></LoginLog>
                   <!-- 更改密码 -->
+                    <users></users>
+                    <release></release>
                     <updatePass></updatePass>
         </b-button-group>
       </div>
@@ -52,7 +54,9 @@ import myattendance from "./The-siderBar/attendance/myattendance";
 import systemmanage from "./The-siderBar/systemManage"
 import LoginLog from "./The-siderBar/systemmange/loginLog";
 import updatePass from "./The-siderBar/systemmange/updatePass";
-import mySign from "./The-siderBar/attendance/mySign"
+import mySign from "./The-siderBar/attendance/mySign";
+import users from "./The-siderBar/systemmange/Users";
+import release from "./The-siderBar/systemmange/release"
 export default {
   data() {
     return {};
@@ -69,6 +73,8 @@ export default {
     LoginLog,
     updatePass,
     mySign,
+    users,
+    release,
   },
   methods: {},
   mounted() {},

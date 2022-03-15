@@ -173,3 +173,41 @@ export const Clocklists=(idPer,clockState)=>requests({
       clockState,
     }
 })
+
+//添加登录用户
+export const newUsers=(idPer,username,userpass,perName,part,role)=>requests({
+   url:"/personnelInfo/users/newUsers.php",
+   method:"post",
+   data:{
+      idPer,
+      perName,
+      part,
+      username,
+      userpass,
+      role,
+   }
+})
+
+//登录用户信息表
+ export  const searchUsers=()=>requests({
+
+   url:"/personnelInfo/users/searchUsers.php",
+   method:"get",
+ })
+ export const deletUsers=(id)=>requests({
+    url:"/personnelInfo/users/deleteUsers.php",
+    method:"post",
+    data:{
+       id,
+    }
+ })
+ export const updateUsers=(perId,perName,part,role)=>requests({
+   url:"/personnelInfo/users/updateUsers.php",
+   method:"post",
+  data:{ 
+  perId,
+  perName,
+  part,
+  role }
+
+})

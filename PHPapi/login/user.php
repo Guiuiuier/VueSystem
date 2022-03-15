@@ -27,13 +27,13 @@ echo json_encode($rows);
 $isToken=$rows[0]['token'];
 // var_dump($isToken);
 // 如果存在这个token 就是没过期 则不创建token 否则创建token
-if($isToken==''){
+if($isToken==''||$isToken==NULL){
      $v = 1;
 $key = mt_rand();
 $hash = md5($key . $v . mt_rand() . time());
 $token = str_replace('=', '', base64_encode($hash));
 // echo $token;
-$insertToken="UPDATE `userlists` SET `token`='{$token}' where `username`='admin' AND `userpass`='admin'";
+$insertToken="UPDATE `userlists` SET `token`='{$token}' where `username`='{$username}' AND `userpass`='$password'";
 $mysqli -> set_charset(DB_CHARSET);
 // 连接数据库并执行
 $result=$mysqli ->query($insertToken);

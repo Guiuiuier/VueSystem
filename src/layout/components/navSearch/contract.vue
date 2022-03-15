@@ -142,7 +142,7 @@ export default {
         let that = this;
         let fileinput = that.$refs.fileinput.files[0];
         let size = Math.floor(fileinput.size / 1024);
-        console.log(size);
+        // console.log(size);
         if (size > 20 * 1024 * 1024) {
           alert("超过20M的图片,docx,pdf不允许上传！");
           return false;
@@ -168,16 +168,20 @@ export default {
           ":" +
           second +
           "";
+       let local=localStorage.getItem("user_info");
+      let username=JSON.parse(local).username;
+       formData.append("username",username);
         formData.append("currentTime", currentTime);
         formData.append("fileContent", this.newforms.fileContent);
         formData.append("part", that.newforms.part);
         formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
-        console.log(formData.get("part"));
+        // console.log(formData.get("part"));
         uploadFile(formData).then(res => {
-          console.log(res);
+          // console.log(res);
         });
         this.show=false;
         this.sucessShow=true;
+              this.fileinputName="";
         // alert(JSON.stringify(this.newforms));
       } else {
         alert("请填完所有信息");
@@ -185,6 +189,7 @@ export default {
     },
     clearFiles() {
       this.$refs["fileinput"].reset();
+      this.fileinputName="";
     },
     //   查询的内容
     searchBtn: function() {

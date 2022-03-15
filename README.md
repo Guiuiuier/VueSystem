@@ -5,7 +5,7 @@
    https://github.com/Guiuiuier/VueSystem/blob/main/src/tips.md 
  
  
- 请安装依赖  在文件根目录下输入这个命令 进行处理    
+请安装依赖  在文件根目录下输入这个命令 进行处理    
 
   cnpm install --save less less-loader@5  
 

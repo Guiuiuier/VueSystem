@@ -113,7 +113,7 @@ export default {
         { key: "fileName", label: "文件名", sortable: true },
         { key: "uploadTime", label: "上传时间", sortable: true },
         { key: "tip", label: "备注" },
-        { key: "actions", label: "操作", sortable: true }
+        { key: "actions", label: "操作", sortable: true, tdClass: "align-middle",}
       ]
     };
   },
@@ -121,9 +121,9 @@ export default {
     //修改
     sub: function() {
       //为什么能获取到这个id 因为点击编辑的时候已经提前在slot中获取到了。
-      updateFile(this.newforms.id, this.newforms.part, this.newforms.tips)
+      updateFile(this.newforms.part, this.newforms.tips)
         .then(res => {
-          console.log(res);
+          // console.log(res);
         })
         .catch(err => {
           console.log(res);
@@ -210,5 +210,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
+td.align-middle{
+  width:190px;
+}
 </style>
