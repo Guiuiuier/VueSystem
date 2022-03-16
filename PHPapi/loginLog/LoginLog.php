@@ -5,7 +5,7 @@ include "../database/configLoginLog.inc.php";
 header("Content-type:text/html; charset=utf-8");
 header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-$sql ="select *  from users";
+$sql ="select *  from users order by id desc";
 
 if ($mysqli -> connect_error) {
        die("连接错误：".$mysqli -> connect_error);

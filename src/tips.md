@@ -265,6 +265,12 @@ bug20
 第二步：把时间调用写在created() 生命周期里面，进入页面就需要调用
 第三步：离开页面使用beforeDestroy() 销毁   
 
+bug21 
+在mounted中如果出现 Error in mounted hook: "TypeError: Cannot read properties of undefined (reading 'contentHeight')" 是因为初始化的时候容器还未生成。
+使用getbyid 换成 $refs可以解决
+
+bug22 this.$route.path 获取当前路由 
+this.$route.matched 遍历当前路由 包括之前的
 ## tips
  package.json中  浏览器自动打开  
 {  </br>

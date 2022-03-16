@@ -211,3 +211,9 @@ export const newUsers=(idPer,username,userpass,perName,part,role)=>requests({
   role }
 
 })
+
+//公司公告页面
+export const allAnnounce=()=>requests({
+   url:"/personnelInfo/announcement/announce.php",
+   method:"get",
+})

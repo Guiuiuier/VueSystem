@@ -58,11 +58,32 @@ const routes = [
       {
         path: 'announcemain',
         // component:announcemain,
-        component: () => import('@/views/announceMain/index'),
+        component: () => import('@/views/announceMain/announce/index'),
         name: "announcemain",
         meta: {
           title: "公司公告"
-        }
+        },
+        children: [
+          {
+          path: 'content',
+          component: () => import('@/views/announceMain/content/index'),
+          name: 'content',
+          meta: {
+            title: "公告内容",
+          },
+
+           
+        },
+        // {
+        //   path:'announce',
+        //   component: () => import('@/views/announceMain/announce/index'),
+        //   name: 'content',
+        //   meta:{
+        //     title:"公告",
+        //   }
+        // }
+      
+      ],
       },
 
 

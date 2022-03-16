@@ -8,7 +8,7 @@ $v=(file_get_contents("php://input"));
 $c=json_decode($v,true);
 $username=$c['username'];
 $password=$c['password'];
-$sql ="select * from userlists where username='{$username}' AND userpass='{$password}'";
+$sql ="select * from userlists where username='{$username}' AND userpass='{$password}' order by id asc";
 if ($mysqli -> connect_error) {
        die("连接错误：".$mysqli -> connect_error);
 }
