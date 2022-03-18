@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-auto">
+  <div class="overflow-auto" v-if="isShow">
     <b-table
       id="my-table"
       :items="items"
@@ -19,11 +19,7 @@
       <!-- 插槽 -->
       <template v-slot:cell(actions)="row">
         <b-button-group>
-          <b-button
-            type="submit"
-            variant="warning"
-            @click="show=true,perUpdate(row.item)"
-          >编辑</b-button>
+          <b-button type="submit" variant="warning" @click="show=true,perUpdate(row.item)">编辑</b-button>
           <!-- 传值 -->
           <!-- <b-button variant="danger" @click="perDelet(row.item,row.index,$event.target)">删除</b-button> -->
           <b-button variant="danger" @click="perDelet(row.item.id)">删除</b-button>
@@ -123,18 +119,16 @@
 <script>
 // 兄弟间传值
 var index = "";
+import { personnelInfo } from "@/api2";
+
 import searchPerTravel from "../navSearch/personsearch";
 import { deletPer, updatePer } from "@/api2";
 export default {
-  props: {
-    //查询所有的职员
-    perInformations: {
-      type: Array,
-      default: () => []
-    }
-  },
+  inject: ["reload"],
+
   data() {
     return {
+      isShow: true,
       perPage: 20,
       currentPage: 1,
       bordered: true,
@@ -142,8 +136,9 @@ export default {
       fixed: true,
       items: [],
       show: false,
+      boxOne: "",
       newforms: {
-        id:"",
+        id: "",
         perName: "",
         age: "",
         address: "",
@@ -166,7 +161,7 @@ export default {
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
       fields: [
         { key: "id", label: "#", sortable: true },
-        { key: "idPer", label: "员工编号", },
+        { key: "idPer", label: "员工编号" },
         { key: "namePer", label: "姓名", sortable: true },
         { key: "genderPer", label: "性别", sortable: true },
         { key: "agePer", label: "年龄", sortable: true },
@@ -174,21 +169,44 @@ export default {
         { key: "addressPer", label: "地址" },
         { key: "contactPer", label: "联系方式" },
         { key: "statePer", label: "在职状态", sortable: true },
-        { key: "actions", label: "操作", tdClass: "align-middle",}
+        { key: "actions", label: "操作", tdClass: "align-middle" }
       ]
     };
   },
   methods: {
     // 修改
     sub: function() {
-     updatePer(this.newforms.id,this.newforms.perId,this.newforms.perName,this.newforms.gender,this.newforms.age,this.newforms.part,this.newforms.address,this.newforms.contact,this.newforms.perState)
-      .then(res=>{
-        console.log(res);
-      }).catch(err=>{
-        console.log(err);
-        
-      })
-       this.show = false;
+      this.boxOne = "";
+      this.$bvModal
+        .msgBoxConfirm("确认修改吗？")
+        .then(value => {
+          this.boxOne = value;
+
+          // console.log(typeof this.boxOne);
+          let flag = String(this.boxOne);
+          if (flag === "true") {
+            updatePer(
+              this.newforms.id,
+              this.newforms.perId,
+              this.newforms.perName,
+              this.newforms.gender,
+              this.newforms.age,
+              this.newforms.part,
+              this.newforms.address,
+              this.newforms.contact,
+              this.newforms.perState
+            )
+              .then(res => {
+                // console.log(res);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+            this.show = false;
+            this.reload();
+          }
+        })
+        .catch(err => {});
     },
 
     // 获取编辑内容
@@ -206,7 +224,7 @@ export default {
       this.newforms.perState = item.statePer;
       this.newforms.address = item.addressPer;
       this.newforms.perId = item.idPer;
-      this.newforms.id=item.id;
+      this.newforms.id = item.id;
       //  console.log(this.newforms.perId=item.idPer);
       // console.log(item);
       // 调用方法
@@ -215,9 +233,22 @@ export default {
     perDelet: function(Ids) {
       var event = event || window.event;
       event.preventDefault();
-      deletPer(Ids).then(res => {
-        console.log(res);
-      });
+      this.boxOne = "";
+      this.$bvModal
+        .msgBoxConfirm("确认删除吗？无法恢复的操作！")
+        //判断是不是确定删除
+        .then(value => {
+          this.boxOne = value;
+
+          // console.log(typeof this.boxOne);
+          let flag = String(this.boxOne);
+          if (flag === "true") {
+            deletPer(Ids).then(res => {}).catch(err=>{
+              
+            });
+            this.reload();
+          }
+        });
     },
     // 接收兄弟组件内容
     getPassInfo() {
@@ -238,26 +269,31 @@ export default {
       if (this.filter != "") {
         return this.filter.length;
       } else {
-        return this.perInformations.length;
+        // return this.perInformations.length;
       }
     }
   },
   // 监控一个props动态
-  watch: {
-    perInformations(val) {
-      this.items = val;
-    }
-  },
+  // watch: {
+  //   perInformations(val) {
+  //     this.items = val;
+  //   }
+  // },
   created() {
     // 触发钩子
     this.getPassInfo();
     this.getEmptyInfo();
+
+    personnelInfo().then(res => {
+      let infors = res.data;
+      this.items = infors;
+    });
   }
 };
 </script>
 
 <style lang="less" >
-td.align-middle{
+td.align-middle {
   width: 120px;
 }
 </style>

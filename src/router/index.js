@@ -20,8 +20,7 @@ const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: '/login'
   }, //重定向
@@ -54,36 +53,58 @@ const routes = [
       title: "主页",
     },
     // 路由懒加载 解决首次过慢的问题 
-    children: [
-      {
+    children: [{
         path: 'announcemain',
         // component:announcemain,
-        component: () => import('@/views/announceMain/announce/index'),
+        component: () => import('@/views/announceMain/index'),
+        redirect:'announcemain/announce',
         name: "announcemain",
         meta: {
-          title: "公司公告"
+          title: "公司公告",
         },
         children: [
+
           {
-          path: 'content',
-          component: () => import('@/views/announceMain/content/index'),
-          name: 'content',
-          meta: {
-            title: "公告内容",
+            path: 'announce',
+            component: () => import('@/views/announceMain/announce/index'),
+            name: 'announce',
+            meta: {
+              title: "公司公告",
+            },
+
           },
 
-           
-        },
-        // {
-        //   path:'announce',
-        //   component: () => import('@/views/announceMain/announce/index'),
-        //   name: 'content',
-        //   meta:{
-        //     title:"公告",
-        //   }
-        // }
-      
-      ],
+          {
+            path: 'content/:id',
+            component: () => import('@/views/announceMain/content/index'),
+            name: 'content',
+            meta: {
+              title: "公告内容",
+            },
+
+
+          },
+          {
+            path: 'newannounce',
+            component: () => import('@/views/announceMain/newAnnounce/index'),
+            name: 'newannounce',
+            meta: {
+              title: "新增公告",
+            },
+
+
+          },
+          {
+            path: 'editannounce/:id',
+            component: () => import('@/views/announceMain/editAnnounce/index'),
+            name: 'editannounce',
+            meta: {
+              title: "编辑内容",
+            },
+
+
+          },
+        ],
       },
 
 
@@ -96,33 +117,32 @@ const routes = [
           title: "人员管理",
         },
       },
-      
+
       {
         path: 'attendancemain',
         component: () => import('@/views/attendanceMain/index'),
-        redirect:'attendanceMain/myattendance',
+        redirect: 'attendanceMain/myattendance',
         name: "attendancemain",
         meta: {
           title: "考勤管理",
         },
-        children:[
-          {
-            path:'mysign',
+        children: [{
+            path: 'mysign',
             component: () => import('@/views/attendanceMain/mySign/index'),
-            name:'mysign',
-            meta:{
-              title:"前往签到",
+            name: 'mysign',
+            meta: {
+              title: "前往签到",
             }
-         },
+          },
           {
-           path:'myattendance',
-           component: () => import('@/views/attendanceMain/myattendance/index'),
-           name:'myattendance',
-           meta:{
-             title:"我的考勤",
-           }
-        }
-      ]
+            path: 'myattendance',
+            component: () => import('@/views/attendanceMain/myattendance/index'),
+            name: 'myattendance',
+            meta: {
+              title: "我的考勤",
+            }
+          }
+        ]
       },
 
       {
@@ -130,8 +150,8 @@ const routes = [
         component: () => import('@/views/fileMain/index'),
         redirect: 'fileMain/Emcontract',
         name: 'filemain',
-        meta:{
-          title:"文件管理"
+        meta: {
+          title: "文件管理"
         },
         children: [{
             path: 'contract',
@@ -150,7 +170,7 @@ const routes = [
             },
           },
         ],
-        
+
       },
       {
         path: 'systemmanage',
@@ -160,8 +180,7 @@ const routes = [
         meta: {
           title: "系统管理",
         },
-          children:[
-            {
+        children: [{
             path: 'loginlog',
             component: () => import('@/views/systemManage/loginLog/index'),
             name: 'loginlog',
@@ -175,14 +194,6 @@ const routes = [
             name: 'updatepass',
             meta: {
               title: "更改密码",
-            },
-          },
-          {
-            path: 'release',
-            component: () => import('@/views/systemManage/release/index'),
-            name: 'release',
-            meta: {
-              title: "公告发布",
             },
           },
           {

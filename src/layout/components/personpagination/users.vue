@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-auto">
+  <div class="overflow-auto"  v-if="isShow">
     <b-table
       id="my-table"
       :items="items"
@@ -78,7 +78,7 @@
         <template #modal-footer>
           <div class="w-100">
             <p class="float-left">请确认无误再修改！</p>
-            <b-button type="submit" variant="primary" size="sm" class="float-right" @click="sub">确定</b-button>
+            <b-button type="submit" variant="primary" size="sm" class="float-right" @click="sub()">确定</b-button>
             <!-- @click="show=false" -->
           </div>
         </template>
@@ -100,8 +100,9 @@
 // 兄弟间传值
 var index = "";
 import searchPerTravel from "../navSearch/personsearch";
-import { deletUsers, updateUsers } from "@/api2";
+import { deletUsers, updateUsers,searchUsers } from "@/api2";
 export default {
+   inject:['reload'],
   props: {
     //查询所有的职员
     theUsers: {
@@ -111,6 +112,7 @@ export default {
   },
   data() {
     return {
+       isShow:true,
       perPage: 20,
       currentPage: 1,
       bordered: true,
@@ -149,14 +151,15 @@ export default {
   methods: {
     // 修改
     sub: function() {
-     updateUsers(this.newforms.perId,this.newforms.name,this.newforms.part,this.newforms.role)
+     updateUsers(this.newforms.id,this.newforms.perId,this.newforms.name,this.newforms.part,this.newforms.role)
       .then(res=>{
         // console.log(res);
       }).catch(err=>{
-        console.log(err);
+        // console.log(err);
         
       })
        this.show = false;
+       this.reload();
     },
 
     // 获取编辑内容
@@ -167,16 +170,19 @@ export default {
       this.newforms.role = item.role;
       this.newforms.part = item.part;
       this.newforms.perId = item.idPer;
-      this.newforms.name=item.name
+      this.newforms.name=item.name;
+      this.newforms.id=item.id;
       // console.log(item);
       // 调用方法
     },
-    usersDelet: function(Ids) {
+    perDelet: function(Ids) {
       var event = event || window.event;
       event.preventDefault();
-      deletPer(Ids).then(res => {
-        console.log(res);
+
+      console.log(Ids);
+      deletUsers(Ids).then(res => {
       });
+      this.reload();
     },
     // 接收兄弟组件内容
     getPassInfo() {
@@ -197,20 +203,26 @@ export default {
       if (this.filter != "") {
         return this.filter.length;
       } else {
-        return this.theUsers.length;
+        // return this.theUsers.length;
       }
     }
   },
   // 监控一个props动态
-  watch: {
-    theUsers(val) {
-      this.items = val;
-    }
-  },
+  // watch: {
+  //   theUsers(val) {
+  //     this.items = val;
+  //   }
+  // },
   created() {
     // 触发钩子
     this.getPassInfo();
     this.getEmptyInfo();
+      searchUsers().then(res=>{
+      //  转化为对象
+      //  console.log(res);
+        let infors=res.data;
+         this.items=infors;
+     })
   }
 };
 </script>

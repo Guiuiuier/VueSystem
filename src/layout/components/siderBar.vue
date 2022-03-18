@@ -26,15 +26,14 @@
           <!-- 员工合同 -->
           <contract></contract>
           <!-- 系统管理 -->
-            <b-button v-b-toggle.collapse-mysystemmange>
-          <systemmanage></systemmanage>
-                    </b-button>
-                    <!-- 登陆日志 -->
-                    <LoginLog></LoginLog>
-                  <!-- 更改密码 -->
-                    <users></users>
-                    <release></release>
-                    <updatePass></updatePass>
+          <b-button v-b-toggle.collapse-mysystemmange>
+            <systemmanage></systemmanage>
+          </b-button>
+          <!-- 登陆日志 -->
+          <LoginLog></LoginLog>
+          <!-- 更改密码 -->
+          <users></users>
+          <updatePass></updatePass>
         </b-button-group>
       </div>
     </div>
@@ -51,12 +50,11 @@ import file from "./The-siderBar/file.vue";
 import contract from "./The-siderBar/file/contract";
 import Emcontract from "./The-siderBar/file/Emcontract";
 import myattendance from "./The-siderBar/attendance/myattendance";
-import systemmanage from "./The-siderBar/systemManage"
+import systemmanage from "./The-siderBar/systemManage";
 import LoginLog from "./The-siderBar/systemmange/loginLog";
 import updatePass from "./The-siderBar/systemmange/updatePass";
 import mySign from "./The-siderBar/attendance/mySign";
 import users from "./The-siderBar/systemmange/Users";
-import release from "./The-siderBar/systemmange/release"
 export default {
   data() {
     return {};
@@ -74,9 +72,8 @@ export default {
     updatePass,
     mySign,
     users,
-    release,
   },
   methods: {},
-  mounted() {},
+  mounted() {}
 };
 </script>

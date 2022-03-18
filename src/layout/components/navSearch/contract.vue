@@ -109,12 +109,13 @@ import axios from "axios";
 import { newPer, uploadFile } from "@/api2";
 import searchPerTravel from "./personsearch.js";
 export default {
+  inject:['reload'],
   data() {
     return {
       show: false,
       sucessShow: false,
       fileinputName: null,
-      //files: "", //文件数据
+      // files: "", //文件数据
       newforms: {
         part: null,
         fileContent: null
@@ -126,7 +127,7 @@ export default {
         "销售部"
       ],
       form: {
-        field: ""
+        // field: ""
       }
     };
   },
@@ -181,7 +182,8 @@ export default {
         });
         this.show=false;
         this.sucessShow=true;
-              this.fileinputName="";
+              this.fileinputName=[];
+              this.reload();
         // alert(JSON.stringify(this.newforms));
       } else {
         alert("请填完所有信息");
@@ -189,7 +191,7 @@ export default {
     },
     clearFiles() {
       this.$refs["fileinput"].reset();
-      this.fileinputName="";
+      this.fileinputName=[];
     },
     //   查询的内容
     searchBtn: function() {

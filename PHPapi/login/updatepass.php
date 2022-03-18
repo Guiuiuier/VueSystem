@@ -9,9 +9,9 @@ $c=json_decode($v,true);
 $username=$c['username'];
 $password=$c['userpass'];
 $token=$c['token'];
-var_dump($token,$username,$password);
+// var_dump($token,$username,$password);
 $sql ="UPDATE `userlists` SET `userpass`='{$password}' WHERE `username`='{$username}' AND `token`='{$token}'";
-var_dump($sql);
+// var_dump($sql);
 if ($mysqli -> connect_error) {
     die("连接错误：".$mysqli -> connect_error);
 }
@@ -19,6 +19,6 @@ if ($mysqli -> connect_error) {
 $mysqli -> set_charset(DB_CHARSET);
 // 连接数据库并执行
 $result=$mysqli ->query($sql);
-var_dump($result);
+// var_dump($result);
  $mysqli->close();  
 ?>

@@ -3,15 +3,15 @@ import requests from './request';
 
 
 // 更改api 自写数据库
-export const login=(username,password)=>requests({
-   url:'/personnelInfo/login/user.php',
-   method:'post',
-   data:{
-          //这里是请求的内容 看服务器要求  不是必选可以不写
-        username,
-        password,
-   }
-  });
+export const login = (username, password) => requests({
+  url: '/personnelInfo/login/user.php',
+  method: 'post',
+  data: {
+    //这里是请求的内容 看服务器要求  不是必选可以不写
+    username,
+    password,
+  }
+});
 
 
 
@@ -20,200 +20,274 @@ export const login=(username,password)=>requests({
 
 
 // 获取后端人员管理信息
- export const personnelInfo=()=>requests({
-    url:'/personnelInfo/persons/personnel.php',
-    method:"get",
- })
+export const personnelInfo = () => requests({
+  url: '/personnelInfo/persons/personnel.php',
+  method: "get",
+})
 
 // 新增人员
 // 曹难怪一直报错
- export const newPer=(perId,perName,gender,age,part,address,contact,perState)=>requests({
-   url:'/personnelInfo/persons/newPer.php',
-   method:"post",
-   data:{
-      perId,
-      perName,
-      gender,
-      age,
-      part,
-      address,
-      contact,
-      perState,
-   }
+export const newPer = (perId, perName, gender, age, part, address, contact, perState) => requests({
+  url: '/personnelInfo/persons/newPer.php',
+  method: "post",
+  data: {
+    perId,
+    perName,
+    gender,
+    age,
+    part,
+    address,
+    contact,
+    perState,
+  }
 })
 // 删除
 
- export const deletPer=(Id)=>requests({
-     url:'/personnelInfo/persons/perDelet.php',
-     method:"POST",
-     data:{
-        Id,
-     }
- })
+export const deletPer = (Id) => requests({
+  url: '/personnelInfo/persons/perDelet.php',
+  method: "POST",
+  data: {
+    Id,
+  }
+})
 
 //  修改
-export const updatePer=(id,perId,perName,gender,age,part,address,contact,perState)=>requests({
-   url:'/personnelInfo/persons/perUpdate.php',
-   method:"post",
-   data:{
-      id,
-      perId,
-      perName,
-      gender,
-      age,
-      part,
-      address,
-      contact,
-      perState,
-   }
+export const updatePer = (id, perId, perName, gender, age, part, address, contact, perState) => requests({
+  url: '/personnelInfo/persons/perUpdate.php',
+  method: "post",
+  data: {
+    id,
+    perId,
+    perName,
+    gender,
+    age,
+    part,
+    address,
+    contact,
+    perState,
+  }
 })
 
 
 // 从数据库获取登录日志信息
 
- export const LoginLogInfors=()=>requests({
-     url:"/personnelInfo/loginLog/LoginLog.php",
-     method:"get"
- })
+export const LoginLogInfors = () => requests({
+  url: "/personnelInfo/loginLog/LoginLog.php",
+  method: "get"
+})
 
 //  查询数据库登录的人的日志信息
- export const searchLogInfors=(user)=>requests({
+export const searchLogInfors = (user) => requests({
 
-    url:"/personnelInfo/loginLog/searchId.php",
-    method:"post",
-    data:{
-       user,
-    }
- })
+  url: "/personnelInfo/loginLog/searchId.php",
+  method: "post",
+  data: {
+    user,
+  }
+})
 
 //  插入日志信息
- export const insertLog=(user,lastIp,lastTime,thisIp,thisTime)=>requests({
+export const insertLog = (user, lastIp, lastTime, thisIp, thisTime) => requests({
 
-  url:"/personnelInfo/loginLog/insertLog.php",
-  method:"post",
-  data:{
-     user,
-     lastIp,
-     lastTime,
-     thisIp,
-     thisTime,
+  url: "/personnelInfo/loginLog/insertLog.php",
+  method: "post",
+  data: {
+    user,
+    lastIp,
+    lastTime,
+    thisIp,
+    thisTime,
   }
 
 });
 
-  //上传文件
-  export const uploadFile=(formData)=>requests({
-     method:"post",
-     url:"/personnelInfo/contract/upload.php",
-     headers: { 'Content-Type': 'multipart/form-data'},
-     data:formData //formdata本身就是一个对象千万别他妈的加了大括号了 整整三天啊整整三天
-  })
+//上传文件
+export const uploadFile = (formData) => requests({
+  method: "post",
+  url: "/personnelInfo/contract/upload.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data: formData //formdata本身就是一个对象千万别他妈的加了大括号了 整整三天啊整整三天
+})
 //   真超级大坑！！！！
 
 
 //查询模板合同
-export const Fileinfors=()=>requests({
- url:"/personnelInfo/contract/fileInfors.php",
-  method:"get",
+export const Fileinfors = () => requests({
+  url: "/personnelInfo/contract/fileInfors.php",
+  method: "get",
 })
 
 //下载文件
-export const downloadFile=(fileName)=>requests({
-    url:"/personnelInfo/contract/downloadFile.php",
-   responseType: 'blob',
-    headers:{   'Content-Type': 'file'},
-    method:"get",
-    params:{
-       fileName
-    },
+export const downloadFile = (fileName) => requests({
+  url: "/personnelInfo/contract/downloadFile.php",
+  responseType: 'blob',
+  headers: {
+    'Content-Type': 'file'
+  },
+  method: "get",
+  params: {
+    fileName
+  },
 })
 
 //删除文件
-export const DeletFile=(id,fileName)=>requests({
-   url:"/personnelInfo/contract/fileDelet.php",
-   method:"post",
-   data:{
-         id,
-         fileName,
-   }
+export const DeletFile = (id, fileName) => requests({
+  url: "/personnelInfo/contract/fileDelet.php",
+  method: "post",
+  data: {
+    id,
+    fileName,
+  }
 })
 
 //更改用户密码
-export const updatePass=(username,userpass,token)=>requests({
-   url:"/personnelInfo/login/updatepass.php",
-   method:'post',
-   data:{
-      username,
-      userpass,
-      token
-   }
+export const updatePass = (username, userpass, token) => requests({
+  url: "/personnelInfo/login/updatepass.php",
+  method: 'post',
+  data: {
+    username,
+    userpass,
+    token
+  }
 })
 
 
 //考勤打卡
-export const clockIn=(idPer,namePer,clockTime,clockState,clockType)=>requests({
-   url:"/personnelInfo/attendance/clockTime.php",
-   method:"post",
-   data:{
-      idPer,
-      namePer,
-      clockTime,
-      clockState,
-      // monthlateness,
-      clockType,
-   }
+export const clockIn = (idPer, namePer, clockTime, clockState, clockType) => requests({
+  url: "/personnelInfo/attendance/clockTime.php",
+  method: "post",
+  data: {
+    idPer,
+    namePer,
+    clockTime,
+    clockState,
+    // monthlateness,
+    clockType,
+  }
 })
 
 //查询打卡列表
-export const Clocklists=(idPer,clockState)=>requests({
-    url:"/personnelInfo/attendance/clockLists.php",
-    method:"post",
-    data:{
-      idPer,
-      clockState,
-    }
+export const Clocklists = (idPer, clockState) => requests({
+  url: "/personnelInfo/attendance/clockLists.php",
+  method: "post",
+  data: {
+    idPer,
+    clockState,
+  }
 })
 
 //添加登录用户
-export const newUsers=(idPer,username,userpass,perName,part,role)=>requests({
-   url:"/personnelInfo/users/newUsers.php",
-   method:"post",
-   data:{
-      idPer,
-      perName,
-      part,
-      username,
-      userpass,
-      role,
-   }
+export const newUsers = (idPer, username, userpass, perName, part, role) => requests({
+  url: "/personnelInfo/users/newUsers.php",
+  method: "post",
+  data: {
+    idPer,
+    perName,
+    part,
+    username,
+    userpass,
+    role,
+  }
 })
 
 //登录用户信息表
- export  const searchUsers=()=>requests({
+export const searchUsers = () => requests({
 
-   url:"/personnelInfo/users/searchUsers.php",
-   method:"get",
- })
- export const deletUsers=(id)=>requests({
-    url:"/personnelInfo/users/deleteUsers.php",
-    method:"post",
-    data:{
-       id,
-    }
- })
- export const updateUsers=(perId,perName,part,role)=>requests({
-   url:"/personnelInfo/users/updateUsers.php",
-   method:"post",
-  data:{ 
-  perId,
-  perName,
-  part,
-  role }
+  url: "/personnelInfo/users/searchUsers.php",
+  method: "get",
+})
+export const deletUsers = (id) => requests({
+  url: "/personnelInfo/users/deletUsers.php",
+  method: "post",
+  data: {
+    id,
+  }
+})
+export const updateUsers = (id, perId, perName, part, role) => requests({
+  url: "/personnelInfo/users/updateUsers.php",
+  method: "post",
+  data: {
+    id,
+    perId,
+    perName,
+    part,
+    role
+  }
 
 })
 
 //公司公告页面
-export const allAnnounce=()=>requests({
-   url:"/personnelInfo/announcement/announce.php",
-   method:"get",
+export const allAnnounce = () => requests({
+  url: "/personnelInfo/announcement/announce.php",
+  method: "get",
+})
+
+//查询文公告文章
+export const announceId = (id) => requests({
+  url: "/personnelInfo/announcement/announceId.php",
+  method: "get",
+  params: {
+    id
+  }
+})
+
+export const announceDelet = (id) => requests({
+  url: "/personnelInfo/announcement/announceDelet.php",
+  method: "get",
+  params: {
+    id
+  }
+})
+
+export const announceEdit = (id, topic, endName, toPerson, content) => requests({
+  url: "/personnelInfo/announcement/announceEdit.php",
+  method: "post",
+  data: {
+    id,
+    topic,
+    endName,
+    toPerson,
+    content
+  }
+
+})
+
+export const announceNew = (user, topic, endName, toPerson, content, currentTimes) => requests({
+  url: "/personnelInfo/announcement/announceNew.php",
+  method: "post",
+  data: {
+    user,
+    topic,
+    endName,
+    toPerson,
+    content,
+    currentTimes,
+  }
+
+})
+
+export const updateFile = (formData) => requests({
+  method: "post",
+  url: "/personnelInfo/contract/fileUpdate.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data: formData //formdata本身就是一个对象千万别他妈的加了大括号了 整整三天啊整整三天
+})
+
+export const updateFileWord = (username, currentTime, id, part, tips) => requests({
+  method: "post",
+  url: "/personnelInfo/contract/fileUpdate.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data: {
+    username,
+    currentTime,
+    id,
+    part,
+    tips,
+  }
 })

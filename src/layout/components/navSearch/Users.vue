@@ -122,6 +122,7 @@ import { newUsers } from "@/api2";
 //  兄弟间传值
 import searchPerTravel from "./personsearch.js";
 export default {
+  inject:['reload'],
   data() {
     return {
       show: false,
@@ -163,6 +164,7 @@ export default {
         setTimeout(()=>{
            this.sucessShow=false;
         },3000);
+        this.reload();
     },
 
     searchBtn: function() {

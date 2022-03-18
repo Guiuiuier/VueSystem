@@ -161,7 +161,7 @@ export default {
         ":" +
         second +
         "";
-    }, 1000);
+    }, 0);
   },
 
   computed: {

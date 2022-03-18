@@ -3,7 +3,7 @@ include "../database/configlogin.inc.php";
 header("Content-type:text/html; charset=utf-8");
 header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-$sql ="select `idPer`,`username`,`name`,`part`,`role` from userlists";
+$sql ="select `id`,`idPer`,`username`,`name`,`part`,`role` from userlists";
 if ($mysqli -> connect_error) {
        die("连接错误：".$mysqli -> connect_error);
 }

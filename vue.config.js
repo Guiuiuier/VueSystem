@@ -8,7 +8,7 @@ module.exports = {
        config.entry('app').clear().add('./src/main-prod.js')
      })
 
- 
+
      config.when(process.env.NODE_ENV==='development',config=>{
       config.entry('app').clear().add('./src/main.js')
     })

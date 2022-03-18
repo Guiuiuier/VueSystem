@@ -9,9 +9,10 @@ $c=json_decode($v,true);
 $name=$c['perName'];
 $part=$c['part'];
 $role=$c['role'];
-$id=$c['perId'];
+$Perid=$c['perId'];
+$id=$c['id'];
 // var_dump($token,$username,$password);
-$sql ="UPDATE `userlists` SET `idPer`='{$id}',`name`='{$name}',`part`='{$part}',`role`='{$role}' WHERE `idPer`='{$id}'";
+$sql ="UPDATE `userlists` SET `idPer`='{$Perid}',`name`='{$name}',`part`='{$part}',`role`='{$role}' WHERE `id`='{$id}'";
 var_dump($sql);
 if ($mysqli -> connect_error) {
     die("连接错误：".$mysqli -> connect_error);

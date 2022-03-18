@@ -27,7 +27,7 @@ include "../database/configupload.inc.php";
     $file_path="$file_location$file_name";
      //如果有这个文件改名 并上传
     if(file_exists($file_path)){
-          $file_name=rand(0,1000).$file_name;
+          $file_name=`rand(0,1000)`.$file_name;
           $file_path="$file_location$file_name";
     }
     // if($_FILES['File']['error']==0){
@@ -47,7 +47,7 @@ include "../database/configupload.inc.php";
 
        $uploadSql="INSERT INTO `uploadfile`(`user`, `partment`, `fileName`, `uploadTime`, `tip`, `src`) VALUES ('{$username}','{$part}','{$file_name}','{$uploadTime}','{$fileContent}','{$src}')";
        $result = $mysqli -> query($uploadSql);
-        var_dump($result);
+        // var_dump($result);
       // }else{
       //   echo "上传失败!";
       // };
