@@ -13,7 +13,7 @@
             <b-row class="mb-1">
               <b-col cols="6">
                 <b-form-group>
-                  <b-form-input v-model="newforms.fileContent"></b-form-input>
+                  <b-form-input id="input-1"  v-model="newforms.fileContent"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col cols="6">

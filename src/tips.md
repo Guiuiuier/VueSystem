@@ -273,6 +273,7 @@ bug22 this.$route.path 获取当前路由
 this.$route.matched 遍历当前路由 包括之前的
 
 bug23  如何实现点击事件后进行页面刷新 提升用户体验感？  如果单纯的使用reload 会导致空白页面用户体验感不好， 所以vue重新渲染的方法是 如果是父子组件可以使用 provide 和 inject  如果是同一个组件 使用V-if 重新渲染就可以了。 provide 和inject 原理也是如此 只是传值而已
+reload过程中 最好设置一秒的定时器否则很可能不生效（网络）
 ## tips
  package.json中  浏览器自动打开  
 {  </br>

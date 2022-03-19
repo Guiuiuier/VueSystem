@@ -57,7 +57,7 @@ const routes = [{
         path: 'announcemain',
         // component:announcemain,
         component: () => import('@/views/announceMain/index'),
-        redirect:'announcemain/announce',
+        redirect: 'announcemain/announce',
         name: "announcemain",
         meta: {
           title: "公司公告",
@@ -69,7 +69,7 @@ const routes = [{
             component: () => import('@/views/announceMain/announce/index'),
             name: 'announce',
             meta: {
-              title: "公司公告",
+              // title: "公司公告",
             },
 
           },
@@ -121,7 +121,7 @@ const routes = [{
       {
         path: 'attendancemain',
         component: () => import('@/views/attendanceMain/index'),
-        redirect: 'attendanceMain/myattendance',
+        redirect: 'attendanceMain/mySign',
         name: "attendancemain",
         meta: {
           title: "考勤管理",
@@ -131,7 +131,7 @@ const routes = [{
             component: () => import('@/views/attendanceMain/mySign/index'),
             name: 'mysign',
             meta: {
-              title: "前往签到",
+
             }
           },
           {
@@ -140,8 +140,28 @@ const routes = [{
             name: 'myattendance',
             meta: {
               title: "我的考勤",
-            }
-          }
+            },
+            children: [{
+                path: 'myleave',
+                component: () => import('@/views/attendanceMain/myLeave/index'),
+                name: "myleave",
+                meta: {
+                  title: "我的请假",
+                }
+              },
+
+              {
+                path: 'approval',
+                component: () => import('@/views/attendanceMain/leaveApproval/index'),
+                name: "approval",
+                meta: {
+                  title: "员工审批",
+                }
+              },
+            ]
+          },
+
+
         ]
       },
 
@@ -166,7 +186,7 @@ const routes = [{
             component: () => import('@/views/fileMain/Emcontract/index'),
             name: 'emcontract',
             meta: {
-              title: "在职员工合同",
+
             },
           },
         ],
@@ -175,7 +195,7 @@ const routes = [{
       {
         path: 'systemmanage',
         component: () => import('@/views/systemManage/index'),
-        redirect: 'systemManage/loginLog',
+        redirect: 'systemManage/updatePass',
         name: "systemmanage",
         meta: {
           title: "系统管理",
@@ -192,9 +212,7 @@ const routes = [{
             path: 'updatepass',
             component: () => import('@/views/systemManage/updatePass/index'),
             name: 'updatepass',
-            meta: {
-              title: "更改密码",
-            },
+            meta: {},
           },
           {
             path: 'users',

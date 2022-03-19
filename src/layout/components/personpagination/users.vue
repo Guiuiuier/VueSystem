@@ -159,7 +159,9 @@ export default {
         
       })
        this.show = false;
-       this.reload();
+       setTimeout(()=>{
+               this.reload();
+          },1000);
     },
 
     // 获取编辑内容
@@ -182,7 +184,9 @@ export default {
       console.log(Ids);
       deletUsers(Ids).then(res => {
       });
-      this.reload();
+      setTimeout(()=>{
+               this.reload();
+          },1000);
     },
     // 接收兄弟组件内容
     getPassInfo() {

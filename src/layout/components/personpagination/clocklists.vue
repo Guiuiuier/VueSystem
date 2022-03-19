@@ -15,9 +15,8 @@
       striped
       head-variant="dark"
       foot-clone
-    >
-    </b-table>
-   
+    ></b-table>
+
     <b-pagination
       align="center"
       v-model="currentPage"
@@ -33,14 +32,9 @@
 <script>
 // 兄弟间传值
 var index = "";
+import { Clocklists } from "@/api2";
 import searchPerTravel from "../navSearch/personsearch";
 export default {
-  props: {
-    theLists: {
-      type: Array,
-      default: () => []
-    }
-  },
   data() {
     return {
       perPage: 20,
@@ -48,18 +42,17 @@ export default {
       bordered: true,
       filter: "",
       fixed: true,
-      items: [],
-      newforms: {
-      },
+      items:[],
+      newforms: {},
 
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
       fields: [
         { key: "id", label: "#", sortable: true },
-        { key: "idPer", label: "员工编号",sortable: true  },
+        { key: "idPer", label: "员工编号", sortable: true },
         { key: "namePer", label: "员工姓名", sortable: true },
         { key: "clockTime", label: "打卡时间", sortable: true },
         { key: "clockState", label: "打卡状态", sortable: true },
-        { key: "clockType", label: "打卡类型",sortable: true },
+        { key: "clockType", label: "打卡类型", sortable: true }
       ]
     };
   },
@@ -83,25 +76,31 @@ export default {
       if (this.filter != "") {
         return this.filter.length;
       } else {
-        return this.theLists.length;
+        // return this.theLists.length;
       }
     }
   },
   // 监控一个props动态
-  watch: {
-    theLists(val) {
-      this.items = val;
-    }
-  },
+  // watch: {
+  //   theLists(val) {
+  //     this.items = val;
+  //   }
+  // },
   created() {
     // 触发钩子
     this.getPassInfo();
     this.getEmptyInfo();
+
+    let local = localStorage.getItem("user_info");
+    let id = JSON.parse(local).idPer;
+    let clockstate = "正常";
+    Clocklists(id, clockstate).then(res => {
+      this.items = res.data;
+      // console.log(this.theLists);
+    });
   }
 };
 </script>
 
 <style lang="less" scoped>
-
-
 </style>

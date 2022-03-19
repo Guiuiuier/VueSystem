@@ -21,7 +21,7 @@
           <b-button type="submit" variant="warning" @click="show=true,fileUpdate(row.item)">编辑</b-button>
           <!-- 传值 -->
           <!-- <b-button variant="danger" @click="perDelet(row.item,row.index,$event.target)">删除</b-button> -->
-          <b-button variant="info" @click="downloadFile(row.item)">下载</b-button>
+          <b-button variant="info" @click="downloadFile(row.item)" v-if="downBtn">下载</b-button>
           <b-button variant="danger" @click="fileDelet(row.item)">删除</b-button>
 
           <!-- <b-button variant="info">Info</b-button> -->
@@ -49,7 +49,7 @@
             </b-col>
           </b-row>
           <b-row class="mb-1 text-center">
-            <b-col cols="12">重新上传文件</b-col>
+            <b-col cols="12">上传文件</b-col>
           </b-row>
           <b-row class="mb-1">
             <b-col cols="12">
@@ -108,7 +108,13 @@
 // 兄弟间传值
 var index = "";
 import searchPerTravel from "../navSearch/personsearch";
-import { DeletFile,uploadFile, updateFile, downloadFile, Fileinfors,updateFileWord } from "@/api2";
+import {
+  DeletFile_em,
+  updateFile_em,
+  downloadFile_em,
+  EmpersonnelInfo,
+  updateFileWord_Em
+} from "@/api2";
 export default {
   // props: {
   // theFiles: {
@@ -121,6 +127,7 @@ export default {
     return {
       fileinputName: null,
       isShow: true,
+      downBtn: true,
       perPage: 20,
       currentPage: 1,
       bordered: true,
@@ -142,12 +149,11 @@ export default {
       ],
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
       fields: [
-        { key: "id", label: "#", sortable: true },
-        { key: "user", label: "上传用户", sortable: true },
-        { key: "partment", label: "部门", sortable: true },
-        { key: "fileName", label: "文件名", sortable: true },
-        { key: "uploadTime", label: "上传时间", sortable: true },
-        { key: "tip", label: "备注" },
+        { key: "idPer", label: "员工编号", sortable: true },
+        { key: "namePer", label: "员工姓名", sortable: true },
+        { key: "partPer", label: "部门", sortable: true },
+        { key: "uploadTime", label: "文件上传时间", sortable: true },
+        { key: "tip", label: "备注", sortable: true },
         {
           key: "actions",
           label: "操作",
@@ -157,31 +163,36 @@ export default {
       ]
     };
   },
+
   methods: {
+    upBtn: function() {},
+
+    uploadFile: function() {},
+
     //修改
     sub: function() {
-                let local = localStorage.getItem("user_info");
-          let username = JSON.parse(local).username;
-       var date = new Date();
-          var year = date.getFullYear();
-          var month = date.getMonth() + 1;
-          var day = date.getDate();
-          var hour = date.getHours();
-          var minutes = date.getMinutes();
-          var second = date.getSeconds();
-          let currentTime =
-            year +
-            "-" +
-            month +
-            "-" +
-            day +
-            " " +
-            hour +
-            ":" +
-            minutes +
-            ":" +
-            second +
-            "";
+      let local = localStorage.getItem("user_info");
+      let username = JSON.parse(local).name;
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      var hour = date.getHours();
+      var minutes = date.getMinutes();
+      var second = date.getSeconds();
+      let currentTime =
+        year +
+        "-" +
+        month +
+        "-" +
+        day +
+        " " +
+        hour +
+        ":" +
+        minutes +
+        ":" +
+        second +
+        "";
       this.boxOne = "";
       this.$bvModal.msgBoxConfirm("确认修改吗？").then(value => {
         this.boxOne = value;
@@ -190,45 +201,49 @@ export default {
         if (flag === "true") {
           let that = this;
           let fileinput = that.$refs.fileinput.files[0];
-        
-        //判断文件是否为空
-          if(fileinput!=undefined||fileinput!=null){
-          let size = Math.floor(fileinput.size / 1024);
-          // console.log(size);
-          if (size > 20 * 1024 * 1024) {
-            alert("超过20M的图片,docx,pdf不允许上传！");
-            return false;
-          }
-          let formData = new window.FormData();
-          formData.append("id",this.newforms.id);
-          formData.append("username", username);
-          formData.append("currentTime", currentTime);
-          formData.append("fileContent", this.newforms.tips);
-          formData.append("part", that.newforms.part);
-          formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
-          // console.log(formData.get("part"));
-          updateFile(formData).then(res => {
-            // console.log(res);
-          });
+
+          //判断文件是否为空
+          if (fileinput != undefined || fileinput != null) {
+            let size = Math.floor(fileinput.size / 1024);
+            // console.log(size);
+            if (size > 20 * 1024 * 1024) {
+              alert("超过20M的图片,docx,pdf不允许上传！");
+              return false;
+            }
+            let formData = new window.FormData();
+            formData.append("id", this.newforms.id);
+            formData.append("username", username);
+            formData.append("currentTime", currentTime);
+            formData.append("fileContent", this.newforms.tips);
+            formData.append("part", that.newforms.part);
+            formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
+            // console.log(formData.get("part"));
+            updateFile_em(formData).then(res => {
+              // console.log(res);
+            });
             this.show = false;
-          this.fileinputName = [];
-          setTimeout(()=>{
-               this.reload();
-          },1000);
-          // this.reload();
-          }else{
-              //如果用户没有重新上传文件则进入这里
-              updateFileWord(username,currentTime,this.newforms.id,this.newforms.part,this.newforms.tips).then(res=>{
-
-              }).catch(err=>{
-
-              })
-          this.show = false;
-          this.fileinputName = [];
-          setTimeout(()=>{
-               this.reload();
-          },1000);
-          // this.reload();
+            this.fileinputName = [];
+            setTimeout(() => {
+              this.reload();
+            }, 1000);
+            // this.reload();
+          } else {
+            //如果用户没有重新上传文件则进入这里
+            updateFileWord_Em(
+              username,
+              currentTime,
+              this.newforms.id,
+              this.newforms.part,
+              this.newforms.tips
+            )
+              .then(res => {})
+              .catch(err => {});
+            this.show = false;
+            this.fileinputName = [];
+            setTimeout(() => {
+              this.reload();
+            }, 1000);
+            // this.reload();
           }
         }
       });
@@ -240,7 +255,19 @@ export default {
     // 下载
 
     downloadFile: function(item) {
-      downloadFile(item.fileName).then(res => {
+      if (item.src == "" || item.src == "undefined") {
+        let boxOne = "";
+        let namePerson = item.namePer;
+        this.$bvModal
+          .msgBoxOk(namePerson + "当前没有合同，请上传后下载！")
+          .then(value => {
+            boxOne = value;
+          })
+          .catch(err => {});
+        return false;
+      }
+
+      downloadFile_em(item.fileName).then(res => {
         //  console.log(res);
         //返回blob对象里的url
         const fileUrl = window.URL.createObjectURL(res.data);
@@ -260,29 +287,30 @@ export default {
     fileUpdate: function(item) {
       var event = event || window.event;
       event.preventDefault();
-      // this.newforms.perId=item.perId;
-      // 一时半会儿没有很好的方法全部赋值 尝试过解构。。。。 到时候这些模板我给写成组件就好了。先这样吧。
-      // 调试过程中注意名字是否相反。 因为我想不出有啥很好的变量名。怪我。
-      this.newforms.part = item.partment;
+      this.newforms.perName = item.namePer;
+      this.newforms.part = item.partPer;
       this.newforms.tips = item.tip;
+      this.newforms.perState = item.statePer;
+      this.newforms.perId = item.idPer;
       this.newforms.id = item.id;
     },
     // 调用方法 删除
     fileDelet: function(item) {
-        this.boxOne = "";
-      this.$bvModal.msgBoxConfirm("确认删除吗？").then(value => {
+        let local=localStorage.getItem("user_info");
+    let username=JSON.parse(local).name
+      this.boxOne = "";
+      this.$bvModal.msgBoxConfirm("只会删除合同，不会删除人员信息，确认删除合同吗？").then(value => {
         this.boxOne = value;
         // console.log(typeof this.boxOne);
         let flag = String(this.boxOne);
         if (flag === "true") {
-      var event = event || window.event;
-      event.preventDefault();
-      // console.log(item.id,item.fileName);
-      DeletFile(item.id, item.fileName).then(res => {});
-      this.reload();
+          var event = event || window.event;
+          event.preventDefault();
+          // console.log(item.id,item.fileName);
+          DeletFile_em(item.id, item.fileName,username).then(res => {});
+          this.reload();
         }
       });
-      
     },
     // 接收兄弟组件内容 //查询过滤的信息
     getPassInfo() {
@@ -317,10 +345,9 @@ export default {
     // 触发钩子
     this.getPassInfo();
     this.getEmptyInfo();
-    Fileinfors().then(res => {
+    EmpersonnelInfo().then(res => {
       let infors = res.data;
       this.items = infors;
-      // console.log(this.items);
     });
   }
 };

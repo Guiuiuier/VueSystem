@@ -30,10 +30,10 @@
             <systemmanage></systemmanage>
           </b-button>
           <!-- 登陆日志 -->
+          <updatePass></updatePass>
           <LoginLog></LoginLog>
           <!-- 更改密码 -->
           <users></users>
-          <updatePass></updatePass>
         </b-button-group>
       </div>
     </div>

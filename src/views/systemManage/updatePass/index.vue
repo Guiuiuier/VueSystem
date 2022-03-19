@@ -50,6 +50,7 @@ import {updatePass} from '@/api2';
     data() {
         
       return {
+        boxOne:"",
           errTips:false,
           form: {
           username:'',
@@ -73,6 +74,12 @@ import {updatePass} from '@/api2';
             //  alert('两次密码不对请再次输入');
              return false;
         }else{
+  this.boxOne = "";
+      this.$bvModal.msgBoxConfirm("确认修改吗？").then(value => {
+        this.boxOne = value;
+        // console.log(typeof this.boxOne);
+        let flag = String(this.boxOne);
+        if (flag === "true") {
             let local=localStorage.getItem('user_info');
             let token=JSON.parse(local).token;
             updatePass(this.form.username,this.form.userpass,token).then(res=>{
@@ -90,7 +97,9 @@ import {updatePass} from '@/api2';
                 //修改密码
 
         }
-  
+      
+        })
+        }
       },
       onReset(event) {
         event.preventDefault()

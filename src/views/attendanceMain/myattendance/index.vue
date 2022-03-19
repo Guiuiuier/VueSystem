@@ -1,24 +1,25 @@
 <template>
   <div>
-    <Navsearch></Navsearch>
+    <Navsearch  v-if="isShow"></Navsearch>
     <!-- <div style="width:100%;position:absolute"> -->
     <b-table>adasdas</b-table>
     <!-- 查询 -->
-    <personPagination :theLists="theLists" v-if="theshow"></personPagination>  </div>
+    <personPagination  v-if="isShow"></personPagination>
+  <router-view></router-view>
+      </div>
   <!-- </div> -->
 </template>
 
 <script>
-import { Clocklists } from "@/api2";
-import Navsearch from "@/layout/components/navSearch/loginLog";
+import Navsearch from "@/layout/components/navSearch/myattendance";
 import personPagination from "@/layout/components/personpagination/clocklists";
 // import personpaginationUnormal from "@/layout/components/personpagination/UnormalLocklists"
 export default {
   data() {
     return {
+      isShow:true,
       //留着做上下班打卡正常异常的模块
-      theshow: true,
-      theLists: []
+      // theLists: []
     };
   },
   components: {
@@ -26,19 +27,23 @@ export default {
     personPagination
   },
   created() {
-    let local = localStorage.getItem("user_info");
-    let id = JSON.parse(local).idPer;
-    let clockstate = "正常";
-    Clocklists(id, clockstate).then(res => {
-      //  转化为对象
-      //  console.log(res);
-      let infors = Object.values(res.data);
-      this.theLists = infors;
-      // console.log(infors);
 
-    });
   },
-  mounted() {}
+  mounted() {},
+  watch: {
+    //判断当前路由
+    $route(to, from) {
+      // console.log(to);
+      if (
+        to.name === "myleave"||to.name==='approval'
+      ) {
+        this.isShow = false;
+      } else {
+        this.isShow = true;
+
+      }
+    }
+  },
 };
 </script>
 <style lang="less" scoped>

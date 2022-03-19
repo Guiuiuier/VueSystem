@@ -11,7 +11,7 @@
         </b-form-group>
 
         <b-form-group label="To:" class="mb-0">
-          <b-form-input id="input-1" placeholder="输入接收人" required v-model="form.toPerson"></b-form-input>
+          <b-form-input readonly id="input-1" placeholder="输入接收人" required v-model="form.toPerson"></b-form-input>
         </b-form-group>
 
         <b-form-group label="署名:" class="mb-0">

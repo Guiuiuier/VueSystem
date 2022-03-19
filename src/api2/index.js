@@ -131,7 +131,17 @@ export const downloadFile = (fileName) => requests({
     fileName
   },
 })
-
+export const downloadFile_em = (fileName) => requests({
+  url: "/personnelInfo/contract/downloadFile_em.php",
+  responseType: 'blob',
+  headers: {
+    'Content-Type': 'file'
+  },
+  method: "get",
+  params: {
+    fileName
+  },
+})
 //删除文件
 export const DeletFile = (id, fileName) => requests({
   url: "/personnelInfo/contract/fileDelet.php",
@@ -139,6 +149,15 @@ export const DeletFile = (id, fileName) => requests({
   data: {
     id,
     fileName,
+  }
+})
+export const DeletFile_em = (id, fileName,username) => requests({
+  url: "/personnelInfo/contract/fileDelet_em.php",
+  method: "post",
+  data: {
+    id,
+    fileName,
+    username,
   }
 })
 
@@ -290,4 +309,34 @@ export const updateFileWord = (username, currentTime, id, part, tips) => request
     part,
     tips,
   }
+})
+
+
+export const EmpersonnelInfo = () => requests({
+  url: '/personnelInfo/persons/Empersonnel.php',
+  method: "get",
+})
+
+export const updateFileWord_Em = (username, currentTime, id, part, tips) => requests({
+  method: "post",
+  url: "/personnelInfo/contract/fileUpdate_Em.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data: {
+    username,
+    currentTime,
+    id,
+    part,
+    tips,
+  }
+})
+
+export const updateFile_em = (formData) => requests({
+  method: "post",
+  url: "/personnelInfo/contract/fileUpdate_em.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data: formData //formdata本身就是一个对象千万别他妈的加了大括号了 整整三天啊整整三天
 })
