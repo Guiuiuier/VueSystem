@@ -151,7 +151,7 @@ export const DeletFile = (id, fileName) => requests({
     fileName,
   }
 })
-export const DeletFile_em = (id, fileName,username) => requests({
+export const DeletFile_em = (id, fileName, username) => requests({
   url: "/personnelInfo/contract/fileDelet_em.php",
   method: "post",
   data: {
@@ -339,4 +339,50 @@ export const updateFile_em = (formData) => requests({
     'Content-Type': 'multipart/form-data'
   },
   data: formData //formdata本身就是一个对象千万别他妈的加了大括号了 整整三天啊整整三天
+})
+
+export const Assessor = (part) => requests({
+  method: "get",
+  url: "/personnelInfo/users/assessor.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  params: {
+    part,
+  }
+})
+
+export const vacation = (idPer, name,vacationType, day, part, contact, startTime, endTime, content, assessor,currentTime) => requests({
+  method: "post",
+  url: "/personnelInfo/persons/vacation.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data: {
+    idPer,
+    name,
+    vacationType,
+    day,
+    part,
+    contact,
+    startTime,
+    endTime,
+    content,
+    assessor,
+    currentTime
+  }
+})
+
+
+export const vacationLists=(idPer)=>requests({
+  method:"get",
+  url: "/personnelInfo/persons/vacationLists.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+params:
+{
+  idPer
+}
+
 })

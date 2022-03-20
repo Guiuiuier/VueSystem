@@ -95,7 +95,11 @@ export default {
     let id = JSON.parse(local).idPer;
     let clockstate = "正常";
     Clocklists(id, clockstate).then(res => {
-      this.items = res.data;
+      // console.log(res.data);
+      if(res.data!=''){
+
+        this.items = res.data;
+      }
       // console.log(this.theLists);
     });
   }

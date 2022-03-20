@@ -27,7 +27,11 @@ export default {
     personPagination
   },
   created() {
-
+       if (this.$route.name === "myleave") {
+      this.isShow = false;
+    } else {
+      this.isShow = true;
+    }
   },
   mounted() {},
   watch: {

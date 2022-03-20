@@ -10,6 +10,7 @@
           <b-button variant="success" @click="newA">新增公告</b-button>
         </b-col>
       </b-row>
+      <!-- 为按钮添加一个id -->
       <div class="con" v-for="(item, id) in items" :key="item.id">
         <b-row class="con-model">
           <b-col cols="6">
@@ -121,66 +122,8 @@ export default {
   mounted() {},
 };
 </script>
+
 <style lang="less" scoped>
-.typography {
-  border: 1px solid rgb(229, 229, 229);
+ @import "/public/an_leave.less";
 
-  .topic {
-    height: 50px;
-    line-height: 50px;
-    border-bottom: 1px solid rgb(229, 229, 229);
-    margin: 0 0 0 1px;
-  }
-  .btnNew {
-    text-align: right;
-    padding-right: 0;
-    margin: 0 5px;
-  }
-  .contentNumber {
-    font-size: 16px;
-    font-weight: bold;
-    padding: 0;
-  }
-  .con {
-    border-bottom: 1px solid rgb(229, 229, 229);
-
-    .con-model {
-      padding-top: 20px;
-      .top-name {
-        .icon-position {
-          margin-right: 5px;
-        }
-        text-align: right;
-        font-size: 13px;
-        //   line-height: 20px;
-        padding: 0 20px;
-      }
-      .top-date {
-        .icon-position {
-          margin-right: 5px;
-        }
-        text-align: right;
-        font-size: 13px;
-        padding: 0 20px;
-      }
-    }
-    .con-bot {
-      padding-top: 25px;
-      font-size: 13px;
-      padding-bottom: 30px;
-      height: 6.5em;
-      overflow: hidden; /*自动隐藏文字*/
-      text-overflow: ellipsis; /*文字隐藏后添加省略号*/
-      white-space: nowrap; /*强制不换行*/
-      /*不允许出现半汉字截断*/
-    }
-    .content-button {
-      text-align: right;
-      padding-bottom: 10px;
-      .contentbtn {
-        margin: 0 5px;
-      }
-    }
-  }
-}
 </style>
