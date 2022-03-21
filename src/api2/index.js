@@ -382,7 +382,7 @@ export const vacationLists=(idPer)=>requests({
   },
 params:
 {
-  idPer
+  idPer,
 }
 
 })

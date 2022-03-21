@@ -124,14 +124,14 @@
         </b-form>
       </b-collapse>
 
-
-
       <b-container v-if="leaveInfors">
         <b-col
           style="margin-top:50px; padding:0; padding-bottom:20px;font-weight:bold;font-size:1em"
         >
           {{this.vacationLists_leaveforms.name}}的
-          <span style="color:red">{{this.vacationLists_leaveforms.vacationType}}</span>详情
+          <span
+            style="color:red"
+          >{{this.vacationLists_leaveforms.vacationType}}</span>详情
         </b-col>
         <b-row class="myleave" style="margin:0">
           <b-col class="myleave_topic">
@@ -142,12 +142,20 @@
             <b-row class="mb-1">
               <b-col cols="6">
                 <b-form-group>
-                  <b-form-input v-model="this.vacationLists_leaveforms.vacationType" disabled :options="leaveType"></b-form-input>
+                  <b-form-input
+                    v-model="this.vacationLists_leaveforms.vacationType"
+                    disabled
+                    :options="leaveType"
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col cols="6">
                 <b-form-group>
-                  <b-form-input v-model="this.vacationLists_leaveforms.day" disabled :options="variants"></b-form-input>
+                  <b-form-input
+                    v-model="this.vacationLists_leaveforms.day"
+                    disabled
+                    :options="variants"
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -158,7 +166,13 @@
             <b-row class="mb-1">
               <b-col cols="6">
                 <b-form-group>
-                  <b-form-input disabled id="input-1" v-model="this.vacationLists_leaveforms.name" placeholder required></b-form-input>
+                  <b-form-input
+                    disabled
+                    id="input-1"
+                    v-model="this.vacationLists_leaveforms.name"
+                    placeholder
+                    required
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col cols="6">
@@ -174,7 +188,13 @@
             <b-row class="mb-1">
               <b-col cols="6">
                 <b-form-group>
-                  <b-form-input id="input-1" disabled v-model="this.vacationLists_leaveforms.idPer" placeholder required></b-form-input>
+                  <b-form-input
+                    id="input-1"
+                    disabled
+                    v-model="this.vacationLists_leaveforms.idPer"
+                    placeholder
+                    required
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col cols="6">
@@ -197,17 +217,29 @@
             <b-row class="mb-1">
               <b-col cols="4">
                 <b-form-group>
-                  <b-form-input disabled v-model="this.vacationLists_leaveforms.assessor" :options="assessor"></b-form-input>
+                  <b-form-input
+                    disabled
+                    v-model="this.vacationLists_leaveforms.assessor"
+                    :options="assessor"
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col cols="4">
                 <b-form-group>
-                  <b-form-input disabled v-model="this.vacationLists_leaveforms.startTime" :options="assessor"></b-form-input>
+                  <b-form-input
+                    disabled
+                    v-model="this.vacationLists_leaveforms.startTime"
+                    :options="assessor"
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col cols="4">
                 <b-form-group>
-                  <b-form-input disabled v-model="this.vacationLists_leaveforms.endTime" :options="assessor"></b-form-input>
+                  <b-form-input
+                    disabled
+                    v-model="this.vacationLists_leaveforms.endTime"
+                    :options="assessor"
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -220,10 +252,10 @@
               value="asdasd"
               rows="12"
             ></b-form-textarea>
-                        <b-row class="mb-1 text-center">
-              <b-col cols="">审批员批复</b-col>
+            <b-row class="mb-1 text-center">
+              <b-col cols>审批员批复</b-col>
             </b-row>
-                        <b-form-textarea
+            <b-form-textarea
               id="input-1"
               v-model="this.vacationLists_leaveforms.reply"
               required
@@ -237,17 +269,17 @@
         </b-row>
       </b-container>
 
-      <b-col class="leaveInfors" v-if="leaveinfors_total" >
+      <b-col class="leaveInfors" v-if="leaveinfors_total">
         <b-row class="topic">
           <b-col class="contentNumber">
             共有
             <font color="red">{{vacationLists.length}}</font>条请假申请
-          </b-col>   
+          </b-col>
         </b-row>
-        <div class="con" v-for="(item,id) in items" :key="item.id" id="my-table">
-          <b-row class="con-model" >
+        <div class="con" v-for="(item,id) in vacationLists" :key="item.id" id="my-table">
+          <b-row class="con-model">
             <b-col cols="3">
-              <a href="javascript:0" @click="detalis(id)" :items="items">{{item.name}}的{{item.vacationType}}申请</a>
+              <a href="javascript:0" @click="detalis(id)">{{item.name}}的{{item.vacationType}}申请</a>
             </b-col>
             <b-col class="top-name" cols="3">
               <b-icon icon="person 
@@ -280,14 +312,13 @@
           </div>
         </div>
       </b-col>
-        <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-        aria-controls="my-table"
-    ></b-pagination>
-
-    <!-- per-page每一页显示三条  totoal-rows 总的条数 当前页数 currentpage -->
+      <b-col v-if="loading">
+        <span>加载中...</span>
+      </b-col>
+      <b-col v-if="noMore">
+        <span>无更多数据</span>
+      </b-col>
+      <!-- per-page每一页显示三条  totoal-rows 总的条数 当前页数 currentpage -->
     </b-container>
   </div>
 </template>
@@ -308,16 +339,18 @@ export default {
     maxDate.setDate(15);
 
     return {
-      items:[],
-       perPage:3,
-       currentPage: 1,
+      page: 1, //当前页数
+      pageNum: 3, //每页3条
+      itemsTotal: [], //后端获取到的存入到前端
+      loading: false,
+      noMore: false,
       prevent: false,
       leaveInfors: false,
       leaveinfors_total: true,
       min: minDate,
       max: maxDate,
       vacationLists: [],
-      vacationLists_leaveforms:[],
+      vacationLists_leaveforms: [],
       boxOne: "",
       newforms: {
         dateStart: "",
@@ -360,43 +393,17 @@ export default {
       ]
     };
   },
-  watch:{
-      currentPage(newName,oldName){
-        if(newName!=oldName){
-             //如果新的页数大于旧的页数
-          if(newName>oldName){
-            console.log(newName);
-          console.log(this.items);
-          console.log(this.items);
-          this.items=[]
-            for(let j=(newName*this.perPage)-this.perPage;j<(newName*this.perPage)-2;j++){
-          for(let i=0;i<this.perPage;i++){
-             this.items[i]=this.vacationLists[j];
-            }
-          }
-          }
-        }
-      }
-  },
-    computed: {
-        rows() {
-          return this.vacationLists.length
-        },
-        // currentPage(){
-  
-        // }
-      },
+
   methods: {
-    editRequest:function(ids){
-      if(this.vacationLists[ids].state!=="已完成"){
-        console.log(this.currentPage)
-    }else{
-       this.$bvModal
+    editRequest: function(ids) {
+      if (this.vacationLists[ids].state !== "已完成") {
+        console.log(this.currentPage);
+      } else {
+        this.$bvModal
           .msgBoxOk("当前所有流程已经完成无法操作！")
           .then(value => {})
           .catch(err => {});
       }
-    
     },
     preLeaveinfors_total() {
       this.leaveInfors = false;
@@ -407,7 +414,7 @@ export default {
       this.leaveInfors = true;
       this.leaveinfors_total = false;
       this.prevent = true;
-      this.vacationLists_leaveforms=this.vacationLists[ids];
+      this.vacationLists_leaveforms = this.vacationLists[ids];
       // console.log(this.vacationLists[ids]);
       // console.log(this.vacationLists_leaveforms)
     },
@@ -439,6 +446,38 @@ export default {
     pre: function() {
       this.$router.back();
     },
+
+    init: function() {
+      vacationLists(this.newforms.perId).then(res => {
+        //由于一些原因后端懒得改了，直接一次性获取到前端处理
+        this.itemsTotal = res.data;
+        if (res.data.length <= this.pageNum) {
+          this.vacationLists = res.data;
+          this.noMore = true;
+        } else {
+          this.vacationLists = res.data.slice(0, this.pageNum);
+          this.loading = true;
+        }
+      });
+    },
+
+    //滚动加载
+    loadMore: function() {
+      this.page++;
+      let begin = this.pageNum * this.page - this.pageNum;
+      let end = this.pageNum * this.page;
+      if (end >= this.itemsTotal.length - 1) {
+        end = this.itemsTotal.length;
+        this.noMore = true;
+        this.loading = false;
+      } else {
+        let end = this.pageNum * this.page;
+      }
+      let data = [];
+      data = [...this.vacationLists, ...this.itemsTotal.slice(begin, end)];
+      this.vacationLists = data;
+    },
+
     onSubmit(event) {
       event.preventDefault();
       var date = new Date();
@@ -487,21 +526,21 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    if(to.name==='login'){
+    if (to.name === "login") {
       next();
-    }else{
-    if (from.name === "myleave") {
-      this.boxOne = "";
-      this.$bvModal
-        .msgBoxConfirm("确认要离开当前页面吗？离开不会保存任何信息！")
-        .then(value => {
-          this.boxOne = value;
-          let flag = String(this.boxOne);
-          if (flag === "true") {
-   next();
-          }
-        });
-    }
+    } else {
+      if (from.name === "myleave") {
+        this.boxOne = "";
+        this.$bvModal
+          .msgBoxConfirm("确认要离开当前页面吗？离开不会保存任何信息！")
+          .then(value => {
+            this.boxOne = value;
+            let flag = String(this.boxOne);
+            if (flag === "true") {
+              next();
+            }
+          });
+      }
     }
   },
 
@@ -516,15 +555,34 @@ export default {
         this.assessor.push(res.data[i].name);
       }
     });
-    vacationLists(this.newforms.perId).then(res => {
-      this.vacationLists = res.data;
-      for(let i=0; i<this.perPage;i++){
-      this.items[i]=this.vacationLists[i]
-      }
-      // this.items=this.vacationLists;
-    });
   },
-  mounted() {}
+  mounted() {
+    //初始化数据
+    this.init();
+
+    // document.documentElement.scrollTop表示当前页面滚动条的位置,documentElement对应的是html标签,body对应的是body标签
+    // document.compatMode 判断当前浏览器的渲染方式用于兼容 CSS1Compat表示标准兼容模式开启
+    // 浏览器标准模式与怪异模式-CSS1Compat and BackCompat 　BackCompat 对应quirks mode
+    // 　  CSS1Compat 对应strict mode
+    // 　  BackCompat：标准兼容模式关闭。
+    // 　  CSS1Compat：标准兼容模式开启。
+    window.addEventListener("scroll", () => {
+      const scrollY =
+        document.body.scrollTop || document.documentElement.scrollTop; // 滚动条在Y轴上的滚动距离
+      const compatibility =
+        document.compatMode === "CSS1Compat"
+          ? document.documentElement.clientHeight
+          : document.body.clientHeight; // clientHeight 属性是一个只读属性，它返回该元素的像素高度，高度包含内边距（padding），不包含边框（border），外边距（margin）和滚动条，是一个整数，单位是像素 px。
+      const TotalHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      ); // 页面总高度
+      if (scrollY + compatibility >= TotalHeight) {
+        // 当滚动条滑到页面底部
+        this.loadMore();
+      }
+    });
+  }
 };
 </script>
 
