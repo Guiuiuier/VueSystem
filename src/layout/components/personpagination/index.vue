@@ -31,63 +31,61 @@
       <b-modal v-model="show" title="修改信息">
         <b-container fluid>
           <b-row class="mb-1 text-center">
-            <b-col cols="3">员工编号</b-col>
-            <b-col cols="3">姓名</b-col>
-            <b-col cols="3">性别</b-col>
-            <b-col cols="3">年龄</b-col>
+            <b-col cols="4">姓名</b-col>
+            <b-col cols="4">性别</b-col>
+            <b-col cols="4">年龄</b-col>
           </b-row>
 
           <b-row class="mb-1">
-            <b-col cols="3">
-              <b-form-group>
-                <b-form-input id="input-1" v-model="newforms.perId"></b-form-input>
-              </b-form-group>
-            </b-col>
-            <b-col cols="3">
+            <b-col cols="4">
               <b-form-group>
                 <b-form-input id="input-1" v-model="newforms.perName"></b-form-input>
               </b-form-group>
             </b-col>
 
-            <b-col cols="3">
+            <b-col cols="4">
               <b-form-group>
                 <b-form-select :options="variants" v-model="newforms.gender"></b-form-select>
               </b-form-group>
             </b-col>
 
-            <b-col cols="3">
+            <b-col cols="4">
               <b-form-group>
-                <b-form-input id="input-1" v-model="newforms.age"></b-form-input>
+                <b-form-select id="input-1" v-model="newforms.age" :options="variantsAge"></b-form-select>
               </b-form-group>
             </b-col>
           </b-row>
 
           <b-row class="mb-1 text-center">
-            <b-col cols="3">联系方式</b-col>
-            <b-col cols="3">地址</b-col>
-            <b-col cols="3">在职状态</b-col>
-            <b-col cols="3">部门</b-col>
+            <b-col cols="6">联系方式</b-col>
+            <b-col cols="6">地址</b-col>
           </b-row>
 
           <b-row class="mb-1">
-            <b-col cols="3">
+            <b-col cols="6">
               <b-form-group>
                 <b-form-input id="input-1" v-model="newforms.contact"></b-form-input>
               </b-form-group>
             </b-col>
-            <b-col cols="3">
+            <b-col cols="6">
               <b-form-group>
                 <b-form-input id="input-1" v-model="newforms.address"></b-form-input>
               </b-form-group>
             </b-col>
+          </b-row>
 
-            <b-col cols="3">
+          <b-row class="mb-1 text-center">
+            <b-col cols="6">在职状态</b-col>
+            <b-col cols="6">部门</b-col>
+          </b-row>
+          <b-row class="mb-1">
+            <b-col cols="6">
               <b-form-group>
                 <b-form-select v-model="newforms.perState" :options="variantsState"></b-form-select>
               </b-form-group>
             </b-col>
 
-            <b-col cols="3">
+            <b-col cols="6">
               <b-form-group>
                 <b-form-select v-model="newforms.part" :options="variantsPart"></b-form-select>
               </b-form-group>
@@ -128,6 +126,76 @@ export default {
 
   data() {
     return {
+      variantsAge: [
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "59",
+        "60",
+        "61",
+        "62",
+        "63",
+        "64",
+        "65",
+        "66",
+        "67",
+        "68",
+        "69",
+        "70",
+        "71",
+        "72",
+        "73",
+        "74",
+        "75",
+        "76",
+        "77",
+        "78",
+        "79",
+        "80",
+        "81",
+        "82",
+        "83",
+        "84",
+        "85"
+      ],
       isShow: true,
       perPage: 20,
       currentPage: 1,
@@ -160,7 +228,6 @@ export default {
 
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
       fields: [
-        { key: "id", label: "#", sortable: true },
         { key: "idPer", label: "员工编号" },
         { key: "namePer", label: "姓名", sortable: true },
         { key: "genderPer", label: "性别", sortable: true },
@@ -177,36 +244,49 @@ export default {
     // 修改
     sub: function() {
       this.boxOne = "";
-      this.$bvModal
-        .msgBoxConfirm("确认修改吗？")
-        .then(value => {
-          this.boxOne = value;
+      if (
+        this.newforms.contact.length < 11 ||
+        this.newforms.perName.length < 1 ||
+        this.newforms.age.length < 1 ||
+        this.newforms.perState.length < 1 ||
+        this.newforms.gender.length < 1 ||
+        this.newforms.part.length < 1 ||
+        this.newforms.address.length < 1
+      ) {
+        alert("请核对信息再提交(或手机号是否为11位?)");
+        return false;
+      } else {
+        this.$bvModal
+          .msgBoxConfirm("确认修改吗？")
+          .then(value => {
+            this.boxOne = value;
 
-          // console.log(typeof this.boxOne);
-          let flag = String(this.boxOne);
-          if (flag === "true") {
-            updatePer(
-              this.newforms.id,
-              this.newforms.perId,
-              this.newforms.perName,
-              this.newforms.gender,
-              this.newforms.age,
-              this.newforms.part,
-              this.newforms.address,
-              this.newforms.contact,
-              this.newforms.perState
-            )
-              .then(res => {
-                // console.log(res);
-              })
-              .catch(err => {
-                console.log(err);
-              });
-            this.show = false;
-            this.reload();
-          }
-        })
-        .catch(err => {});
+            // console.log(typeof this.boxOne);
+            let flag = String(this.boxOne);
+            if (flag === "true") {
+              updatePer(
+                this.newforms.id,
+                this.newforms.perId,
+                this.newforms.perName,
+                this.newforms.gender,
+                this.newforms.age,
+                this.newforms.part,
+                this.newforms.address,
+                this.newforms.contact,
+                this.newforms.perState
+              )
+                .then(res => {
+                  // console.log(res);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              this.show = false;
+              this.reload();
+            }
+          })
+          .catch(err => {});
+      }
     },
 
     // 获取编辑内容
@@ -243,9 +323,9 @@ export default {
           // console.log(typeof this.boxOne);
           let flag = String(this.boxOne);
           if (flag === "true") {
-            deletPer(Ids).then(res => {}).catch(err=>{
-              
-            });
+            deletPer(Ids)
+              .then(res => {})
+              .catch(err => {});
             this.reload();
           }
         });
@@ -266,10 +346,11 @@ export default {
   },
   computed: {
     rows() {
+      //计算分页的页数
       if (this.filter != "") {
         return this.filter.length;
       } else {
-        // return this.perInformations.length;
+        return this.items.length;
       }
     }
   },

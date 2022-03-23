@@ -22,20 +22,20 @@ include "../database/configupload.inc.php";
     // 连接数据库并执行
     $result=$mysqli ->query($sql);
      
-    $mysqli->close();    
     //删除掉数据库的文件后再删除本地存的文件
-     //保存的文件都在这里
+    //保存的文件都在这里
     $download_path = "../File/";
     //文件名
     $file_name=$c['fileName'];
     // var_dump($file_name);
-     //路径
+    //路径
     $file=$download_path.$file_name;  //双引号可以不用.
     // var_dump($file);
     if (!unlink($file)){
-    echo ("删除失败请检查文件是否存在？ $file");
-    }else
-    {
-    echo ("删除成功 $file");
-    }
+           echo ("删除失败请检查文件是否存在？ $file");
+       }else
+       {
+              echo ("删除成功 $file");
+       }
+       $mysqli->close();    
   ?>

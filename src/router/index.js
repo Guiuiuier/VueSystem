@@ -69,7 +69,6 @@ const routes = [{
             component: () => import('@/views/announceMain/announce/index'),
             name: 'announce',
             meta: {
-              // title: "公司公告",
             },
 
           },
@@ -147,17 +146,33 @@ const routes = [{
                 name: "myleave",
                 meta: {
                   title: "我的请假",
-                }
-              },
-
-              {
-                path: 'approval',
-                component: () => import('@/views/attendanceMain/leaveApproval/index'),
-                name: "approval",
+                },
+                children:[              {
+                  path:'myleaveinfors/:id',
+                  component:()=>import('@/views/attendanceMain/requestContent/index'),
+                  name:'myleaveinfors',
+                  meta:{
+                    title:"请假内容",
+                  }
+                },
+                              {
+                path: 'editMyleaveinfors/:id',
+                component: () => import('@/views/attendanceMain/requestEdit/index'),
+                name: "editMyleaveinfors",
                 meta: {
                   title: "员工审批",
                 }
               },
+  ]
+              },
+              // {
+              //   path: 'approval',
+              //   component: () => import('@/views/attendanceMain/leaveApproval/index'),
+              //   name: "approval",
+              //   meta: {
+              //     title: "员工审批",
+              //   }
+              // },
             ]
           },
 

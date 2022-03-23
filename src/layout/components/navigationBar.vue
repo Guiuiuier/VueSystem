@@ -25,7 +25,7 @@
           <b-nav-item-dropdown right>
             <template #button-content>
               <b-avatar src="../../public/img/head.jpg"></b-avatar>
-              <em class="userName">{{userinfo.name}}</em>
+              <em class="userName">{{userinfo.roleid}}</em>
             </template>
             <b-dropdown-item @click="quit">退出登录</b-dropdown-item>
           </b-nav-item-dropdown>

@@ -27,11 +27,12 @@ export default {
     personPagination
   },
   created() {
-       if (this.$route.name === "myleave") {
+       if (this.$route.name === "myleave"||this.$route.name === "myleaveinfors"||this.$route.name==="editMyleaveinfors") {
       this.isShow = false;
     } else {
       this.isShow = true;
     }
+    // console.log("我是父组件1");
   },
   mounted() {},
   watch: {
@@ -39,7 +40,7 @@ export default {
     $route(to, from) {
       // console.log(to);
       if (
-        to.name === "myleave"||to.name==='approval'
+        to.name === "myleave"||to.name==="myleaveinfors"||to.name==="editMyleaveinfors"
       ) {
         this.isShow = false;
       } else {

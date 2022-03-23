@@ -8,15 +8,24 @@
           <announcement></announcement>
           <!-- 人员管理 -->
           <personal></personal>
+
           <b-button v-b-toggle.collapse-myattend>
             <!-- 考勤 -->
             <attendance></attendance>
           </b-button>
-
           <!-- 我的考勤 -->
           <mySign></mySign>
           <myattendance></myattendance>
           <!-- 折叠管理 -->
+           <b-button v-b-toggle.collapse-partment>
+            <partment></partment>
+             </b-button>
+             <mypartment></mypartment>
+               <b-button v-b-toggle.collapse-mysalary>
+            <salary></salary>
+            </b-button>
+            <mysalary></mysalary>
+            <!-- <allsalary></allsalary> -->
           <b-button v-b-toggle.collapse-myfile>
             <!-- 文件管理 -->
             <file></file>
@@ -55,6 +64,11 @@ import LoginLog from "./The-siderBar/systemmange/loginLog";
 import updatePass from "./The-siderBar/systemmange/updatePass";
 import mySign from "./The-siderBar/attendance/mySign";
 import users from "./The-siderBar/systemmange/Users";
+import mysalary from "./The-siderBar/salary/mysalary";
+import salary from "./The-siderBar/salary";
+import allsalary from "./The-siderBar/salary/allsalary";
+import partment from "./The-siderBar/partment";
+import mypartment from "./The-siderBar/partment/index";
 export default {
   data() {
     return {};
@@ -71,7 +85,13 @@ export default {
     LoginLog,
     updatePass,
     mySign,
+    salary,
+    partment,
+    mysalary,
+    allsalary,
+    mypartment,
     users,
+    allsalary,
   },
   methods: {},
   mounted() {}

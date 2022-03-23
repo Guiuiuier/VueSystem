@@ -255,7 +255,7 @@ export default {
     // 下载
 
     downloadFile: function(item) {
-      if (item.src == "" || item.src == "undefined") {
+      if (item.src == "" || item.src == "undefined" ||item.src==null) {
         let boxOne = "";
         let namePerson = item.namePer;
         this.$bvModal

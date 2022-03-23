@@ -4,8 +4,8 @@ include "../database/config.inc.php";
 date_default_timezone_set("PRC");
 header('Access-Control-Allow-Origin:*');
 header('Access-Control-Allow-Methods:POST');
-
-
+ //关闭错误提示
+ini_set('display_errors','off');
 $v=(file_get_contents("php://input"));
 // var_dump(json_decode($v,true));
 $c=json_decode($v,true);
@@ -30,8 +30,8 @@ $result=$mysqli ->query($sql);
 };
 //   var_dump($rows);
  if($rows==null){
-return false; 
-}else{
+  return false; 
+  }else{
          echo json_encode($rows);
  }
 

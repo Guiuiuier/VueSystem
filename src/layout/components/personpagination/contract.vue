@@ -303,7 +303,7 @@ export default {
       if (this.filter != "") {
         return this.filter.length;
       } else {
-        // return this.theFiles.length;
+        return this.items.length;
       }
     }
   },

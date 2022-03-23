@@ -27,7 +27,7 @@ include "../database/configupload.inc.php";
     $file_path="$file_location$file_name";
      //如果有这个文件改名 并上传
     if(file_exists($file_path)){
-          $file_name=`rand(0,1000)`.$file_name;
+           $file_name=$file_name."(".rand(0,1000).")";
           $file_path="$file_location$file_name";
     }
     // if($_FILES['File']['error']==0){

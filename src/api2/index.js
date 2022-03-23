@@ -27,11 +27,10 @@ export const personnelInfo = () => requests({
 
 // 新增人员
 // 曹难怪一直报错
-export const newPer = (perId, perName, gender, age, part, address, contact, perState) => requests({
+export const newPer = (perName, gender, age, part, address, contact, perState) => requests({
   url: '/personnelInfo/persons/newPer.php',
   method: "post",
   data: {
-    perId,
     perName,
     gender,
     age,
@@ -198,16 +197,16 @@ export const Clocklists = (idPer, clockState) => requests({
 })
 
 //添加登录用户
-export const newUsers = (idPer, username, userpass, perName, part, role) => requests({
+export const newUsers = (idPer,  userpass, username, part, role,email) => requests({
   url: "/personnelInfo/users/newUsers.php",
   method: "post",
   data: {
     idPer,
-    perName,
     part,
     username,
     userpass,
     role,
+    email
   }
 })
 
@@ -224,12 +223,11 @@ export const deletUsers = (id) => requests({
     id,
   }
 })
-export const updateUsers = (id, perId, perName, part, role) => requests({
+export const updateUsers = (id, perName, part, role) => requests({
   url: "/personnelInfo/users/updateUsers.php",
   method: "post",
   data: {
     id,
-    perId,
     perName,
     part,
     role
@@ -385,4 +383,90 @@ params:
   idPer,
 }
 
+});
+
+export const cancelRequest=(id)=>requests({
+  method:"get",
+  url: "/personnelInfo/persons/cancelRequest.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+params:
+{
+  id,
+}
+
+})
+export const vacationUpdate=(vacationType,day,contact,startTime,endTime,content,assessor,clockTime,id)=>requests({
+  method:"post",
+  url:"/personnelInfo/persons/vacationUpdate.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data:{
+    vacationType,day,contact,startTime,endTime,content,assessor,clockTime,id
+  }
+})
+
+export const vacationmyleave=(id,idPer)=>requests({
+  method:"get",
+  url:"/personnelInfo/persons/vacationmyleave.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  params:{
+    id,idPer
+  }
+})
+
+export const idAll=()=>requests({
+  method:"get",
+  url:"/personnelInfo/persons/idall.php",
+})
+
+export const allUsername=()=>requests({
+  method:"get",
+  url:"/personnelInfo/users/allUsername.php",
+})
+
+export const isClock=(clockTime,id)=>requests({
+  method:'get',
+  url:"/personnelInfo/persons/isClock.php",
+  params:{
+clockTime,
+id,
+  }
+})
+export const loginCode=(username)=>requests({
+
+  method:"post",
+  url:"/personnelInfo/users/loginCode.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data:{
+    username,
+  }
+})
+export const sendMail=(contact)=>requests({
+
+  method:"post",
+  url:"/personnelInfo/users/sendMail.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data:{
+    contact,
+  }
+})
+export const myPass=(username)=>requests({
+
+  method:"post",
+  url:"/personnelInfo/users/mypass.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data:{
+    username,
+  }
 })

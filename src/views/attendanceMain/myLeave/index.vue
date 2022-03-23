@@ -1,12 +1,10 @@
 <template>
   <div>
-    <b-container fluid class="typography_myleave">
+    <b-container fluid class="typography_myleave" v-if="isShow">
       <b-button @click="pre" v-if="leaveinfors_total">返回</b-button>
       <b-button variant="success" v-if="leaveinfors_total" class="btn1" v-b-toggle.collapse-1>点击请假</b-button>
       <b-button @click="preLeaveinfors_total" v-if="prevent">返回</b-button>
-      <b-row>
-        <b-col></b-col>
-      </b-row>
+      <b-row></b-row>
 
       <b-collapse id="collapse-1" class="mt-2">
         <b-form @submit="onSubmit">
@@ -124,156 +122,11 @@
         </b-form>
       </b-collapse>
 
-      <b-container v-if="leaveInfors">
-        <b-col
-          style="margin-top:50px; padding:0; padding-bottom:20px;font-weight:bold;font-size:1em"
-        >
-          {{this.vacationLists_leaveforms.name}}的
-          <span
-            style="color:red"
-          >{{this.vacationLists_leaveforms.vacationType}}</span>详情
-        </b-col>
-        <b-row class="myleave" style="margin:0">
-          <b-col class="myleave_topic">
-            <b-row class="mb-1 text-center">
-              <b-col cols="6">请假类型</b-col>
-              <b-col cols="6">请假天数</b-col>
-            </b-row>
-            <b-row class="mb-1">
-              <b-col cols="6">
-                <b-form-group>
-                  <b-form-input
-                    v-model="this.vacationLists_leaveforms.vacationType"
-                    disabled
-                    :options="leaveType"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col cols="6">
-                <b-form-group>
-                  <b-form-input
-                    v-model="this.vacationLists_leaveforms.day"
-                    disabled
-                    :options="variants"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-            </b-row>
-            <b-row class="mb-1 text-center">
-              <b-col cols="6">姓名</b-col>
-              <b-col cols="6">部门</b-col>
-            </b-row>
-            <b-row class="mb-1">
-              <b-col cols="6">
-                <b-form-group>
-                  <b-form-input
-                    disabled
-                    id="input-1"
-                    v-model="this.vacationLists_leaveforms.name"
-                    placeholder
-                    required
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col cols="6">
-                <b-form-group>
-                  <b-form-input disabled v-model="this.vacationLists_leaveforms.part" required></b-form-input>
-                </b-form-group>
-              </b-col>
-            </b-row>
-            <b-row class="mb-1 text-center">
-              <b-col cols="6">员工编号</b-col>
-              <b-col cols="6">联系方式</b-col>
-            </b-row>
-            <b-row class="mb-1">
-              <b-col cols="6">
-                <b-form-group>
-                  <b-form-input
-                    id="input-1"
-                    disabled
-                    v-model="this.vacationLists_leaveforms.idPer"
-                    placeholder
-                    required
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col cols="6">
-                <b-form-group>
-                  <b-form-input
-                    id="input-1"
-                    disabled
-                    v-model="this.vacationLists_leaveforms.contact"
-                    placeholder
-                    required
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-            </b-row>
-            <b-row class="mb-1 text-center">
-              <b-col cols="4">审批人</b-col>
-              <b-col cols="4">开始时间</b-col>
-              <b-col cols="4">结束时间</b-col>
-            </b-row>
-            <b-row class="mb-1">
-              <b-col cols="4">
-                <b-form-group>
-                  <b-form-input
-                    disabled
-                    v-model="this.vacationLists_leaveforms.assessor"
-                    :options="assessor"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col cols="4">
-                <b-form-group>
-                  <b-form-input
-                    disabled
-                    v-model="this.vacationLists_leaveforms.startTime"
-                    :options="assessor"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col cols="4">
-                <b-form-group>
-                  <b-form-input
-                    disabled
-                    v-model="this.vacationLists_leaveforms.endTime"
-                    :options="assessor"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-            </b-row>
-            <b-form-textarea
-              id="input-1"
-              v-model="this.vacationLists_leaveforms.content"
-              required
-              disabled
-              placeholder="详细原因是"
-              value="asdasd"
-              rows="12"
-            ></b-form-textarea>
-            <b-row class="mb-1 text-center">
-              <b-col cols>审批员批复</b-col>
-            </b-row>
-            <b-form-textarea
-              id="input-1"
-              v-model="this.vacationLists_leaveforms.reply"
-              required
-              disabled
-              placeholder="暂未批复"
-              value="asdasd"
-              rows="12"
-            ></b-form-textarea>
-          </b-col>
-          <!-- <b-col></b-col> -->
-        </b-row>
-      </b-container>
-
       <b-col class="leaveInfors" v-if="leaveinfors_total">
         <b-row class="topic">
           <b-col class="contentNumber">
             共有
-            <font color="red">{{vacationLists.length}}</font>条请假申请
+            <font color="red">{{itemsTotal.length}}</font>条请假申请
           </b-col>
         </b-row>
         <div class="con" v-for="(item,id) in vacationLists" :key="item.id" id="my-table">
@@ -303,8 +156,8 @@
           <div class="con-bot">{{item.content}}</div>
           <div class="content-button">
             <b-col class="contentbtn">当前批复:{{item.reply}}</b-col>
-            <b-col class="contentbtn">当前进度:{{item.state}}</b-col>
             <b-col class="contentbtn">处理时间:{{item.replyTime}}</b-col>
+            <b-col class="contentbtn">当前进度:{{item.state}}</b-col>
           </div>
           <div class="content-button">
             <b-button class="contentbtn" variant="danger" @click="cancelRequest(id)">取消申请</b-button>
@@ -320,10 +173,11 @@
       </b-col>
       <!-- per-page每一页显示三条  totoal-rows 总的条数 当前页数 currentpage -->
     </b-container>
+    <router-view  :assessPerson="assessor"></router-view>
   </div>
 </template>
 <script>
-import { Assessor, vacation, vacationLists } from "@/api2";
+import { Assessor, vacation, vacationLists, cancelRequest } from "@/api2";
 export default {
   inject: ["reload"],
   data() {
@@ -339,10 +193,12 @@ export default {
     maxDate.setDate(15);
 
     return {
+      isShow: true,
       page: 1, //当前页数
       pageNum: 3, //每页3条
       itemsTotal: [], //后端获取到的存入到前端
       loading: false,
+      leaveInfors_edit: false,
       noMore: false,
       prevent: false,
       leaveInfors: false,
@@ -364,7 +220,9 @@ export default {
         perContact: "",
         assessor: ""
       },
-      assessor: [],
+      assessor: [
+
+      ],
       variants: [
         { text: "1", value: "1" },
         "2",
@@ -395,9 +253,29 @@ export default {
   },
 
   methods: {
-    editRequest: function(ids) {
-      if (this.vacationLists[ids].state !== "已完成") {
-        console.log(this.currentPage);
+    editRequest: function(id) {
+      if (this.vacationLists[id].state !== "已完成") {
+        this.vacationLists_leaveforms = this.vacationLists[id];
+        let contentId = this.vacationLists[id].id;
+        this.$router.push(
+          `/index/attendancemain/myattendance/myleave/editMyleaveinfors/${contentId}`
+        );
+
+        // console.log(this.vacationLists[ids].id);
+      } else {
+        this.$bvModal
+          .msgBoxOk("当前所有流程已经完成无法操作！")
+          .then(value => {})
+          .catch(err => {});
+      }
+    },
+    detalis: function(id) {
+      if (this.vacationLists[id.state] !== "已完成") {
+        this.vacationLists_leaveforms = this.vacationLists[id];
+        let contentId = this.vacationLists[id].id;
+        this.$router.push(
+          `/index/attendancemain/myattendance/myleave/myleaveinfors/${contentId}`
+        );
       } else {
         this.$bvModal
           .msgBoxOk("当前所有流程已经完成无法操作！")
@@ -410,17 +288,7 @@ export default {
       this.leaveinfors_total = true;
       this.prevent = false;
     },
-    detalis: function(ids) {
-      this.leaveInfors = true;
-      this.leaveinfors_total = false;
-      this.prevent = true;
-      this.vacationLists_leaveforms = this.vacationLists[ids];
-      // console.log(this.vacationLists[ids]);
-      // console.log(this.vacationLists_leaveforms)
-    },
     cancelRequest: function(ids) {
-      // console.log(this.vacationLists[ids].id);
-      // console.log(this.vacationLists[ids]);
       if (this.vacationLists[ids].state == "进行中") {
         this.boxOne = "";
         this.$bvModal
@@ -429,9 +297,14 @@ export default {
             this.boxOne = value;
             let flag = String(this.boxOne);
             if (flag === "true") {
-              this.$bvModal
-                .msgBoxOk("取消成功")
-                .then(value => {})
+              cancelRequest(this.vacationLists[ids].id)
+                .then(res => {
+                  this.$bvModal
+                    .msgBoxOk("取消成功")
+                    .then(value => {})
+                    .catch(err => {});
+                  this.reload();
+                })
                 .catch(err => {});
             }
           })
@@ -451,6 +324,7 @@ export default {
       vacationLists(this.newforms.perId).then(res => {
         //由于一些原因后端懒得改了，直接一次性获取到前端处理
         this.itemsTotal = res.data;
+        // console.log(res.data.length);
         if (res.data.length <= this.pageNum) {
           this.vacationLists = res.data;
           this.noMore = true;
@@ -466,7 +340,7 @@ export default {
       this.page++;
       let begin = this.pageNum * this.page - this.pageNum;
       let end = this.pageNum * this.page;
-      if (end >= this.itemsTotal.length - 1) {
+      if (end >= this.itemsTotal.length) {
         end = this.itemsTotal.length;
         this.noMore = true;
         this.loading = false;
@@ -515,7 +389,7 @@ export default {
                 this.$bvModal.msgBoxOk("申请成功！请等待").then(value => {});
                 setTimeout(() => {
                   this.reload();
-                }, 1000);
+                }, 2000);
               })
               .catch(err => {});
           }
@@ -543,29 +417,51 @@ export default {
       }
     }
   },
+  watch: {
+    //判断当前路由
+    $route(to, from) {
+      // console.log(to);
+      if (to.name === "myleaveinfors"||to.name==="editMyleaveinfors") {
+        this.isShow = false;
+      } else {
+        this.isShow = true;
+      }
 
+    }
+  },
   created() {
+    // console.log(this.$route);
+    if(this.$route.name==='myleaveinfors'||this.$route.name==="editMyleaveinfors"){
+        this.isShow = false;
+      } else {
+        this.isShow = true;
+      }
+      // console.log("我是父组件2")
     let local = localStorage.getItem("user_info");
-    this.newforms.name = JSON.parse(local).name;
+    this.newforms.name = JSON.parse(local).roleid;
     this.newforms.perId = JSON.parse(local).idPer;
     this.newforms.part = JSON.parse(local).part;
     //循环遍历并存入数组
     Assessor(this.newforms.part).then(res => {
       for (var i = 0; i < res.data.length; i++) {
-        this.assessor.push(res.data[i].name);
+        this.assessor.push(res.data[i].roleid);
       }
     });
+    // this.vacationLists_leaveforms=this.vacationLists;
+    // console.log(this.vacationLists)
+    // this.isShow=true;
+    // console.log("我还是会运行！");
   },
   mounted() {
     //初始化数据
     this.init();
-
     // document.documentElement.scrollTop表示当前页面滚动条的位置,documentElement对应的是html标签,body对应的是body标签
     // document.compatMode 判断当前浏览器的渲染方式用于兼容 CSS1Compat表示标准兼容模式开启
     // 浏览器标准模式与怪异模式-CSS1Compat and BackCompat 　BackCompat 对应quirks mode
     // 　  CSS1Compat 对应strict mode
     // 　  BackCompat：标准兼容模式关闭。
     // 　  CSS1Compat：标准兼容模式开启。
+
     window.addEventListener("scroll", () => {
       const scrollY =
         document.body.scrollTop || document.documentElement.scrollTop; // 滚动条在Y轴上的滚动距离

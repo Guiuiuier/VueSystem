@@ -51,9 +51,8 @@ export default {
   methods: {
     pre: function() {
       this.$router.back();
-      this.reloads();
+      // this.reloads();
     },
-    sub: function() {},
     onSubmit(event) {
       event.preventDefault();
       //   alert(JSON.stringify(this.form));
@@ -79,6 +78,24 @@ export default {
          }
         })
         .catch(err => {});
+    }
+  },
+    beforeRouteLeave(to, from, next) {
+    if (to.name === "login") {
+      next();
+    } else {
+      if (from.name === "editannounce") {
+        this.boxOne = "";
+        this.$bvModal
+          .msgBoxConfirm("确认要离开当前页面吗？离开不会保存任何信息！")
+          .then(value => {
+            this.boxOne = value;
+            let flag = String(this.boxOne);
+            if (flag === "true") {
+              next();
+            }
+          });
+      }
     }
   },
   created() {
