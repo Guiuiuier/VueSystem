@@ -156,14 +156,23 @@ export default {
        for(let i=0;i<res.data.length;++i){
          if(res.data[i].clockType=="上班打卡"){
             sbdk=sbdk-1;
-            console.log(sbdk)
+            // console.log(sbdk)
              
-          }
+          }else{
+            this.sbdkNum=sbdk
+          };
           if(res.data[i].clockType=="下班打卡"){
                xbdk=xbdk-1;
             // console.log(xbdk);
+          }else{
+            this.xbdkNum=xbdk
           };
        }
+       this.sbdkNum=sbdk;
+       this.xbdkNum=xbdk;
+     }).catch(err=>{
+       let sbdk=1;
+       let xbdk=1;
        this.sbdkNum=sbdk;
        this.xbdkNum=xbdk;
      });

@@ -1,5 +1,7 @@
 <template>
-    <div @click="btnShow(this)" >
+    <div @click="btnShow(this)" style="    height: 40px;
+    line-height:40px
+">
     <b-icon icon="folder" class="iconstyle"></b-icon>薪资管理
     <b-icon icon="chevron-up" class="Childiconstyle" v-show="btnshow"></b-icon>
     <b-icon icon="chevron-down" class="Childiconstyle" v-show="btnshowdown"></b-icon>
