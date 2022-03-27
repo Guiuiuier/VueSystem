@@ -107,7 +107,7 @@
 <script>
 // 兄弟间传值
 var index = "";
-import searchPerTravel from "../navSearch/personsearch";
+import searchPerTravel from "../sameLevelJS/search";
 import {
   DeletFile_em,
   updateFile_em,

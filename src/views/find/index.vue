@@ -17,25 +17,39 @@
                   ></b-form-input>
                 </b-col>
               </b-row>
-              <b-row v-if="codeinput" style="padding-top:20px padding-left:20px">
+              <b-row v-if="!userInput" style="padding-top:20px padding-left:20px">
                 <b-col cols="8" style="padding-right:15px;padding-left:15px;">
                   <b-form-input
                     v-model="form.code"
                     type="text"
                     required
                     id="input-1"
-                    placeholder="请输入收到的验证码"
+                    placeholder="请输入验证码"
                   >1</b-form-input>
                 </b-col>
                 <b-col style="padding-right:15px padding-left:0px">
-                  <b-button style="margin:0px ;width:100%" variant="info" @click="sendCode"  id="sendBtn">发送验证码</b-button>
+                  <b-button
+                    style="margin:0px ;width:100%"
+                    variant="info"
+                    @click="countDown"
+                    id="sendBtn"
+                    v-show="codeBtnShow"
+                  >获取验证码</b-button>
+                  <b-button
+                    style="margin:0px ;width:100%"
+                    variant="info"
+                    @click="countDown"
+                    id="sendBtn"
+                    disabled
+                    v-show="!codeBtnShow"
+                  >{{count}}后重新获取</b-button>
                 </b-col>
               </b-row>
             </b-form-group>
 
             <span class="errorTips" v-if="infoTips">您的账号是{{this.username}}密码是:{{this.userpass}}</span>
             <span class="errorTips" v-if="erroTips">都没这个号，乱输入？</span>
-            <b-form-group id="input-group-4">
+            <b-form-group id="input-group-4" v-if="isAdminShow">
               <div class="register_right" style="float:right">
                 <a
                   href="javascript:;"
@@ -47,9 +61,9 @@
               <div class="clear" style="clear:both"></div>
             </b-form-group>
             <b-button type="submit" variant="primary" v-if="findBtn">找回</b-button>
-            <b-button type="submit" variant="primary" @click="Myuser" v-if="subBtn">确认</b-button>
+            <b-button type="submit" variant="primary" @click="Myuser" v-if="!findBtn">确认</b-button>
             <b-button variant="danger" @click="back" class="backbtn" v-if="preBtn">返回上一页</b-button>
-            <b-button variant="danger" @click="pre" class="backbtn" v-if="preBtn2">返回上一页</b-button>
+            <b-button variant="danger" @click="pre" class="backbtn" v-if="!preBtn">返回上一页</b-button>
           </b-form>
         </div>
       </b-container>
@@ -120,12 +134,14 @@ import { loginCode, sendMail, myPass } from "@/api2";
 export default {
   data() {
     return {
+      isAdminShow:true,
       preBtn: true,
-      preBtn2: false,
       subBtn: false,
-      codeinput: false,
       userInput: true,
       findBtn: true,
+      codeBtnShow: true,
+      timer: null,
+      count: "",
       code: "",
       contact: "",
       form: {
@@ -151,12 +167,10 @@ export default {
     },
     pre: function() {
       this.preBtn = true;
-      this.preBtn2 = false;
-      this.subBtn = false;
-      this.codeinput = false;
       this.userInput = true;
       this.findBtn = true;
-      this.infoTips=false;
+      this.isAdminShow=true;
+      // this.infoTips = false;
     },
     controoter: function() {
       this.rooter = true;
@@ -174,14 +188,13 @@ export default {
       event.preventDefault(); //防止发生默认行为
       loginCode(this.form.name).then(res => {
         if (res.data[0].username == this.form.name) {
+                this.isAdminShow=false;
+
           this.contact = res.data[0].number;
           // console.log(this.contact);
           this.userInput = false;
-          this.codeinput = true;
           this.findBtn = false;
-          this.subBtn = true;
           this.preBtn = false;
-          this.preBtn2 = true;
         } else {
           this.erroTips = true;
           setTimeout(() => {
@@ -189,49 +202,58 @@ export default {
           }, 2000);
         }
       });
-      // return false;
-      // login().then(res => {
-      //   if (this.form.name == res.data.userinfo.username) {
-      //     this.infoTips = true;
-      //     this.erroTips = false;
-      //     this.username = res.data.userinfo.username;
-      //     this.userpass = res.data.userinfo.userpass;
-      //   } else {
-      //     this.erroTips = true;
-      //     this.infoTips = false;
-      //   }
-      // })   .catch(err => {
-      //     console.log(err);
-      //   });
     },
-    sendCode: function() {
-      let  sendBtn=document.getElementById("sendBtn");
-      sendBtn.disabled="disabled";
-      sendMail(this.contact).then(res => {
-        this.code = res.data;
-      });
-      setTimeout(()=>{
-        sendBtn.innerHTML="验证码已发送"
-      },1000)
-            setTimeout(()=>{
-              sendBtn.disabled=false;
-              sendBtn.innerHTML="发送验证码"
-            },60000)
-    },
+    // sendCode: function() {
+    //   // let  sendBtn=document.getElementById("sendBtn");
+    //   // sendBtn.disabled="disabled";
+    //   // sendMail(this.contact).then(res => {
+    //   //   this.code = res.data;
+    //   // });
+    //   // setTimeout(()=>{
+    //   //   sendBtn.innerHTML="验证码已发送"
+    //   // },1000)
+    //   //       setTimeout(()=>{
+    //   //         sendBtn.disabled=false;
+    //   //         sendBtn.innerHTML="发送验证码"
+    //   //       },1100)
+    // },
 
     Myuser: function() {
       //  alert(JSON.stringify(this.form));
-      if (this.form.code != this.code||this.form.code=="") {
+      if (this.form.code != this.code || this.form.code == "") {
         alert("验证码错误");
         // return false;
       } else {
         myPass(this.form.name).then(res => {
-          this.username=res.data[0].username;
-          this.userpass=res.data[0].userpass;
-          console.log(this.username,this.userpass);
-                  this.infoTips = true;
-
+          this.username = res.data[0].username;
+          this.userpass = res.data[0].userpass;
+          console.log(this.username, this.userpass);
+          this.infoTips = true;
         });
+      }
+    },
+    countDown() {
+      const TIME_COUNT = 60;
+      //当点击的一瞬间disabled
+      this.codeBtnShow = false;
+      //同时伪异步一下
+      sendMail(this.contact).then(res => {
+        this.code = res.data;
+      });
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        //发送
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.codeBtnShow = true;
+            //清除定时器
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000);
+      } else {
       }
     },
     //   重置代码
@@ -245,9 +267,10 @@ export default {
       this.$nextTick(() => {
         this.show = true;
         this.errTips = false;
-
       });
     }
-  }
+  },
+  mounted() {},
+  created() {}
 };
 </script>

@@ -106,18 +106,8 @@
         <b-col sm="1" style="font-size:10px;color:red" v-show="sucessShow">添加成功!</b-col>
         <!-- <b-col sm="1" style="font-size:10px;color:red">失败!重新添加</b-col> -->
 
-        <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input v-model="form.field" size="sm" class="mr-sm-2" placeholder="请输入员工姓名或者ID"></b-form-input>
-            <b-button
-              size="sm"
-              class="my-2 my-sm-0"
-              variant="success"
-              type="submit"
-              @click="searchBtn"
-            >查询内容</b-button>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="emptyInfo">清空</b-button>
-          </b-nav-form>
+             <b-navbar-nav class="ml-auto">
+              <searchContent></searchContent>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -137,7 +127,7 @@
 import { newUsers, idAll, allUsername } from "@/api2";
 // 通过中间间 传入搜索信息
 //  兄弟间传值
-import searchPerTravel from "./personsearch.js";
+import searchContent from "@/components/searchBox/index";
 export default {
   inject: ["reload"],
   data() {
@@ -169,6 +159,9 @@ export default {
       },
       userId: []
     };
+  },
+    components: {
+    searchContent, //查询组件
   },
   computed: {
     stateUser(){

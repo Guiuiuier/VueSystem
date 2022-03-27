@@ -76,18 +76,8 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input v-model="form.field" size="sm" class="mr-sm-2" placeholder="请输入查询的账户"></b-form-input>
-            <b-button
-              size="sm"
-              class="my-2 my-sm-0"
-              variant="success"
-              type="submit"
-              @click="searchBtn"
-            >查询内容</b-button>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="emptyInfo">清空</b-button>
-          </b-nav-form>
+      <b-navbar-nav class="ml-auto">
+          <searchContent></searchContent>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -105,9 +95,8 @@
  
  <script>
 //  兄弟间传值
-import axios from "axios";
+import searchContent from "@/components/searchBox/index";
 import { newPer, uploadFile } from "@/api2";
-import searchPerTravel from "./personsearch.js";
 export default {
   inject:['reload'],
   data() {
@@ -130,6 +119,9 @@ export default {
         // field: ""
       }
     };
+  },
+  components:{
+searchContent,
   },
   methods: {
     //上传文件

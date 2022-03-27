@@ -107,7 +107,7 @@
 <script>
 // 兄弟间传值
 var index = "";
-import searchPerTravel from "../navSearch/personsearch";
+import searchPerTravel from "../sameLevelJS/search";
 import { DeletFile,uploadFile, updateFile, downloadFile, Fileinfors,updateFileWord } from "@/api2";
 export default {
   // props: {
@@ -151,8 +151,8 @@ export default {
         {
           key: "actions",
           label: "操作",
-          sortable: true,
-          tdClass: "align-middle"
+          // sortable: true,
+          // tdClass: "align-middle"
         }
       ]
     };

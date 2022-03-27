@@ -44,6 +44,8 @@
   </div>
 </template>
 <script>
+import {jia} from "@/commonFun/scroll";
+// Vue.prototype
 import { allAnnounce, announceDelet } from "@/api2";
 export default {
   inject: ["reloads"],
@@ -165,6 +167,13 @@ export default {
   },
   mounted() {
     //初始化数据
+    //   allAnnounce().then(res => {
+    //   let cont = res.data;
+    //    jia(cont);
+
+    // });
+  //  console.log(items);
+  //   jia(this.totalcont);
     this.init();
     // document.documentElement.scrollTop表示当前页面滚动条的位置,documentElement对应的是html标签,body对应的是body标签
     // document.compatMode 判断当前浏览器的渲染方式用于兼容 CSS1Compat表示标准兼容模式开启

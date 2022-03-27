@@ -72,15 +72,9 @@
           <b-row class="mb-1 text-center">
             <b-col cols="12">入职时间（非必选）</b-col>
           </b-row>
-           <b-row class="mb-1">
-                              <b-form-datepicker
-                  v-model="newforms.InTheTime"
-                  block
-                  locale="zh"
-                  :max="max"
-                  :min="min"
-                ></b-form-datepicker>
-           </b-row>
+          <b-row class="mb-1">
+            <b-form-datepicker v-model="newforms.InTheTime" block locale="zh" :max="max" :min="min"></b-form-datepicker>
+          </b-row>
         </b-container>
 
         <template #modal-footer>
@@ -109,17 +103,7 @@
         <!-- <b-col sm="1" style="font-size:10px;color:red">失败!重新添加</b-col> -->
 
         <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input v-model="form.field" size="sm" class="mr-sm-2" placeholder="请输入员工姓名或者ID"></b-form-input>
-            <b-button
-              size="sm"
-              class="my-2 my-sm-0"
-              variant="success"
-              type="submit"
-              @click="searchBtn"
-            >查询内容</b-button>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="emptyInfo">清空</b-button>
-          </b-nav-form>
+          <searchContent></searchContent>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -136,15 +120,15 @@
 </style>
  
  <script>
+import searchContent from "@/components/searchBox/index";
 import { newPer } from "@/api2";
 // 通过中间间 传入搜索信息
-//  兄弟间传值
-import searchPerTravel from "./personsearch.js";
+//  兄弟间 查询传值
+// import searchPerTravel from "../sameLevelJS/search.js";
 export default {
   inject: ["reload"],
   data() {
-
-     const now = new Date();
+    const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     // 15th two months prior
     const minDate = new Date(today);
@@ -155,7 +139,7 @@ export default {
     maxDate.setMonth(maxDate.getMonth() + 2);
     maxDate.setDate(15);
     return {
-      InTheTime:"",
+      InTheTime: "",
       boxOne: "",
       show: false,
       sucessShow: false,
@@ -167,7 +151,7 @@ export default {
         perState: "",
         gender: "",
         // perId: "",
-        part: "",
+        part: ""
         // perId: ""
       },
       variants: [{ text: "男", value: "男" }, "女", "其他"],
@@ -253,61 +237,70 @@ export default {
       }
     };
   },
+  components: {
+    searchContent //查询组件
+  },
   methods: {
     sub: function() {
       var event = event || window.event;
       event.preventDefault();
       this.boxOne = "";
-            if (
-
-        this.newforms.contact.length< 11||this.newforms.perName.length<1||this.newforms.age.length<1||this.newforms.perState.length<1||this.newforms.gender.length<1||this.newforms.part.length<1||this.newforms.address.length<1
+      if (
+        this.newforms.contact.length < 11 ||
+        this.newforms.perName.length < 1 ||
+        this.newforms.age.length < 1 ||
+        this.newforms.perState.length < 1 ||
+        this.newforms.gender.length < 1 ||
+        this.newforms.part.length < 1 ||
+        this.newforms.address.length < 1
       ) {
         alert("请核对信息再提交(或手机号是否为11位?)");
         return false;
-      }else{
-      this.$bvModal
-        .msgBoxConfirm("确认发布吗？")
-        //判断是不是确定删除
-        .then(value => {
-          this.boxOne = value;
+      } else {
+        this.$bvModal
+          .msgBoxConfirm("确认发布吗？")
+          //判断是不是确定删除
+          .then(value => {
+            this.boxOne = value;
 
-          let flag = String(this.boxOne);
-          if (flag === "true") {
-            // 解构一下
-            let {
-              perName,
-              gender,
-              age,
-              part,
-              address,
-              contact,
-              perState
-            } = this.newforms;
+            let flag = String(this.boxOne);
+            if (flag === "true") {
+              // 解构一下
+              let {
+                perName,
+                gender,
+                age,
+                part,
+                address,
+                contact,
+                perState
+              } = this.newforms;
 
-            newPer(perName, gender, age, part, address, contact, perState)
-              .then(res => {
-                //  跳转到空白页面回退
-                //  alert("添加成功")
-              })
-              .catch(err => {
-                console.log(err);
-              });
-            this.show = false;
-            this.sucessShow = true;
-            // alert(JSON.stringify(this.newforms));
-            this.newforms = {};
-             setTimeout(() => {
-            this.reload();
-            }, 1000);
-            setTimeout(() => {
-              this.sucessShow = false;
-            }, 3000);
-          }
-        });
+              newPer(perName, gender, age, part, address, contact, perState)
+                .then(res => {
+                  //  跳转到空白页面回退
+                  //  alert("添加成功")
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              this.show = false;
+              this.sucessShow = true;
+              // alert(JSON.stringify(this.newforms));
+              this.newforms = {};
+              setTimeout(() => {
+                this.reload();
+              }, 1000);
+              setTimeout(() => {
+                this.sucessShow = false;
+              }, 3000);
+            }
+          });
       }
     },
 
     searchBtn: function() {
+      // console.log(this.form.field);
       var event = event || window.event;
       event.preventDefault();
       // 传值 这个value要和兄弟组件接收的on相同 不支持驼峰命名

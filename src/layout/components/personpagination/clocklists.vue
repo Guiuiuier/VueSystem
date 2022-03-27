@@ -1,6 +1,6 @@
 <template>
-<div>
-      <b-card-group deck style="padding:50px">
+  <div>
+    <b-card-group deck style="padding:50px">
       <b-card bg-variant="info" text-variant="white" header="申请中的请假" class="text-center">
         <b-card-text>{{jxNum}}</b-card-text>
       </b-card>
@@ -14,8 +14,8 @@
         <b-card-text>下班未打卡: {{xbdkNum}}</b-card-text>
       </b-card>
     </b-card-group>
-  <div class="overflow-auto">
-    <b-table
+    <!-- <div class="overflow-auto"> -->
+    <!-- <b-table
       id="my-table"
       :items="items"
       :per-page="perPage"
@@ -30,43 +30,48 @@
       striped
       head-variant="dark"
       foot-clone
-    ></b-table>
-
-    <b-pagination
+    ></b-table>-->
+    <!-- <b-pagination
       align="center"
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
       aria-controls="my-table"
-    ></b-pagination>
-    <!-- 遍历测试没啥用 -->
-    <!-- <div v-for="personnelitems in personnelInfors" :key="personnelitems.id">{{personnelitems}}</div> -->
-  </div>
+    ></b-pagination>-->
+
+    <MyLists :thedata="thedata" :tablesection="tableSection" :perpage="10"></MyLists>
   </div>
 </template>
 
 <script>
 // 兄弟间传值
-var index = "";
-import { Clocklists,vacationLists,isClock} from "@/api2";
-import searchPerTravel from "../navSearch/personsearch";
+// var index = "";
+import MyLists from "@/components/list/index";
+
+import { Clocklists, vacationLists, isClock } from "@/api2";
+import searchPerTravel from "@/layout/components/sameLevelJS/search";
 export default {
   data() {
     return {
-      jxNum:"",
-      wcNum:"",
-      sbdkNum:"",
-      xbdkNum:"",
-      perPage: 20,
-      currentPage: 1,
+      jxNum: "",
+      wcNum: "",
+      sbdkNum: "",
+      xbdkNum: "",
       bordered: true,
-      filter: "",
       fixed: true,
-      items:[],
+      items: [],
       newforms: {},
-
+      thedata: [],
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
-      fields: [
+      // fields: [
+      //   { key: "id", label: "#", sortable: true },
+      //   { key: "idPer", label: "员工编号", sortable: true },
+      //   { key: "namePer", label: "员工姓名", sortable: true },
+      //   { key: "clockTime", label: "打卡时间", sortable: true },
+      //   { key: "clockState", label: "打卡状态", sortable: true },
+      //   { key: "clockType", label: "打卡类型", sortable: true }
+      // ],
+      tableSection: [
         { key: "id", label: "#", sortable: true },
         { key: "idPer", label: "员工编号", sortable: true },
         { key: "namePer", label: "员工姓名", sortable: true },
@@ -76,30 +81,10 @@ export default {
       ]
     };
   },
-  methods: {
-    // 接收兄弟组件内容 //查询过滤的信息
-    getPassInfo() {
-      const that = this;
-      searchPerTravel.$on("pass-info", function(val) {
-        that.filter = val;
-      });
-    },
-    getEmptyInfo() {
-      const that = this;
-      searchPerTravel.$on("empty-info", function(val) {
-        that.filter = val;
-      });
-    }
+  components: {
+    MyLists
   },
-  computed: {
-    rows() {
-      if (this.filter != "") {
-        return this.filter.length;
-      } else {
-        return this.items.length;
-      }
-    }
-  },
+
   // 监控一个props动态
   // watch: {
   //   theLists(val) {
@@ -108,75 +93,62 @@ export default {
   // },
   created() {
     // 触发钩子
-    this.getPassInfo();
-    this.getEmptyInfo();
-
     let local = localStorage.getItem("user_info");
     let id = JSON.parse(local).idPer;
     let clockstate = "正常";
     Clocklists(id, clockstate).then(res => {
-      // console.log(res.data);
-      if(res.data!=''){
-
-        this.items = res.data;
+      if (res.data != "") {
+        this.thedata = res.data;
       }
-      // console.log(this.theLists);
     });
-     
-     let idPer=JSON.parse(local).idPer;
-     vacationLists(idPer).then(res=>{
-      //  console.log(res);
-       let jx=0
-       let wc=0
-       for(let i=0;i<res.data.length;++i){
-         if(res.data[i].state=="进行中"){
-            jx=jx+1;
-             
-          }
-          if(res.data[i].state=="已完成"){
-            wc=wc+1
-          }
-       }
-       this.jxNum=jx;
-       this.wcNum=wc;
-      //  console.log(this.jxNum)
-      //  console.log(num);
-      //  console.log(res.data)
-     });
 
-        var date = new Date();
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1;
-       var day = date.getDate();
-       let clockTime = year + "-" + month + "-" + day;
-     isClock(clockTime,idPer).then(res=>{
-      //  console.log(res.data)
-          let sbdk=1
-       let xbdk=1
-       for(let i=0;i<res.data.length;++i){
-         if(res.data[i].clockType=="上班打卡"){
-            sbdk=sbdk-1;
-            // console.log(sbdk)
-             
-          }else{
-            this.sbdkNum=sbdk
-          };
-          if(res.data[i].clockType=="下班打卡"){
-               xbdk=xbdk-1;
+    let idPer = JSON.parse(local).idPer;
+    vacationLists(idPer).then(res => {
+      let jx = 0;
+      let wc = 0;
+      for (let i = 0; i < res.data.length; ++i) {
+        if (res.data[i].state == "进行中") {
+          jx = jx + 1;
+        }
+        if (res.data[i].state == "已完成") {
+          wc = wc + 1;
+        }
+      }
+      this.jxNum = jx;
+      this.wcNum = wc;
+    });
+
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    let clockTime = year + "-" + month + "-" + day;
+    isClock(clockTime, idPer)
+      .then(res => {
+        let sbdk = 1;
+        let xbdk = 1;
+        for (let i = 0; i < res.data.length; ++i) {
+          if (res.data[i].clockType == "上班打卡") {
+            sbdk = sbdk - 1;
+          } else {
+            this.sbdkNum = sbdk;
+          }
+          if (res.data[i].clockType == "下班打卡") {
+            xbdk = xbdk - 1;
             // console.log(xbdk);
-          }else{
-            this.xbdkNum=xbdk
-          };
-       }
-       this.sbdkNum=sbdk;
-       this.xbdkNum=xbdk;
-     }).catch(err=>{
-       let sbdk=1;
-       let xbdk=1;
-       this.sbdkNum=sbdk;
-       this.xbdkNum=xbdk;
-     });
-    
+          } else {
+            this.xbdkNum = xbdk;
+          }
+        }
+        this.sbdkNum = sbdk;
+        this.xbdkNum = xbdk;
+      })
+      .catch(err => {
+        let sbdk = 1;
+        let xbdk = 1;
+        this.sbdkNum = sbdk;
+        this.xbdkNum = xbdk;
+      });
   }
 };
 </script>

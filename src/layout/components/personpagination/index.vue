@@ -1,6 +1,6 @@
 <template>
   <div class="overflow-auto" v-if="isShow">
-    <b-table
+    <!-- <b-table
       id="my-table"
       :items="items"
       :per-page="perPage"
@@ -11,22 +11,23 @@
       empty-filtered-text="emptyFilteredText"
       empty-text
       :fields="fields"
-      responsive="sm"
+      responsive="sm" 
       striped
       head-variant="dark"
       foot-clone
     >
-      <!-- 插槽 -->
       <template v-slot:cell(actions)="row">
         <b-button-group>
           <b-button type="submit" variant="warning" @click="show=true,perUpdate(row.item)">编辑</b-button>
-          <!-- 传值 -->
-          <!-- <b-button variant="danger" @click="perDelet(row.item,row.index,$event.target)">删除</b-button> -->
           <b-button variant="danger" @click="perDelet(row.item.id)">删除</b-button>
-          <!-- <b-button variant="info">Info</b-button> -->
         </b-button-group>
       </template>
-    </b-table>
+    </b-table> -->
+    <MyLists :thedata="thedata" :tablesection="tablesection">
+    <b-button type="submit" variant="warning" @click="show=true,edit(row)">编辑</b-button>
+    <b-button variant="danger" @click="Delet()">删除</b-button>
+
+    </MyLists>
     <b-form>
       <b-modal v-model="show" title="修改信息">
         <b-container fluid>
@@ -102,13 +103,13 @@
         </template>
       </b-modal>
     </b-form>
-    <b-pagination
+    <!-- <b-pagination
       align="center"
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
       aria-controls="my-table"
-    ></b-pagination>
+    ></b-pagination> -->
     <!-- 遍历测试没啥用 -->
     <!-- <div v-for="personnelitems in personnelInfors" :key="personnelitems.id">{{personnelitems}}</div> -->
   </div>
@@ -116,10 +117,10 @@
 
 <script>
 // 兄弟间传值
-var index = "";
+// var index = "";
+import MyLists from "@/components/list/index";
 import { personnelInfo } from "@/api2";
-
-import searchPerTravel from "../navSearch/personsearch";
+import searchPerTravel from "../sameLevelJS/search";
 import { deletPer, updatePer } from "@/api2";
 export default {
   inject: ["reload"],
@@ -196,6 +197,7 @@ export default {
         "84",
         "85"
       ],
+      thedata:[],
       isShow: true,
       perPage: 20,
       currentPage: 1,
@@ -227,7 +229,18 @@ export default {
       ],
 
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
-      fields: [
+      // fields: [
+      //   { key: "idPer", label: "员工编号" },
+      //   { key: "namePer", label: "姓名", sortable: true },
+      //   { key: "genderPer", label: "性别", sortable: true },
+      //   { key: "agePer", label: "年龄", sortable: true },
+      //   { key: "partPer", label: "部门" },
+      //   { key: "addressPer", label: "地址" },
+      //   { key: "contactPer", label: "联系方式" },
+      //   { key: "statePer", label: "在职状态",},
+      //   { key: "actions", label: "操作", tdClass: "align-middle" }
+      // ],
+            tablesection: [
         { key: "idPer", label: "员工编号" },
         { key: "namePer", label: "姓名", sortable: true },
         { key: "genderPer", label: "性别", sortable: true },
@@ -235,12 +248,18 @@ export default {
         { key: "partPer", label: "部门" },
         { key: "addressPer", label: "地址" },
         { key: "contactPer", label: "联系方式" },
-        { key: "statePer", label: "在职状态", sortable: true },
+        { key: "statePer", label: "在职状态",},
         { key: "actions", label: "操作", tdClass: "align-middle" }
       ]
     };
   },
+  components:{
+    MyLists,
+  },
   methods: {
+    edit:function(element){
+      console.log(element)
+    },
     // 修改
     sub: function() {
       this.boxOne = "";
@@ -293,9 +312,6 @@ export default {
     perUpdate: function(item) {
       var event = event || window.event;
       event.preventDefault();
-      // this.newforms.perId=item.perId;
-      // 一时半会儿没有很好的方法全部赋值 尝试过解构。。。。 到时候这些模板我给写成组件就好了。先这样吧。
-      // 调试过程中注意名字是否相反。 因为我想不出有啥很好的变量名。怪我。
       this.newforms.perName = item.namePer;
       this.newforms.gender = item.genderPer;
       this.newforms.age = item.agePer;
@@ -305,8 +321,6 @@ export default {
       this.newforms.address = item.addressPer;
       this.newforms.perId = item.idPer;
       this.newforms.id = item.id;
-      //  console.log(this.newforms.perId=item.idPer);
-      // console.log(item);
       // 调用方法
     },
     // 删除 由于UI原因 新增用户在navSearch中
@@ -330,7 +344,7 @@ export default {
           }
         });
     },
-    // 接收兄弟组件内容
+    // 接收（接收查询的组件功能）兄弟组件内容
     getPassInfo() {
       const that = this;
       searchPerTravel.$on("pass-info", function(val) {
@@ -354,6 +368,7 @@ export default {
       }
     }
   },
+  // components:
   // 监控一个props动态
   // watch: {
   //   perInformations(val) {
@@ -368,6 +383,7 @@ export default {
     personnelInfo().then(res => {
       let infors = res.data;
       this.items = infors;
+      this.thedata=res.data;
     });
   }
 };

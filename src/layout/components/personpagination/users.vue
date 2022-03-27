@@ -93,7 +93,7 @@
 <script>
 // 兄弟间传值
 var index = "";
-import searchPerTravel from "../navSearch/personsearch";
+import searchPerTravel from "../sameLevelJS/search";
 import { deletUsers, updateUsers, searchUsers } from "@/api2";
 export default {
   inject: ["reload"],

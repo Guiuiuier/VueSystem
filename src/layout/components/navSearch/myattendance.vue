@@ -13,6 +13,9 @@
             type="submit"
             @click="leaveManage"
           >员工请假审批管理</b-button>
+         <b-navbar-nav class="ml-auto">
+          <searchContent></searchContent>
+        </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
@@ -28,6 +31,8 @@
 </style>
  <script>
 // import { clockIn } from "@/api2";
+import searchContent from "@/components/searchBox/index";
+
 export default {
   data() {
     return {
@@ -35,6 +40,9 @@ export default {
       show: false,
       sucessShow: false
     };
+  },
+  components:{
+    searchContent,
   },
   methods: {
   leaveManage:function(){
