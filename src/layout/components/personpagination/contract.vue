@@ -1,33 +1,13 @@
 <template>
   <div class="overflow-auto" v-if="isShow">
-    <b-table
-      id="my-table"
-      :items="items"
-      :per-page="perPage"
-      :current-page="currentPage"
-      small
-      :bordered="bordered"
-      :filter="filter"
-      empty-filtered-text="emptyFilteredText"
-      empty-text
-      :fields="fields"
-      responsive="sm"
-      striped
-      head-variant="dark"
-      foot-clone
-    >
-      <template v-slot:cell(actions)="row">
-        <b-button-group>
-          <b-button type="submit" variant="warning" @click="show=true,fileUpdate(row.item)">编辑</b-button>
-          <!-- 传值 -->
-          <!-- <b-button variant="danger" @click="perDelet(row.item,row.index,$event.target)">删除</b-button> -->
-          <b-button variant="info" @click="downloadFile(row.item)">下载</b-button>
-          <b-button variant="danger" @click="fileDelet(row.item)">删除</b-button>
-
-          <!-- <b-button variant="info">Info</b-button> -->
-        </b-button-group>
+    <MyLists :thedata="thedata" :tablesection="tableSection" :perpage="10">
+      <template v-slot="{btnid}">
+        <b-button type="submit" variant="warning" @click="show=true,fileUpdate(btnid)">编辑</b-button>
+        <b-button variant="info" @click="downloadFile(btnid)">下载</b-button>
+        <b-button variant="danger" @click="fileDelet(btnid)">删除</b-button>
       </template>
-    </b-table>
+    </MyLists>
+
     <b-form>
       <b-modal v-model="show" title="修改信息">
         <b-container fluid>
@@ -65,7 +45,6 @@
                   v-model="fileinputName"
                   accept=".txt, .docx"
                 ></b-form-file>
-                <!-- <p>上传文件<input  ref="fileinput" name="uploadfile" type="file"  value="" /></p> -->
                 <span class="mt-2">
                   <small>仅允许docx.txt格式文件</small>
                 </span>
@@ -92,33 +71,26 @@
         </template>
       </b-modal>
     </b-form>
-    <b-pagination
-      align="center"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-    ></b-pagination>
-    <!-- 遍历测试没啥用 -->
-    <!-- <div v-for="personnelitems in personnelInfors" :key="personnelitems.id">{{personnelitems}}</div> -->
   </div>
 </template>
 
 <script>
 // 兄弟间传值
-var index = "";
+import MyLists from "@/components/list/index";
 import searchPerTravel from "../sameLevelJS/search";
-import { DeletFile,uploadFile, updateFile, downloadFile, Fileinfors,updateFileWord } from "@/api2";
+import {
+  DeletFile,
+  uploadFile,
+  updateFile,
+  downloadFile,
+  Fileinfors,
+  updateFileWord
+} from "@/api2";
 export default {
-  // props: {
-  // theFiles: {
-  // type: Array,
-  // default: () => []
-  // }
-  // },
   inject: ["reload"],
   data() {
     return {
+      thedata: [],
       fileinputName: null,
       isShow: true,
       perPage: 20,
@@ -140,8 +112,7 @@ export default {
         "资源部",
         "营销部"
       ],
-      //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
-      fields: [
+      tableSection: [
         { key: "id", label: "#", sortable: true },
         { key: "user", label: "上传用户", sortable: true },
         { key: "partment", label: "部门", sortable: true },
@@ -151,37 +122,44 @@ export default {
         {
           key: "actions",
           label: "操作",
-          // sortable: true,
-          // tdClass: "align-middle"
+           tdClass: "align-middle"
         }
       ]
     };
   },
+  components: {
+    MyLists
+  },
   methods: {
+    onFiltered(filteredItems) {
+      this.rows = filteredItems.length;
+      this.currentPage = 1;
+    },
+
     //修改
     sub: function() {
-                let local = localStorage.getItem("user_info");
-          let username = JSON.parse(local).username;
-       var date = new Date();
-          var year = date.getFullYear();
-          var month = date.getMonth() + 1;
-          var day = date.getDate();
-          var hour = date.getHours();
-          var minutes = date.getMinutes();
-          var second = date.getSeconds();
-          let currentTime =
-            year +
-            "-" +
-            month +
-            "-" +
-            day +
-            " " +
-            hour +
-            ":" +
-            minutes +
-            ":" +
-            second +
-            "";
+      let local = localStorage.getItem("user_info");
+      let username = JSON.parse(local).username;
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      var hour = date.getHours();
+      var minutes = date.getMinutes();
+      var second = date.getSeconds();
+      let currentTime =
+        year +
+        "-" +
+        month +
+        "-" +
+        day +
+        " " +
+        hour +
+        ":" +
+        minutes +
+        ":" +
+        second +
+        "";
       this.boxOne = "";
       this.$bvModal.msgBoxConfirm("确认修改吗？").then(value => {
         this.boxOne = value;
@@ -190,45 +168,49 @@ export default {
         if (flag === "true") {
           let that = this;
           let fileinput = that.$refs.fileinput.files[0];
-        
-        //判断文件是否为空
-          if(fileinput!=undefined||fileinput!=null){
-          let size = Math.floor(fileinput.size / 1024);
-          // console.log(size);
-          if (size > 20 * 1024 * 1024) {
-            alert("超过20M的图片,docx,pdf不允许上传！");
-            return false;
-          }
-          let formData = new window.FormData();
-          formData.append("id",this.newforms.id);
-          formData.append("username", username);
-          formData.append("currentTime", currentTime);
-          formData.append("fileContent", this.newforms.tips);
-          formData.append("part", that.newforms.part);
-          formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
-          // console.log(formData.get("part"));
-          updateFile(formData).then(res => {
-            // console.log(res);
-          });
+
+          //判断文件是否为空
+          if (fileinput != undefined || fileinput != null) {
+            let size = Math.floor(fileinput.size / 1024);
+            // console.log(size);
+            if (size > 20 * 1024 * 1024) {
+              alert("超过20M的图片,docx,pdf不允许上传！");
+              return false;
+            }
+            let formData = new window.FormData();
+            formData.append("id", this.newforms.id);
+            formData.append("username", username);
+            formData.append("currentTime", currentTime);
+            formData.append("fileContent", this.newforms.tips);
+            formData.append("part", that.newforms.part);
+            formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
+            // console.log(formData.get("part"));
+            updateFile(formData).then(res => {
+              // console.log(res);
+            });
             this.show = false;
-          this.fileinputName = [];
-          setTimeout(()=>{
-               this.reload();
-          },1000);
-          // this.reload();
-          }else{
-              //如果用户没有重新上传文件则进入这里
-              updateFileWord(username,currentTime,this.newforms.id,this.newforms.part,this.newforms.tips).then(res=>{
-
-              }).catch(err=>{
-
-              })
-          this.show = false;
-          this.fileinputName = [];
-          setTimeout(()=>{
-               this.reload();
-          },1000);
-          // this.reload();
+            this.fileinputName = [];
+            setTimeout(() => {
+              this.reload();
+            }, 1000);
+            // this.reload();
+          } else {
+            //如果用户没有重新上传文件则进入这里
+            updateFileWord(
+              username,
+              currentTime,
+              this.newforms.id,
+              this.newforms.part,
+              this.newforms.tips
+            )
+              .then(res => {})
+              .catch(err => {});
+            this.show = false;
+            this.fileinputName = [];
+            setTimeout(() => {
+              this.reload();
+            }, 1000);
+            // this.reload();
           }
         }
       });
@@ -241,10 +223,8 @@ export default {
 
     downloadFile: function(item) {
       downloadFile(item.fileName).then(res => {
-        //  console.log(res);
         //返回blob对象里的url
         const fileUrl = window.URL.createObjectURL(res.data);
-        // console.log(fileUrl);
         // 创建一个标签
         const fileLink = document.createElement("a");
         fileLink.href = fileUrl;
@@ -252,7 +232,6 @@ export default {
         fileLink.download = item.fileName;
         fileLink.click();
         this.newforms.id = item.id;
-        // console.log(item.fileName);
       });
     },
 
@@ -260,70 +239,64 @@ export default {
     fileUpdate: function(item) {
       var event = event || window.event;
       event.preventDefault();
-      // this.newforms.perId=item.perId;
-      // 一时半会儿没有很好的方法全部赋值 尝试过解构。。。。 到时候这些模板我给写成组件就好了。先这样吧。
-      // 调试过程中注意名字是否相反。 因为我想不出有啥很好的变量名。怪我。
       this.newforms.part = item.partment;
       this.newforms.tips = item.tip;
       this.newforms.id = item.id;
     },
     // 调用方法 删除
     fileDelet: function(item) {
-        this.boxOne = "";
+      this.boxOne = "";
       this.$bvModal.msgBoxConfirm("确认删除吗？").then(value => {
         this.boxOne = value;
-        // console.log(typeof this.boxOne);
         let flag = String(this.boxOne);
         if (flag === "true") {
-      var event = event || window.event;
-      event.preventDefault();
-      // console.log(item.id,item.fileName);
-      DeletFile(item.id, item.fileName).then(res => {});
-      this.reload();
+          var event = event || window.event;
+          event.preventDefault();
+          DeletFile(item.id, item.fileName).then(res => {});
+                   setTimeout(() => {
+              this.reload();
+            }, 1000);
         }
       });
-      
-    },
-    // 接收兄弟组件内容 //查询过滤的信息
-    getPassInfo() {
-      const that = this;
-      searchPerTravel.$on("pass-info", function(val) {
-        that.filter = val;
-      });
-    },
-    getEmptyInfo() {
-      const that = this;
-      searchPerTravel.$on("empty-info", function(val) {
-        that.filter = val;
-      });
     }
   },
-  computed: {
-    rows() {
-      if (this.filter != "") {
-        return this.filter.length;
-      } else {
-        return this.items.length;
-      }
-    }
+  computed: {},
+  mounted() {
+    this.rows = this.items.length;
   },
-  // 监控一个props动态
-  // watch: {
-  //   theFiles(val) {
-  //     this.items = val;
-  //   }
-  // },
+
   created() {
-    // 触发钩子
-    this.getPassInfo();
-    this.getEmptyInfo();
     Fileinfors().then(res => {
-      let infors = res.data;
-      this.items = infors;
-      // console.log(this.items);
+      this.thedata = res.data;
     });
   }
 };
+// 接收兄弟组件内容 //查询过滤的信息
+// getPassInfo() {
+//   const that = this;
+//   searchPerTravel.$on("pass-info", function(val) {
+//     that.filter = val;
+//   });
+// },
+// getEmptyInfo() {
+//   const that = this;
+//   searchPerTravel.$on("empty-info", function(val) {
+//     that.filter = val;
+//   });
+// }
+// 监控一个props动态
+// watch: {
+//   theFiles(val) {
+//     this.items = val;
+//   }
+// },
+// rows() {
+//   if (this.filter != "") {
+//     return this.filter.length;
+//   } else {
+//     return this.items.length;
+//   }
+// }
 </script>
 
 <style lang="less" >

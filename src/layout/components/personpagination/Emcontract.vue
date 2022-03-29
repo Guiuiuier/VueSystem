@@ -1,33 +1,12 @@
 <template>
   <div class="overflow-auto" v-if="isShow">
-    <b-table
-      id="my-table"
-      :items="items"
-      :per-page="perPage"
-      :current-page="currentPage"
-      small
-      :bordered="bordered"
-      :filter="filter"
-      empty-filtered-text="emptyFilteredText"
-      empty-text
-      :fields="fields"
-      responsive="sm"
-      striped
-      head-variant="dark"
-      foot-clone
-    >
-      <template v-slot:cell(actions)="row">
-        <b-button-group>
-          <b-button type="submit" variant="warning" @click="show=true,fileUpdate(row.item)">编辑</b-button>
-          <!-- 传值 -->
-          <!-- <b-button variant="danger" @click="perDelet(row.item,row.index,$event.target)">删除</b-button> -->
-          <b-button variant="info" @click="downloadFile(row.item)" v-if="downBtn">下载</b-button>
-          <b-button variant="danger" @click="fileDelet(row.item)">删除</b-button>
-
-          <!-- <b-button variant="info">Info</b-button> -->
-        </b-button-group>
+    <MyLists :thedata="thedata" :tablesection="tableSection" :perpage="10">
+      <template v-slot="{btnid}">
+        <b-button type="submit" variant="warning" @click="show=true,fileUpdate(btnid)">编辑</b-button>
+        <b-button variant="info" @click="downloadFile(btnid)">下载</b-button>
+        <b-button variant="danger" @click="fileDelet(btnid)">删除</b-button>
       </template>
-    </b-table>
+    </MyLists>
     <b-form>
       <b-modal v-model="show" title="修改信息">
         <b-container fluid>
@@ -92,21 +71,13 @@
         </template>
       </b-modal>
     </b-form>
-    <b-pagination
-      align="center"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-    ></b-pagination>
-    <!-- 遍历测试没啥用 -->
-    <!-- <div v-for="personnelitems in personnelInfors" :key="personnelitems.id">{{personnelitems}}</div> -->
+
   </div>
 </template>
 
 <script>
 // 兄弟间传值
-var index = "";
+import MyLists from "@/components/list/index";
 import searchPerTravel from "../sameLevelJS/search";
 import {
   DeletFile_em,
@@ -116,12 +87,6 @@ import {
   updateFileWord_Em
 } from "@/api2";
 export default {
-  // props: {
-  // theFiles: {
-  // type: Array,
-  // default: () => []
-  // }
-  // },
   inject: ["reload"],
   data() {
     return {
@@ -130,6 +95,7 @@ export default {
       downBtn: true,
       perPage: 20,
       currentPage: 1,
+      thedata:[],
       bordered: true,
       filter: "",
       fixed: true,
@@ -147,8 +113,8 @@ export default {
         "资源部",
         "营销部"
       ],
-      //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
-      fields: [
+
+            tableSection: [
         { key: "idPer", label: "员工编号", sortable: true },
         { key: "namePer", label: "员工姓名", sortable: true },
         { key: "partPer", label: "部门", sortable: true },
@@ -163,11 +129,14 @@ export default {
       ]
     };
   },
-
+  components: {
+    MyLists
+  },
   methods: {
-    upBtn: function() {},
-
-    uploadFile: function() {},
+    onFiltered(filteredItems) {
+      this.rows = filteredItems.length;
+      this.currentPage = 1;
+    },
 
     //修改
     sub: function() {
@@ -219,14 +188,12 @@ export default {
             formData.append("File", that.$refs.fileinput.files[0]); //指向全局中的files
             // console.log(formData.get("part"));
             updateFile_em(formData).then(res => {
-              // console.log(res);
             });
             this.show = false;
             this.fileinputName = [];
             setTimeout(() => {
               this.reload();
             }, 1000);
-            // this.reload();
           } else {
             //如果用户没有重新上传文件则进入这里
             updateFileWord_Em(
@@ -243,7 +210,6 @@ export default {
             setTimeout(() => {
               this.reload();
             }, 1000);
-            // this.reload();
           }
         }
       });
@@ -268,10 +234,8 @@ export default {
       }
 
       downloadFile_em(item.fileName).then(res => {
-        //  console.log(res);
         //返回blob对象里的url
         const fileUrl = window.URL.createObjectURL(res.data);
-        // console.log(fileUrl);
         // 创建一个标签
         const fileLink = document.createElement("a");
         fileLink.href = fileUrl;
@@ -279,7 +243,6 @@ export default {
         fileLink.download = item.fileName;
         fileLink.click();
         this.newforms.id = item.id;
-        // console.log(item.fileName);
       });
     },
 
@@ -301,53 +264,26 @@ export default {
       this.boxOne = "";
       this.$bvModal.msgBoxConfirm("只会删除合同，不会删除人员信息，确认删除合同吗？").then(value => {
         this.boxOne = value;
-        // console.log(typeof this.boxOne);
         let flag = String(this.boxOne);
         if (flag === "true") {
           var event = event || window.event;
           event.preventDefault();
-          // console.log(item.id,item.fileName);
           DeletFile_em(item.id, item.fileName,username).then(res => {});
-          this.reload();
+                         setTimeout(() => {
+              this.reload();
+            }, 1000);
         }
       });
     },
-    // 接收兄弟组件内容 //查询过滤的信息
-    getPassInfo() {
-      const that = this;
-      searchPerTravel.$on("pass-info", function(val) {
-        that.filter = val;
-      });
-    },
-    getEmptyInfo() {
-      const that = this;
-      searchPerTravel.$on("empty-info", function(val) {
-        that.filter = val;
-      });
-    }
+
   },
   computed: {
-    rows() {
-      if (this.filter != "") {
-        return this.filter.length;
-      } else {
-        // return this.theFiles.length;
-      }
-    }
+ 
   },
-  // 监控一个props动态
-  // watch: {
-  //   theFiles(val) {
-  //     this.items = val;
-  //   }
-  // },
+
   created() {
-    // 触发钩子
-    this.getPassInfo();
-    this.getEmptyInfo();
     EmpersonnelInfo().then(res => {
-      let infors = res.data;
-      this.items = infors;
+      this.thedata=res.data
     });
   }
 };

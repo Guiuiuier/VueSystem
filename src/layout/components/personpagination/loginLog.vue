@@ -1,9 +1,11 @@
 <template>
   <div class="overflow-auto">
-<MyLists :thedata="theLogs" :tablesection="tableSection" :perpage="10"></MyLists>
-
-    <!-- 遍历测试没啥用 -->
-    <!-- <div v-for="personnelitems in personnelInfors" :key="personnelitems.id">{{personnelitems}}</div> -->
+    <!-- es  结构的方式更好 v-slot=slotProps.btnid => {btnid}-->
+<MyLists :thedata="theLogs" :tablesection="tableSection" :perpage="10">
+  <!-- <template  v-slot="{btnid}"> 
+    <b-button @click="edit(btnid)">{{btnid.id}}</b-button>
+  </template> -->
+  </MyLists>
   </div>
 </template>
 
@@ -30,13 +32,18 @@ export default {
         { key: "user", label: "登录账户",sortable: true  },
         { key: "lastTime", label: "上次登陆时间", sortable: true },
         { key: "lastIp", label: "上次IP",},
+        // {key:"actions",label:"操作"}
       ]
     };
   },
    components:{
     MyLists,
   },
-
+//  methods: {
+//    edit:function(e){
+// console.log(e);
+//    }
+//  },
   // 监控一个props动态
   watch: {
     theLogs(val) {
@@ -44,6 +51,7 @@ export default {
     }
   },
   created() {
+    console.log(this.theLogs[0]);
   }
 };
 </script>

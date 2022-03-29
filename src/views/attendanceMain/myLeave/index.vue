@@ -122,61 +122,60 @@
         </b-form>
       </b-collapse>
 
-      <b-col class="leaveInfors" v-if="leaveinfors_total">
-        <b-row class="topic">
-          <b-col class="contentNumber">
-            共有
-            <font color="red">{{itemsTotal.length}}</font>条请假申请
+      <myScroll v-if="flag" :thedata="thedata" :perpage="3">
+        <template v-slot="{content}">
+          <b-col class="leaveInfors" v-if="leaveinfors_total">
+            <b-row class="topic">
+              <b-col class="contentNumber">
+                共有
+                <font color="red">{{content.length}}</font>条请假申请
+              </b-col>
+            </b-row>
+            <div class="con" v-for="(item,id) in content" :key="item.id" id="my-table">
+              <b-row class="con-model">
+                <b-col cols="3">
+                  <a href="javascript:0" @click="detalis(id)">{{item.name}}的{{item.vacationType}}申请</a>
+                </b-col>
+                <b-col class="top-name" cols="3">
+                  <b-icon icon="person 
+" class="icon-position"></b-icon>
+                  审核人:
+                  {{item.assessor}};
+                </b-col>
+                <b-col class="top-name" cols="3">
+                  <b-icon icon="person 
+" class="icon-position"></b-icon>
+                  申请人:
+                  {{item.name}}
+                </b-col>
+                <b-col class="top-date" cols="3">
+                  <b-icon icon="clock
+" class="icon-position"></b-icon>
+                  申请时间:
+                  {{item.clockTime}}
+                </b-col>
+              </b-row>
+              <div class="con-bot">{{item.content}}</div>
+              <div class="content-button">
+                <b-col class="contentbtn">当前批复:{{item.reply}}</b-col>
+                <b-col class="contentbtn">处理时间:{{item.replyTime}}</b-col>
+                <b-col class="contentbtn">当前进度:{{item.state}}</b-col>
+              </div>
+              <div class="content-button">
+                <b-button class="contentbtn" variant="danger" @click="cancelRequest(id)">取消申请</b-button>
+                <b-button class="contentbtn" variant="warning" @click="editRequest(id)">编辑申请</b-button>
+              </div>
+            </div>
           </b-col>
-        </b-row>
-        <div class="con" v-for="(item,id) in vacationLists" :key="item.id" id="my-table">
-          <b-row class="con-model">
-            <b-col cols="3">
-              <a href="javascript:0" @click="detalis(id)">{{item.name}}的{{item.vacationType}}申请</a>
-            </b-col>
-            <b-col class="top-name" cols="3">
-              <b-icon icon="person 
-" class="icon-position"></b-icon>
-              审核人:
-              {{item.assessor}};
-            </b-col>
-            <b-col class="top-name" cols="3">
-              <b-icon icon="person 
-" class="icon-position"></b-icon>
-              申请人:
-              {{item.name}}
-            </b-col>
-            <b-col class="top-date" cols="3">
-              <b-icon icon="clock
-" class="icon-position"></b-icon>
-              申请时间:
-              {{item.clockTime}}
-            </b-col>
-          </b-row>
-          <div class="con-bot">{{item.content}}</div>
-          <div class="content-button">
-            <b-col class="contentbtn">当前批复:{{item.reply}}</b-col>
-            <b-col class="contentbtn">处理时间:{{item.replyTime}}</b-col>
-            <b-col class="contentbtn">当前进度:{{item.state}}</b-col>
-          </div>
-          <div class="content-button">
-            <b-button class="contentbtn" variant="danger" @click="cancelRequest(id)">取消申请</b-button>
-            <b-button class="contentbtn" variant="warning" @click="editRequest(id)">编辑申请</b-button>
-          </div>
-        </div>
-      </b-col>
-      <b-col v-if="loading">
-        <span>加载中...</span>
-      </b-col>
-      <b-col v-if="noMore">
-        <span>无更多数据</span>
-      </b-col>
-      <!-- per-page每一页显示三条  totoal-rows 总的条数 当前页数 currentpage -->
+        </template>
+      </myScroll>
     </b-container>
-    <router-view  :assessPerson="assessor"></router-view>
+    <router-view :assessPerson="assessor"></router-view>
   </div>
 </template>
 <script>
+import myScroll from "@/commonFun/scroll/index.vue";
+
 import { Assessor, vacation, vacationLists, cancelRequest } from "@/api2";
 export default {
   inject: ["reload"],
@@ -194,20 +193,17 @@ export default {
 
     return {
       isShow: true,
-      page: 1, //当前页数
-      pageNum: 3, //每页3条
-      itemsTotal: [], //后端获取到的存入到前端
-      loading: false,
+      // itemsTotal: [], //后端获取到的存入到前端
       leaveInfors_edit: false,
-      noMore: false,
       prevent: false,
       leaveInfors: false,
       leaveinfors_total: true,
       min: minDate,
       max: maxDate,
-      vacationLists: [],
       vacationLists_leaveforms: [],
       boxOne: "",
+      flag: false,
+      thedata: [],
       newforms: {
         dateStart: "",
         dateEnd: "",
@@ -220,9 +216,7 @@ export default {
         perContact: "",
         assessor: ""
       },
-      assessor: [
-
-      ],
+      assessor: [],
       variants: [
         { text: "1", value: "1" },
         "2",
@@ -251,17 +245,18 @@ export default {
       ]
     };
   },
-
+  components: {
+    myScroll
+  },
   methods: {
     editRequest: function(id) {
-      if (this.vacationLists[id].state !== "已完成") {
-        this.vacationLists_leaveforms = this.vacationLists[id];
-        let contentId = this.vacationLists[id].id;
+      if (this.thedata[id].state !== "已完成") {
+        this.vacationLists_leaveforms = this.thedata[id];
+        let contentId = this.thedata[id].id;
         this.$router.push(
           `/index/attendancemain/myattendance/myleave/editMyleaveinfors/${contentId}`
         );
 
-        // console.log(this.vacationLists[ids].id);
       } else {
         this.$bvModal
           .msgBoxOk("当前所有流程已经完成无法操作！")
@@ -270,9 +265,9 @@ export default {
       }
     },
     detalis: function(id) {
-      if (this.vacationLists[id.state] !== "已完成") {
-        this.vacationLists_leaveforms = this.vacationLists[id];
-        let contentId = this.vacationLists[id].id;
+      if (this.thedata[id.state] !== "已完成") {
+        this.vacationLists_leaveforms = this.thedata[id];
+        let contentId = this.thedata[id].id;
         this.$router.push(
           `/index/attendancemain/myattendance/myleave/myleaveinfors/${contentId}`
         );
@@ -289,7 +284,7 @@ export default {
       this.prevent = false;
     },
     cancelRequest: function(ids) {
-      if (this.vacationLists[ids].state == "进行中") {
+      if (this.thedata[ids].state == "进行中") {
         this.boxOne = "";
         this.$bvModal
           .msgBoxConfirm("您确认要取消申请吗？")
@@ -297,7 +292,7 @@ export default {
             this.boxOne = value;
             let flag = String(this.boxOne);
             if (flag === "true") {
-              cancelRequest(this.vacationLists[ids].id)
+              cancelRequest(this.thedata[ids].id)
                 .then(res => {
                   this.$bvModal
                     .msgBoxOk("取消成功")
@@ -318,38 +313,6 @@ export default {
     },
     pre: function() {
       this.$router.back();
-    },
-
-    init: function() {
-      vacationLists(this.newforms.perId).then(res => {
-        //由于一些原因后端懒得改了，直接一次性获取到前端处理
-        this.itemsTotal = res.data;
-        // console.log(res.data.length);
-        if (res.data.length <= this.pageNum) {
-          this.vacationLists = res.data;
-          this.noMore = true;
-        } else {
-          this.vacationLists = res.data.slice(0, this.pageNum);
-          this.loading = true;
-        }
-      });
-    },
-
-    //滚动加载
-    loadMore: function() {
-      this.page++;
-      let begin = this.pageNum * this.page - this.pageNum;
-      let end = this.pageNum * this.page;
-      if (end >= this.itemsTotal.length) {
-        end = this.itemsTotal.length;
-        this.noMore = true;
-        this.loading = false;
-      } else {
-        let end = this.pageNum * this.page;
-      }
-      let data = [];
-      data = [...this.vacationLists, ...this.itemsTotal.slice(begin, end)];
-      this.vacationLists = data;
     },
 
     onSubmit(event) {
@@ -420,65 +383,42 @@ export default {
   watch: {
     //判断当前路由
     $route(to, from) {
-      // console.log(to);
-      if (to.name === "myleaveinfors"||to.name==="editMyleaveinfors") {
+
+      if (to.name === "myleaveinfors" || to.name === "editMyleaveinfors") {
         this.isShow = false;
       } else {
         this.isShow = true;
       }
-
     }
   },
   created() {
-    // console.log(this.$route);
-    if(this.$route.name==='myleaveinfors'||this.$route.name==="editMyleaveinfors"){
-        this.isShow = false;
-      } else {
-        this.isShow = true;
-      }
-      // console.log("我是父组件2")
+
+    if (
+      this.$route.name === "myleaveinfors" ||
+      this.$route.name === "editMyleaveinfors"
+    ) {
+      this.isShow = false;
+    } else {
+      this.isShow = true;
+    }
+    // console.log("我是父组件2")
     let local = localStorage.getItem("user_info");
     this.newforms.name = JSON.parse(local).roleid;
     this.newforms.perId = JSON.parse(local).idPer;
     this.newforms.part = JSON.parse(local).part;
     //循环遍历并存入数组
+    vacationLists(this.newforms.perId).then(res => {
+      this.thedata = res.data;
+      this.flag = true;
+    });
+
     Assessor(this.newforms.part).then(res => {
       for (var i = 0; i < res.data.length; i++) {
         this.assessor.push(res.data[i].roleid);
       }
     });
-    // this.vacationLists_leaveforms=this.vacationLists;
-    // console.log(this.vacationLists)
-    // this.isShow=true;
-    // console.log("我还是会运行！");
   },
-  mounted() {
-    //初始化数据
-    this.init();
-    // document.documentElement.scrollTop表示当前页面滚动条的位置,documentElement对应的是html标签,body对应的是body标签
-    // document.compatMode 判断当前浏览器的渲染方式用于兼容 CSS1Compat表示标准兼容模式开启
-    // 浏览器标准模式与怪异模式-CSS1Compat and BackCompat 　BackCompat 对应quirks mode
-    // 　  CSS1Compat 对应strict mode
-    // 　  BackCompat：标准兼容模式关闭。
-    // 　  CSS1Compat：标准兼容模式开启。
-
-    window.addEventListener("scroll", () => {
-      const scrollY =
-        document.body.scrollTop || document.documentElement.scrollTop; // 滚动条在Y轴上的滚动距离
-      const compatibility =
-        document.compatMode === "CSS1Compat"
-          ? document.documentElement.clientHeight
-          : document.body.clientHeight; // clientHeight 属性是一个只读属性，它返回该元素的像素高度，高度包含内边距（padding），不包含边框（border），外边距（margin）和滚动条，是一个整数，单位是像素 px。
-      const TotalHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight
-      ); // 页面总高度
-      if (scrollY + compatibility >= TotalHeight) {
-        // 当滚动条滑到页面底部
-        this.loadMore();
-      }
-    });
-  }
+  mounted() {}
 };
 </script>
 

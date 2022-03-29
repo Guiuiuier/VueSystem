@@ -1,32 +1,13 @@
 <template>
   <div class="overflow-auto" v-if="isShow">
-    <b-table
-      id="my-table"
-      :items="items"
-      :per-page="perPage"
-      :current-page="currentPage"
-      small
-      :bordered="bordered"
-      :filter="filter"
-      empty-filtered-text="emptyFilteredText"
-      empty-text
-      :fields="fields"
-      responsive="sm"
-      striped
-      head-variant="dark"
-      foot-clone
-    >
-      <!-- 插槽 -->
-      <template v-slot:cell(actions)="row">
-        <b-button-group>
-          <b-button type="submit" variant="warning" @click="show=true,perUpdate(row.item)">编辑</b-button>
-          <!-- 传值 -->
-          <!-- <b-button variant="danger" @click="perDelet(row.item,row.index,$event.target)">删除</b-button> -->
-          <b-button variant="danger" @click="perDelet(row.item.id)">删除</b-button>
-          <!-- <b-button variant="info">Info</b-button> -->
-        </b-button-group>
+        <MyLists :thedata="thedata" :tablesection="tableSection" :perpage="10">
+      <template v-slot="{btnid}">
+        <!-- <b-button @click="edit(btnid)">{{btnid.id}}</b-button> -->
+       <b-button type="submit" variant="warning" @click="show=true,perUpdate(btnid)">编辑</b-button>
+          <b-button variant="danger" @click="perDelet(btnid.id)">删除</b-button>
       </template>
-    </b-table>
+    </MyLists>
+
     <b-form>
       <b-modal v-model="show" title="修改信息">
         <b-container fluid>
@@ -50,8 +31,7 @@
           </b-row>
 
           <b-row class="mb-1 text-center">
-            <!-- <b-col cols="6">员工编号</b-col> -->
-            <b-col cols="6">权限</b-col>
+\            <b-col cols="6">权限</b-col>
           </b-row>
 
           <b-row class="mb-1">
@@ -78,21 +58,14 @@
         </template>
       </b-modal>
     </b-form>
-    <b-pagination
-      align="center"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-    ></b-pagination>
-    <!-- 遍历测试没啥用 -->
-    <!-- <div v-for="personnelitems in personnelInfors" :key="personnelitems.id">{{personnelitems}}</div> -->
+
+  
   </div>
 </template>
 
 <script>
 // 兄弟间传值
-var index = "";
+import MyLists from "@/components/list/index";
 import searchPerTravel from "../sameLevelJS/search";
 import { deletUsers, updateUsers, searchUsers } from "@/api2";
 export default {
@@ -111,6 +84,7 @@ export default {
       currentPage: 1,
       bordered: true,
       filter: "",
+      thedata:[],
       fixed: true,
       items: [],
       boxOne: "",
@@ -133,7 +107,8 @@ export default {
       ],
 
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
-      fields: [
+
+            tableSection: [
         { key: "roleid", label: "员工编号" },
         { key: "part", label: "部门", sortable: true },
         { key: "role", label: "权限", sortable: true },
@@ -147,7 +122,14 @@ export default {
       ]
     };
   },
+    components: {
+    MyLists
+  },
   methods: {
+        onFiltered(filteredItems) {
+      this.rows = filteredItems.length;
+      this.currentPage = 1;
+    },
     // 修改
     sub: function() {
       this.boxOne = "";
@@ -189,7 +171,6 @@ export default {
       this.newforms.perId = item.idPer;
       this.newforms.name = item.name;
       this.newforms.id = item.id;
-      // console.log(item);
       // 调用方法
     },
     perDelet: function(Ids) {
@@ -212,44 +193,15 @@ export default {
           }
         })
     },
-    // 接收兄弟组件内容
-    getPassInfo() {
-      const that = this;
-      searchPerTravel.$on("pass-info", function(val) {
-        that.filter = val;
-      });
-    },
-    getEmptyInfo() {
-      const that = this;
-      searchPerTravel.$on("empty-info", function(val) {
-        that.filter = val;
-      });
-    }
   },
   computed: {
-    rows() {
-      if (this.filter != "") {
-        return this.filter.length;
-      } else {
-        return this.items.length;
-      }
-    }
+
   },
-  // 监控一个props动态
-  // watch: {
-  //   theUsers(val) {
-  //     this.items = val;
-  //   }
-  // },
+
   created() {
-    // 触发钩子
-    this.getPassInfo();
-    this.getEmptyInfo();
+ 
     searchUsers().then(res => {
-      //  转化为对象
-      //  console.log(res);
-      let infors = res.data;
-      this.items = infors;
+          this.thedata=res.data
     });
   }
 };

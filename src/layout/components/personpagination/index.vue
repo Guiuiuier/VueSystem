@@ -1,32 +1,11 @@
 <template>
   <div class="overflow-auto" v-if="isShow">
-    <!-- <b-table
-      id="my-table"
-      :items="items"
-      :per-page="perPage"
-      :current-page="currentPage"
-      small
-      :bordered="bordered"
-      :filter="filter"
-      empty-filtered-text="emptyFilteredText"
-      empty-text
-      :fields="fields"
-      responsive="sm" 
-      striped
-      head-variant="dark"
-      foot-clone
-    >
-      <template v-slot:cell(actions)="row">
-        <b-button-group>
-          <b-button type="submit" variant="warning" @click="show=true,perUpdate(row.item)">编辑</b-button>
-          <b-button variant="danger" @click="perDelet(row.item.id)">删除</b-button>
-        </b-button-group>
+    <MyLists :thedata="thedata" :tablesection="tableSection" :perpage="10">
+      <template v-slot="{btnid}">
+        <!-- <b-button @click="edit(btnid)">{{btnid.id}}</b-button> -->
+        <b-button type="submit" variant="warning" @click="show=true,perUpdate(btnid)">编辑</b-button>
+        <b-button variant="danger" @click="perDelet(btnid.id)">删除</b-button>
       </template>
-    </b-table> -->
-    <MyLists :thedata="thedata" :tablesection="tablesection">
-    <b-button type="submit" variant="warning" @click="show=true,edit(row)">编辑</b-button>
-    <b-button variant="danger" @click="Delet()">删除</b-button>
-
     </MyLists>
     <b-form>
       <b-modal v-model="show" title="修改信息">
@@ -93,7 +72,6 @@
             </b-col>
           </b-row>
         </b-container>
-
         <template #modal-footer>
           <div class="w-100">
             <p class="float-left">请确认无误再修改！</p>
@@ -103,15 +81,6 @@
         </template>
       </b-modal>
     </b-form>
-    <!-- <b-pagination
-      align="center"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-    ></b-pagination> -->
-    <!-- 遍历测试没啥用 -->
-    <!-- <div v-for="personnelitems in personnelInfors" :key="personnelitems.id">{{personnelitems}}</div> -->
   </div>
 </template>
 
@@ -119,14 +88,14 @@
 // 兄弟间传值
 // var index = "";
 import MyLists from "@/components/list/index";
-import { personnelInfo } from "@/api2";
 import searchPerTravel from "../sameLevelJS/search";
-import { deletPer, updatePer } from "@/api2";
+import {  personnelInfo,deletPer, updatePer } from "@/api2";
 export default {
   inject: ["reload"],
 
   data() {
     return {
+      thedata: [],
       variantsAge: [
         "18",
         "19",
@@ -197,7 +166,6 @@ export default {
         "84",
         "85"
       ],
-      thedata:[],
       isShow: true,
       perPage: 20,
       currentPage: 1,
@@ -229,38 +197,43 @@ export default {
       ],
 
       //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
-      // fields: [
-      //   { key: "idPer", label: "员工编号" },
-      //   { key: "namePer", label: "姓名", sortable: true },
-      //   { key: "genderPer", label: "性别", sortable: true },
-      //   { key: "agePer", label: "年龄", sortable: true },
-      //   { key: "partPer", label: "部门" },
-      //   { key: "addressPer", label: "地址" },
-      //   { key: "contactPer", label: "联系方式" },
-      //   { key: "statePer", label: "在职状态",},
-      //   { key: "actions", label: "操作", tdClass: "align-middle" }
-      // ],
-            tablesection: [
-        { key: "idPer", label: "员工编号" },
-        { key: "namePer", label: "姓名", sortable: true },
+      tableSection: [
+        { key: "idPer", label: "员工编号", sortable: true },
+        { key: "namePer", label: "姓名" },
         { key: "genderPer", label: "性别", sortable: true },
         { key: "agePer", label: "年龄", sortable: true },
-        { key: "partPer", label: "部门" },
+        { key: "partPer", label: "部门", sortable: true },
         { key: "addressPer", label: "地址" },
+        { key: "statePer", label: "在职状态", sortable: true },
         { key: "contactPer", label: "联系方式" },
-        { key: "statePer", label: "在职状态",},
         { key: "actions", label: "操作", tdClass: "align-middle" }
       ]
     };
   },
-  components:{
-    MyLists,
+  components: {
+    MyLists
   },
   methods: {
-    edit:function(element){
-      console.log(element)
+    onFiltered(filteredItems) {
+      this.rows = filteredItems.length;
+      this.currentPage = 1;
     },
     // 修改
+
+    edit: function(item) {
+      // console.log(item);
+      var event = event || window.event;
+      event.preventDefault();
+      this.newforms.perName = item.namePer;
+      this.newforms.gender = item.genderPer;
+      this.newforms.age = item.agePer;
+      this.newforms.part = item.partPer;
+      this.newforms.contact = item.contactPer;
+      this.newforms.perState = item.statePer;
+      this.newforms.address = item.addressPer;
+      this.newforms.perId = item.idPer;
+      this.newforms.id = item.id;
+    },
     sub: function() {
       this.boxOne = "";
       if (
@@ -294,14 +267,14 @@ export default {
                 this.newforms.contact,
                 this.newforms.perState
               )
-                .then(res => {
-                  // console.log(res);
-                })
+                .then(res => {})
                 .catch(err => {
                   console.log(err);
                 });
               this.show = false;
-              this.reload();
+              setTimeout(() => {
+                this.reload();
+              }, 1000);
             }
           })
           .catch(err => {});
@@ -323,7 +296,6 @@ export default {
       this.newforms.id = item.id;
       // 调用方法
     },
-    // 删除 由于UI原因 新增用户在navSearch中
     perDelet: function(Ids) {
       var event = event || window.event;
       event.preventDefault();
@@ -343,47 +315,15 @@ export default {
             this.reload();
           }
         });
-    },
-    // 接收（接收查询的组件功能）兄弟组件内容
-    getPassInfo() {
-      const that = this;
-      searchPerTravel.$on("pass-info", function(val) {
-        that.filter = val;
-      });
-    },
-    getEmptyInfo() {
-      const that = this;
-      searchPerTravel.$on("empty-info", function(val) {
-        that.filter = val;
-      });
     }
   },
-  computed: {
-    rows() {
-      //计算分页的页数
-      if (this.filter != "") {
-        return this.filter.length;
-      } else {
-        return this.items.length;
-      }
-    }
+  mounted() {
+    this.rows = this.items.length;
   },
-  // components:
-  // 监控一个props动态
-  // watch: {
-  //   perInformations(val) {
-  //     this.items = val;
-  //   }
-  // },
-  created() {
-    // 触发钩子
-    this.getPassInfo();
-    this.getEmptyInfo();
 
+  created() {
     personnelInfo().then(res => {
-      let infors = res.data;
-      this.items = infors;
-      this.thedata=res.data;
+      this.thedata = res.data;
     });
   }
 };
