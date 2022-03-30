@@ -459,6 +459,18 @@ export const sendMail=(contact)=>requests({
     contact,
   }
 })
+export const verify=(mail,code)=>requests({
+
+  method:"post",
+  url:"/personnelInfo/users/sendMail.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  data:{
+    mail,
+    code,
+  }
+})
 export const myPass=(username)=>requests({
 
   method:"post",

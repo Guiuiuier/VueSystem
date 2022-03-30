@@ -130,11 +130,11 @@
 </style>
 <script>
 import { login, administratorContact } from "@/api";
-import { loginCode, sendMail, myPass } from "@/api2";
+import { loginCode, sendMail, myPass, verify } from "@/api2";
 export default {
   data() {
     return {
-      isAdminShow:true,
+      isAdminShow: true,
       preBtn: true,
       subBtn: false,
       userInput: true,
@@ -169,13 +169,12 @@ export default {
       this.preBtn = true;
       this.userInput = true;
       this.findBtn = true;
-      this.isAdminShow=true;
-      // this.infoTips = false;
+      this.isAdminShow = true;
     },
     controoter: function() {
-      this.rooter = true;
       administratorContact()
         .then(res => {
+      this.rooter = true;
           this.adminContact = res.data.number;
         })
         .catch(err => {
@@ -188,7 +187,7 @@ export default {
       event.preventDefault(); //防止发生默认行为
       loginCode(this.form.name).then(res => {
         if (res.data[0].username == this.form.name) {
-                this.isAdminShow=false;
+          this.isAdminShow = false;
 
           this.contact = res.data[0].number;
           // console.log(this.contact);
@@ -203,42 +202,38 @@ export default {
         }
       });
     },
-    // sendCode: function() {
-    //   // let  sendBtn=document.getElementById("sendBtn");
-    //   // sendBtn.disabled="disabled";
-    //   // sendMail(this.contact).then(res => {
-    //   //   this.code = res.data;
-    //   // });
-    //   // setTimeout(()=>{
-    //   //   sendBtn.innerHTML="验证码已发送"
-    //   // },1000)
-    //   //       setTimeout(()=>{
-    //   //         sendBtn.disabled=false;
-    //   //         sendBtn.innerHTML="发送验证码"
-    //   //       },1100)
-    // },
 
     Myuser: function() {
-      //  alert(JSON.stringify(this.form));
-      if (this.form.code != this.code || this.form.code == "") {
-        alert("验证码错误");
-        // return false;
-      } else {
-        myPass(this.form.name).then(res => {
+      // alert(JSON.stringify(this.form));
+      if (
+        this.form.code != "" &&
+        this.form.code != null &&
+        this.form.code != undefined
+      ) {
+        verify(this.contact, this.form.code).then(res => {
+           this.code=res.data;
+                   if(this.code==='验证码正确'){
+           myPass(this.form.name).then(res => {
           this.username = res.data[0].username;
           this.userpass = res.data[0].userpass;
-          console.log(this.username, this.userpass);
+          // console.log(this.username, this.userpass);
           this.infoTips = true;
         });
+        }else{
+          alert("验证码错误！");
+        }
+        });
+
       }
+
     },
+
     countDown() {
       const TIME_COUNT = 60;
       //当点击的一瞬间disabled
       this.codeBtnShow = false;
-      //同时伪异步一下
       sendMail(this.contact).then(res => {
-        this.code = res.data;
+        // this.code = res.data;
       });
       if (!this.timer) {
         this.count = TIME_COUNT;

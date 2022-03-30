@@ -3,7 +3,7 @@ include "../database/configlogin.inc.php";
 header("Content-type:text/html; charset=utf-8");
 header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-
+ini_set('display_errors','off');
 $part=$_GET['part'];
 $sql ="select `roleid` from userlists WHERE `part`='{$part}' AND `rolepermission`='1'";
 // var_dump($sql);

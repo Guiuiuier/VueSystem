@@ -58,10 +58,11 @@ export default {
 
     
   },
-  created() {},
+  created() {
+    // console.log(this.weathers);
+  },
   computed: {
     ...mapState(["userinfo"]),
-    // 是个对象哦
     breadCrumbList() {
       return this.$route.matched;
     }

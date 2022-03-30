@@ -185,7 +185,7 @@ export default {
 
           let flag = String(this.boxOne);
           if (flag === "true") {
-      console.log(Ids);
+      // console.log(Ids);
       deletUsers(Ids).then(res => {});
       setTimeout(() => {
         this.reload();

@@ -51,7 +51,7 @@ export default {
     }
   },
   created() {
-    console.log(this.theLogs[0]);
+    // console.log(this.theLogs[0]);
   }
 };
 </script>

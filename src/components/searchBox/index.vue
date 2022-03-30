@@ -7,7 +7,7 @@
           v-model="form.field"
           size="sm"
           class="mr-sm-2"
-          placeholder="请输入员工姓名或者ID"
+          placeholder="请输入您要搜索的内容"
         ></b-form-input>
         <b-button
           size="sm"

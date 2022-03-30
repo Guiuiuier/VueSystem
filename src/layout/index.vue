@@ -4,11 +4,10 @@
       <siderBar></siderBar>
     </div>
     <div class="navigation">
-      <navigationBar :weathers="weathers"></navigationBar>
+      <navigationBar :weathers="weathers" v-if="flag"></navigationBar>
     </div>
     <div class="sysmain">
-      <sysMain :infoName="infoName">
-      </sysMain>
+      <sysMain :infoName="infoName"></sysMain>
     </div>
   </div>
 </template>
@@ -28,8 +27,9 @@ export default {
   data() {
     return {
       weathers: {},
+      flag: "false",
       // 主页名字
-      infoName:{},
+      infoName: {}
     };
   },
   components: {
@@ -38,31 +38,27 @@ export default {
     navigationBar,
     sysMain
   },
-  computed: {
-  },
+  computed: {},
   created() {
     // //  获取天气请求 存入vuex
-    // //因为vuex里的数据是保存在运行内存中的，当页面刷新时，页面会重新加载vue实例，vuex里面的数据就会被重新赋值。
-    // //同时为了保证用户的体验这里才用sessionstorage 这样安全性会稍微高些
-    //  这里修复了一个bug一定要加判断
-     if(!sessionStorage.getItem("weather")){
+    //  if(!sessionStorage.getItem("weather")){
     getLoginLog().then(res => {
       let c = sessionStorage.setItem(
         "weather",
         JSON.stringify(res.data.weather)
       );
+      this.weathers = JSON.parse(sessionStorage.getItem("weather"));
+      this.flag = true;
     });
-     }
-  },
-  mounted() {
+    //  }
     // 返回一个对象给子组件
     //传值给子组件
-    this.weathers = JSON.parse(sessionStorage.getItem("weather"));
-
 
     //传给主页内容
-    this.infoName=JSON.parse(localStorage.getItem("user_info"));
+
+    this.infoName = JSON.parse(localStorage.getItem("user_info"));
   },
+  mounted() {},
   methods: {}
 };
 </script>
