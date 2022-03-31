@@ -45,16 +45,16 @@ axios.interceptors.response.use(config => {
   //200-300之间的请求都是可以通过的这里假设错误的为303 作者在这里的虚拟服务器上虚拟的返回了一个状态码
    //当然如果有大佬还能添加一个session而不是token  大可在 判断语句中 加|| ！    
   //  data.status 改为data.code==303即可使用了 这里为了方便假设通过。因为没真实服务器做返回值  
-  if (data.status == '303') {
-    //     //   此时就不用$了因为已经拿到了 否则会报错的
-    alert("登录信息失效，重新登陆!");
-    router.push({
-      path: '/login/index',
-      name: "login",
-    });
-    //此时在这里还是会报错的 但是不影响使用 因为这是多次重定向路由报的错
-    //  console.log(router);
-  }
+  // if (data.status == '303') {
+  //   //     //   此时就不用$了因为已经拿到了 否则会报错的
+  //   alert("登录信息失效，重新登陆!");
+  //   router.push({
+  //     path: '/login/index',
+  //     name: "login",
+  //   });
+  //   //此时在这里还是会报错的 但是不影响使用 因为这是多次重定向路由报的错
+  //   //  console.log(router);
+  // }
   //   //如果token相等 则无需登录跳转
   return config;
 })

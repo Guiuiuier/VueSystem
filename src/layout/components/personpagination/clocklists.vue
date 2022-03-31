@@ -6,38 +6,24 @@
       </b-card>
 
       <b-card bg-variant="success" text-variant="white" header="已完成的请假" class="text-center">
+       <!-- <b-col>当前暂未解决Vuex关掉页面后的问题，应该改用查询数据库，避免重复打卡</b-col><br> -->
         <b-card-text>{{wcNum}}</b-card-text>
       </b-card>
 
       <b-card bg-variant="danger" text-variant="white" header="打卡状态" class="text-center">
+
+        <b-col>迟到一次扣50元，早退50元， 完成一次完整上下班计入一次正常上班。缺少上下班打卡记为当天不出勤</b-col><br>
         <b-card-text>上班未打卡: {{sbdkNum}}</b-card-text>
         <b-card-text>下班未打卡: {{xbdkNum}}</b-card-text>
       </b-card>
+            <b-card bg-variant="info" text-variant="white" header="当月迟到及完整出勤记录" class="text-center">
+        <b-col>迟到次数（完成一次上下班打卡）</b-col>
+        <b-card-text> {{sbdkNum}}</b-card-text>
+        <b-col>完整出勤次数（完成一轮上下班为一次）</b-col>
+        <b-card-text> {{xbdkNum}}</b-card-text>
+      </b-card>
     </b-card-group>
-    <!-- <div class="overflow-auto"> -->
-    <!-- <b-table
-      id="my-table"
-      :items="items"
-      :per-page="perPage"
-      :current-page="currentPage"
-      small
-      :bordered="bordered"
-      :filter="filter"
-      empty-filtered-text="emptyFilteredText"
-      empty-text
-      :fields="fields"
-      responsive="sm"
-      striped
-      head-variant="dark"
-      foot-clone
-    ></b-table>-->
-    <!-- <b-pagination
-      align="center"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-    ></b-pagination>-->
+
 
     <MyLists :thedata="thedata" :tablesection="tableSection" :perpage="10"></MyLists>
   </div>
@@ -62,17 +48,9 @@ export default {
       items: [],
       newforms: {},
       thedata: [],
-      //fields 插槽 自定义字段! 不过要和items的内容匹配才能多加
-      // fields: [
-      //   { key: "id", label: "#", sortable: true },
-      //   { key: "idPer", label: "员工编号", sortable: true },
-      //   { key: "namePer", label: "员工姓名", sortable: true },
-      //   { key: "clockTime", label: "打卡时间", sortable: true },
-      //   { key: "clockState", label: "打卡状态", sortable: true },
-      //   { key: "clockType", label: "打卡类型", sortable: true }
-      // ],
+
       tableSection: [
-        { key: "id", label: "#", sortable: true },
+        // { key: "id", label: "#", sortable: true },
         { key: "idPer", label: "员工编号", sortable: true },
         { key: "namePer", label: "员工姓名", sortable: true },
         { key: "clockTime", label: "打卡时间", sortable: true },
@@ -85,18 +63,12 @@ export default {
     MyLists
   },
 
-  // 监控一个props动态
-  // watch: {
-  //   theLists(val) {
-  //     this.items = val;
-  //   }
-  // },
+
   created() {
     // 触发钩子
     let local = localStorage.getItem("user_info");
     let id = JSON.parse(local).idPer;
-    let clockstate = "正常";
-    Clocklists(id, clockstate).then(res => {
+    Clocklists(id).then(res => {
       if (res.data != "") {
         this.thedata = res.data;
       }
@@ -129,12 +101,16 @@ export default {
         let xbdk = 1;
         for (let i = 0; i < res.data.length; ++i) {
           if (res.data[i].clockType == "上班打卡") {
+            if(sbdk>0){
             sbdk = sbdk - 1;
+            }
           } else {
             this.sbdkNum = sbdk;
           }
           if (res.data[i].clockType == "下班打卡") {
+            if(xbdk>0){
             xbdk = xbdk - 1;
+            }
             // console.log(xbdk);
           } else {
             this.xbdkNum = xbdk;

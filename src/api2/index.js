@@ -27,7 +27,7 @@ export const personnelInfo = () => requests({
 
 // 新增人员
 // 曹难怪一直报错
-export const newPer = (perName, gender, age, part, address, contact, perState) => requests({
+export const newPer = (perName, gender, age, part, address, contact, perState,position,hireTime) => requests({
   url: '/personnelInfo/persons/newPer.php',
   method: "post",
   data: {
@@ -38,6 +38,8 @@ export const newPer = (perName, gender, age, part, address, contact, perState) =
     address,
     contact,
     perState,
+    position,
+    hireTime
   }
 })
 // 删除
@@ -51,7 +53,7 @@ export const deletPer = (Id) => requests({
 })
 
 //  修改
-export const updatePer = (id, perId, perName, gender, age, part, address, contact, perState) => requests({
+export const updatePer = (id, perId, perName, gender, age, part, address, contact, perState,position,hireTime,fireTime) => requests({
   url: '/personnelInfo/persons/perUpdate.php',
   method: "post",
   data: {
@@ -64,6 +66,9 @@ export const updatePer = (id, perId, perName, gender, age, part, address, contac
     address,
     contact,
     perState,
+    position,
+    hireTime,
+    fireTime,
   }
 })
 
@@ -187,12 +192,11 @@ export const clockIn = (idPer, namePer, clockTime, clockState, clockType) => req
 })
 
 //查询打卡列表
-export const Clocklists = (idPer, clockState) => requests({
+export const Clocklists = (idPer) => requests({
   url: "/personnelInfo/attendance/clockLists.php",
   method: "post",
   data: {
     idPer,
-    clockState,
   }
 })
 

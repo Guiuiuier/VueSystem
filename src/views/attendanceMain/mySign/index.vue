@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navsearch></Navsearch>
+    <Navsearch v-if="isRouterAlive"></Navsearch>
     <b-table></b-table>
   </div>
 </template>
@@ -8,9 +8,13 @@
 <script>
 import Navsearch from "@/layout/components/navSearch/mysign";
 export default {
+      provide(){
+        return {reloads:this.reload}
+    },
   data() {
-    return {
-    }
+   return{
+         isRouterAlive:true,
+        }
   },
   components: {
     Navsearch,
@@ -20,6 +24,14 @@ export default {
   mounted() {
      
   },
+      methods: {
+        reload(){
+            this.isRouterAlive=false;
+            this.$nextTick(function(){
+                this.isRouterAlive=true
+            })
+        }
+    },
 };
 </script>
 <style lang="less" scoped>

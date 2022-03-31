@@ -70,10 +70,16 @@
             </b-col>
           </b-row>
           <b-row class="mb-1 text-center">
+            <b-col cols="12">职位</b-col>
+          </b-row>
+          <b-row class="mb-1">
+            <b-form-select v-model="newforms.position" :options="variantsPosition"></b-form-select>
+          </b-row>
+          <b-row class="mb-1 text-center">
             <b-col cols="12">入职时间（非必选）</b-col>
           </b-row>
           <b-row class="mb-1">
-            <b-form-datepicker v-model="newforms.InTheTime" block locale="zh" :max="max" :min="min"></b-form-datepicker>
+            <b-form-datepicker v-model="newforms.hireTime" block locale="zh" :max="max" :min="min"></b-form-datepicker>
           </b-row>
         </b-container>
 
@@ -132,17 +138,18 @@ export default {
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     // 15th two months prior
     const minDate = new Date(today);
-    minDate.setMonth(minDate.getMonth());
-    //  两个月前的前十五天
-    // minDate.setDate(15);
+    minDate.setMonth(minDate.getMonth() - 2);
+    // 60
+    minDate.setDate(60);
     const maxDate = new Date(today);
     maxDate.setMonth(maxDate.getMonth() + 2);
     maxDate.setDate(15);
     return {
-      InTheTime: "",
       boxOne: "",
       show: false,
       sucessShow: false,
+      min: minDate,
+      max: maxDate,
       newforms: {
         perName: "",
         age: "",
@@ -150,10 +157,15 @@ export default {
         contact: "",
         perState: "",
         gender: "",
+        position: "",
+              hireTime: "",
+   
         // perId: "",
         part: ""
-        // perId: ""
       },
+      variantsPosition: [
+        { label: "开发部", options: ["前端开发工程师", "后端开发工程师"]},{label:"管理部", options:["管理部经理","行政主管","行政专员","人事专员","培训主管"]},{label:"资源部", options:["物料员","物料总监"]},{label:"销售部", options:["销售专员","销售主管"] }
+      ],
       variants: [{ text: "男", value: "男" }, "女", "其他"],
       variantsState: [{ text: "在职", value: "在职" }, "待入职"],
       variantsPart: [
@@ -273,10 +285,12 @@ export default {
                 part,
                 address,
                 contact,
-                perState
+                perState,
+                position,
+                hireTime,
               } = this.newforms;
 
-              newPer(perName, gender, age, part, address, contact, perState)
+              newPer(perName, gender, age, part, address, contact, perState,position,hireTime)
                 .then(res => {
                   //  跳转到空白页面回退
                   //  alert("添加成功")

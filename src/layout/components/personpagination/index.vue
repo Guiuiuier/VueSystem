@@ -71,6 +71,25 @@
               </b-form-group>
             </b-col>
           </b-row>
+          <b-row class="mb-1 text-center">
+            <b-col cols="12">职位</b-col>
+          </b-row>
+          <b-row class="mb-1">
+            <b-form-select v-model="newforms.position" :options="variantsPosition"></b-form-select>
+          </b-row>
+          <b-row class="mb-1 text-center">
+            <b-col cols="12">入职时间</b-col>
+          </b-row>
+          <b-row class="mb-1">
+            <b-form-datepicker v-model="newforms.hireTime" block locale="zh" :max="max" :min="min"></b-form-datepicker>
+          </b-row>
+          <b-row class="mb-1 text-center">
+            <b-col cols="12">离职时间</b-col>
+          </b-row>
+          <b-row class="mb-1">
+            <b-form-datepicker v-model="newforms.fireTime" block locale="zh" :max="max" :min="min"></b-form-datepicker>
+            <b-button @click="deleteFireTime">清空离职时间</b-button>
+          </b-row>
         </b-container>
         <template #modal-footer>
           <div class="w-100">
@@ -89,13 +108,25 @@
 // var index = "";
 import MyLists from "@/components/list/index";
 import searchPerTravel from "../sameLevelJS/search";
-import {  personnelInfo,deletPer, updatePer } from "@/api2";
+import { personnelInfo, deletPer, updatePer } from "@/api2";
 export default {
   inject: ["reload"],
 
   data() {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    // 15th two months prior
+    const minDate = new Date(today);
+    minDate.setMonth(minDate.getMonth() - 2);
+    // 60
+    minDate.setDate(60);
+    const maxDate = new Date(today);
+    maxDate.setMonth(maxDate.getMonth() + 2);
+    maxDate.setDate(15);
     return {
       thedata: [],
+      min: minDate,
+      max: maxDate,
       variantsAge: [
         "18",
         "19",
@@ -185,8 +216,26 @@ export default {
         gender: null,
         // perId: "",
         part: null,
-        perId: ""
+        perId: "",
+        position: "",
+        hireTime: "",
+        fireTime: ""
       },
+      variantsPosition: [
+        { label: "开发部", options: ["前端开发工程师", "后端开发工程师"] },
+        {
+          label: "管理部",
+          options: [
+            "管理部经理",
+            "行政主管",
+            "行政专员",
+            "人事专员",
+            "培训主管"
+          ]
+        },
+        { label: "资源部", options: ["物料员", "物料总监"] },
+        { label: "销售部", options: ["销售专员", "销售主管"] }
+      ],
       variants: [{ text: "男", value: "男" }, "女", "其他"],
       variantsState: [{ text: "在职", value: "在职" }, "离职", "待入职"],
       variantsPart: [
@@ -203,8 +252,11 @@ export default {
         { key: "genderPer", label: "性别", sortable: true },
         { key: "agePer", label: "年龄", sortable: true },
         { key: "partPer", label: "部门", sortable: true },
-        { key: "addressPer", label: "地址" },
+        { key: "position", label: "职位" },
+        { key: "hireTime", label: "入职时间" },
+        { key: "fireTime", label: "离职时间" },
         { key: "statePer", label: "在职状态", sortable: true },
+        { key: "addressPer", label: "地址" },
         { key: "contactPer", label: "联系方式" },
         { key: "actions", label: "操作", tdClass: "align-middle" }
       ]
@@ -218,22 +270,17 @@ export default {
       this.rows = filteredItems.length;
       this.currentPage = 1;
     },
-    // 修改
-
-    edit: function(item) {
-      // console.log(item);
-      var event = event || window.event;
-      event.preventDefault();
-      this.newforms.perName = item.namePer;
-      this.newforms.gender = item.genderPer;
-      this.newforms.age = item.agePer;
-      this.newforms.part = item.partPer;
-      this.newforms.contact = item.contactPer;
-      this.newforms.perState = item.statePer;
-      this.newforms.address = item.addressPer;
-      this.newforms.perId = item.idPer;
-      this.newforms.id = item.id;
+    // 清空离职时间
+    deleteFireTime: function() {
+      this.$bvModal.msgBoxConfirm("确认清空该员工离职时间吗？当清空后请点击确认才会生效！").then(value => {
+        this.boxOne = value;
+        let flag = String(this.boxOne);
+        if (flag === "true") {
+          this.newforms.fireTime = "";
+        }
+      });
     },
+
     sub: function() {
       this.boxOne = "";
       if (
@@ -265,7 +312,10 @@ export default {
                 this.newforms.part,
                 this.newforms.address,
                 this.newforms.contact,
-                this.newforms.perState
+                this.newforms.perState,
+                this.newforms.position,
+                this.newforms.hireTime,
+                this.newforms.fireTime
               )
                 .then(res => {})
                 .catch(err => {
@@ -294,6 +344,9 @@ export default {
       this.newforms.address = item.addressPer;
       this.newforms.perId = item.idPer;
       this.newforms.id = item.id;
+      this.newforms.position = item.position;
+      this.newforms.hireTime = item.hireTime;
+      this.newforms.fireTime = item.fireTime;
       // 调用方法
     },
     perDelet: function(Ids) {
