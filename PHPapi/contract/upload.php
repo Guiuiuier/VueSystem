@@ -7,20 +7,14 @@ include "../database/configupload.inc.php";
   
     //二进制文件
     $uploadTime=$_POST['currentTime'];
-    // var_dump($uploadTime);
     $file=$_FILES['File'];
     var_dump($_FILES);
-    //部门
     $part=$_POST['part'];
-    //文件用途名
     $username=$_POST['username'];
     $fileContent=$_POST['fileContent'];
-    // var_dump($part);
     // 文件信息
     $file_name=$_FILES['File']['name'];
-    // var_dump($file_name);
     $file_type=$_FILES['File']['type'];
-    // var_dump($file_type);
     $file_location="../File/";
     //这里不做保存分类了。直接放一起。
      //文件路径
@@ -30,12 +24,9 @@ include "../database/configupload.inc.php";
            $file_name=$file_name."(".rand(0,1000).")";
           $file_path="$file_location$file_name";
     }
-    // if($_FILES['File']['error']==0){
     move_uploaded_file($_FILES['File']['tmp_name'],$file_path);
-
     //上传的存储地址
     $src=$file_location.$file_name;
-  // var_dump($src);
 
     $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
     $mysqli -> set_charset(DB_CHARSET);

@@ -62,7 +62,7 @@ while ($row = $result -> fetch_assoc()) {
 
 
     if(file_exists($file_path)){
-          $file_name="(".rand(0,1000).")".$file_name;
+          $file_name=$file_name."(".rand(0,1000).")";
           $file_path="$file_location$file_name";
     };
     // if($_FILES['File']['error']==0){

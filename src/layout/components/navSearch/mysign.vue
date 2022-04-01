@@ -32,17 +32,17 @@
 }
 </style>
  <script>
-import { clockIn,isClock } from "@/api2";
+import { clockIn, isClock, comattendance, clockeventDealy,insertClock } from "@/api2";
 // import { mapMutations, mapState } from "vuex";
 export default {
-   inject: ["reload"],
+  inject: ["reload"],
   data() {
     return {
       timer: "", //定义一个定时器的变量
       currentTime: "",
       show: false,
-      sbdkFlag:true,
-      xbdkFlag:true,
+      sbdkFlag: true,
+      xbdkFlag: true,
       sucessShow: false,
       boxOne: ""
     };
@@ -68,43 +68,44 @@ export default {
       let name = JSON.parse(local).name;
       let clockState = "正常";
       let clockType = "下班打卡";
-      if(this.sbdkFlag!=true){
-      if(this.xbdkFlag!=false){
-      if (hourMinutes >= "1730" && hourMinutes <= "2400") {
-          clockIn(id, name, this.currentTime, clockState, clockType).then(
-            res => {
-              alert("下班愉快");
-              setTimeout(()=>{
-                this.reload();
-              },500);
-            }
-          );
-      } else if (hourMinutes >= "0930" && hourMinutes <= "1730") {
-        this.boxOne = "";
-          this.$bvModal.msgBoxConfirm("您确定要提前下班吗？").then(value => {
-            this.boxOne = value;
-            let flag = String(this.boxOne);
-            let clockAdvance = "提前下班";
-            if (flag === "true") {
-              clockIn(id, name, this.currentTime, clockAdvance, clockType).then(
-                res => {
+      let monthsTime=year+"-"+month;
+      if (this.sbdkFlag != true) {
+        if (this.xbdkFlag != false) {
+          if (hourMinutes >= "1730" && hourMinutes <= "2400") {
+            this.xbdkFlag = false;
+            insertClock(id,name,this.currentTime,monthsTime).then(res=>{
+              alert("下班愉快我的宝");
+            })
+          } else if (hourMinutes >= "1010" && hourMinutes < "1730") {
+            this.xbdkFlag = false;
+            this.boxOne = "";
+            this.$bvModal.msgBoxConnfirm("您确定要提前下班吗？").then(value => {
+              this.boxOne = value;
+              let flag = String(this.boxOne);
+              let clockAdvance = "早退";
+              let monthsTime=year+"-"+month;
+              if (flag === "true") {
+                clockIn(
+                  id,
+                  name,
+                  this.currentTime,
+                  clockAdvance,
+                  clockType
+                ).then(res => {
                   alert("下班愉快");
-                       setTimeout(()=>{
-                this.reload();
-              },500);
-                }
-              );
-            }
-          });
-        }else{
-          alert("当前不在任何打卡时间段！")
-        } 
+                  comattendance(id, monthsTime).then(res => {});
+                });
+              }
+            });
+          } else {
+            alert("当前不在任何打卡时间段！");
+          }
+        } else {
+          alert("已经打过卡了！快下班！");
+        }
       } else {
-        alert("已经打过卡了！快下班！");
+        alert("今天上班没打卡，不允许下班打卡！");
       }
-    }else{
-      alert("今天上班没打卡，不允许下班打卡！")
-    }
     },
 
     toWork: function() {
@@ -127,56 +128,55 @@ export default {
       let clockStateNormal = "正常";
       let clockStateDelay = "迟到";
       let clockType = "上班打卡";
-      if(this.sbdkFlag!=false){
-      if (hourMinutes >= "0930" && hourMinutes <= "1730") {
+      let monthsTime = year + "-" + month;
+      if (this.sbdkFlag != false) {
+        if (hourMinutes >= "0930" && hourMinutes <= "1000") {
+          this.sbdkFlag = false;
           clockIn(id, name, this.currentTime, clockStateNormal, clockType).then(
             res => {
-              alert("打卡成功！上班愉快");  
-                   setTimeout(()=>{
-                this.reload();
-              },500);
+              alert("打卡成功！上班愉快");
             }
           );
-      } else if(hourMinutes >= "1000" && hourMinutes <= "1730"){
-          clockIn(
+        } else if (hourMinutes >= "1010" && hourMinutes <= "1730") {
+          this.sbdkFlag = false;
+
+          clockeventDealy(
             id,
             name,
             this.currentTime,
             clockStateDelay,
-            clockType
+            clockType,
+            monthsTime
           ).then(res => {
             alert("打卡成功！您已迟到。");
-                 setTimeout(()=>{
-                this.reload();
-              },500);
           });
-        }else{
+        } else {
           alert("当前不在任何打卡时间段！");
         }
-      }else{
-        alert("您打过卡了！");
+      } else {
+        alert("您今天打过卡了！");
       }
     }
   },
   created() {
     //当前时间
-      var that = this;
+    var that = this;
     that.timer = setInterval(function() {
-        var year = new Date().getFullYear();
-        var month = new Date().getMonth() + 1;
-        var day = new Date().getDate();
-        var hour = new Date().getHours();
-        var minutes = new Date().getMinutes();
-        var second = new Date().getSeconds();
-        if (hour < 10) {
-          hour = "0" + hour;
-        }
-        if (minutes < 10) {
-          minutes = "0" + minutes;
-        }
-        if (second < 10) {
-          second = "0" + second;
-        }
+      var year = new Date().getFullYear();
+      var month = new Date().getMonth() + 1;
+      var day = new Date().getDate();
+      var hour = new Date().getHours();
+      var minutes = new Date().getMinutes();
+      var second = new Date().getSeconds();
+      if (hour < 10) {
+        hour = "0" + hour;
+      }
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      if (second < 10) {
+        second = "0" + second;
+      }
       that.currentTime =
         year +
         "-" +
@@ -191,48 +191,38 @@ export default {
         second +
         "";
     }, 0);
- //判断当前用户打卡没
-         var year = new Date().getFullYear();
-        var month = new Date().getMonth() + 1;
-        var day = new Date().getDate();
-     let whetherClock=year+"-"+month+"-"+day;
-           let local = localStorage.getItem("user_info");
-      let id = JSON.parse(local).idPer;
-     isClock(whetherClock,id).then(res=>{
-      //  console.log(res.data);
-        for(let i=0;i<res.data.length;++i){
-          console.log(res.data);
-          if(res.data[0].clockType=="上班打卡"){
-            this.sbdkFlag=false;
-            console.log(this.sbdkFlag+"1");
-          }else{
-            this.sbdkFlag=true;
-          };
-          if(res.data[1]!=undefined){
-          if(res.data[1].clockType=="下班打卡"){
-            this.xbdkFlag=false;
-             console.log(this.xbdkFlag);
-
-          }else{
-            this.xbdkFlag=true;
-               console.log(this.xbdkFlag);
-          }
-          }else{
-            this.xbdkFlag=true;
-            console.log(this.xbdkFlag);
-          }
-        
-     };
-     }).catch(err=>{
-
-     })
+    //判断当前用户打卡没
+    var year = new Date().getFullYear();
+    var month = new Date().getMonth() + 1;
+    var day = new Date().getDate();
+    let whetherClock = year + "-" + month + "-" + day;
+    let local = localStorage.getItem("user_info");
+    let id = JSON.parse(local).idPer;
+    isClock(whetherClock, id)
+      .then(res => {
+        let go = res.data[0].clockType;
+        if (go == "上班打卡") {
+          this.sbdkFlag = false;
+        } else {
+          this.sbdkFlag = true;
+        }
+        let after = res.data[1].clockType;
+        if (after == "下班打卡") {
+          this.xbdkFlag = false;
+        } else {
+          this.xbdkFlag = true;
+        }
+      })
+      .catch(err => {
+        this.sbdkFlag = true;
+        this.xbdkFlag = true;
+      });
   },
 
   computed: {
     // ...mapState(["afterWorkFlag", "toWorkFlag"])
   },
-  mounted() {
-  },
+  mounted() {},
   beforeDestroy() {
     if (this.timer) {
       clearInterval(this.timer); //清除定时器

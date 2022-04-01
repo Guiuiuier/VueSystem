@@ -10,8 +10,7 @@ $v=(file_get_contents("php://input"));
 // var_dump(json_decode($v,true));
 $c=json_decode($v,true);
 $idPer=$c['idPer'];
-$clockState=$c['clockState'];
-$sql="SELECT  * FROM `clockin` WHERE `idPer`='{$idPer}' AND `clockState`='{$clockState}'";
+$sql="SELECT  * FROM `clockin` WHERE `idPer`='{$idPer}' order by id DESC";
 // var_dump($sql);
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 if ($mysqli -> connect_error) {

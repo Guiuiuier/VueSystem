@@ -18,7 +18,10 @@ $part=$c['part'];
 $address=$c['address'];
 $contact=$c['contact'];
 $perState=$c['perState'];
-$sql ="UPDATE `personnel` SET `idPer`='{$perId}',`namePer`='{$perName}',`genderPer`='{$gender}',`agePer`='{$age}',`partPer`='{$part}',`addressPer`='{$address}',`contactPer`='{$contact}',`statePer`='{$perState}' WHERE id={$Id}";
+$position=$c['position'];
+$hireTime=$c['hireTime'];
+$fireTime=$c['fireTime'];
+$sql ="UPDATE `personnel` SET `idPer`='{$perId}',`namePer`='{$perName}',`genderPer`='{$gender}',`agePer`='{$age}',`partPer`='{$part}',`addressPer`='{$address}',`contactPer`='{$contact}',`statePer`='{$perState}',`position`='{$position}',`hireTime`='{$hireTime}',`fireTime`='{$fireTime}' WHERE id={$Id}";
 if ($mysqli -> connect_error) {
        die("连接错误：".$mysqli -> connect_error);
 }

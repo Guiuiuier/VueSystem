@@ -19,10 +19,8 @@ $mysqli -> set_charset(DB_CHARSET);
 $result=$mysqli ->query($sqlid);
 var_dump($result,$sqlid);
 while ($row = $result -> fetch_assoc()) {
-
        $rows[] = $row;   //$rows中保存personnel表中所有记录
          }
-
  //  $perId=$c['perId'];
 $userId=($rows[0]['idPer']+1);
 $perName=$c['perName'];
@@ -33,7 +31,9 @@ $part=$c['part'];
 $address=$c['address'];
 $contact=$c['contact'];
 $perState=$c['perState'];
-$sql ="INSERT INTO `personnel`(`idPer`,`roleid`, `namePer`, `genderPer`, `agePer`, `partPer`, `addressPer`, `contactPer`, `statePer`) VALUES('{$userId}','{$roleId}','{$perName}','{$gender}','{$age}','{$part}','{$address}','{$contact}','{$perState}')";
+$hireTime=$c['hireTime'];
+$position=$c['position'];
+$sql ="INSERT INTO `personnel`(`idPer`,`roleid`, `namePer`, `genderPer`, `agePer`, `partPer`, `addressPer`, `contactPer`, `statePer`,`position`,`hireTime`) VALUES('{$userId}','{$roleId}','{$perName}','{$gender}','{$age}','{$part}','{$address}','{$contact}','{$perState}','{$position}','{$hireTime}')";
 // 转换字符集
 $mysqli -> set_charset(DB_CHARSET);
 // 连接数据库并执行
