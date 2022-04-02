@@ -79,7 +79,7 @@ export default {
           } else if (hourMinutes >= "1010" && hourMinutes < "1730") {
             this.xbdkFlag = false;
             this.boxOne = "";
-            this.$bvModal.msgBoxConnfirm("您确定要提前下班吗？").then(value => {
+            this.$bvModal.msgBoxConfirm("您确定要提前下班吗？").then(value => {
               this.boxOne = value;
               let flag = String(this.boxOne);
               let clockAdvance = "早退";

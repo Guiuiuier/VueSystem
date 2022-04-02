@@ -21,6 +21,9 @@
    代码使用：Nprogress start()开始进度条  
       Nprogress done()  关闭进度条  
 
+
+  npm install echarts --save 下载echarts饼状图插件  
+
  ## 关于后端PHP 数据库管理采用的是wamp3.2.3.3版本（请自行到网上下载后边的可自带）  PHP为7.4.9 Apache 2.4.46 PHPmyadmin 5.02
 
 

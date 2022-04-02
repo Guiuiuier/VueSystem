@@ -179,6 +179,24 @@ const routes = [{
 
         ]
       },
+    {
+      path:'partment',
+      component:()=>import('@/views/partment/index'),
+      redirect:'partment/mypartment',
+      name:'partment',
+      meta:{
+        title:"部门管理"
+      },
+      children:[{
+        path:'mypartment',
+        component:()=>import('@/views/partment/mypartment/index'),
+        name:'mypartment',
+        meta:{
+          title:"",
+        }
+      }]
+    },
+
 
       {
         path: 'filemain',

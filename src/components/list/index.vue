@@ -22,7 +22,7 @@ perpage 每页显示的数据 如果不设置默认为20个
         responsive="sm"
         striped
         show-empty
-        head-variant="dark"
+       
         foot-clone
       >
         <template v-slot:cell(actions)="row">
@@ -65,6 +65,7 @@ export default {
   name: "myLists",
   data() {
     return {
+
       btnid:"",
       rows: 1,
       currentPage: 1,
@@ -102,3 +103,5 @@ export default {
   }
 };
 </script>
+
+

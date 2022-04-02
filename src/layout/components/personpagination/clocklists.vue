@@ -89,7 +89,7 @@ export default {
       }
     });
   Emclock(id,thisMonth).then(res=>{
-    console.log(res.data);
+    // console.log(res.data);
     this.comattendance=res.data[0].comattendance;
     this.leaveEarly=res.data[0].leaveEarly;
     if(res.data.lateNumber==null){

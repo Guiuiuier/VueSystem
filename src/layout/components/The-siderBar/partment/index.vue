@@ -14,7 +14,7 @@
 export default {
   methods: {
     topage: function() {
-      this.$router.push("/index/systemmanage/loginLog");
+      this.$router.push("/index/partment/mypartment");
     }
   }
 };
