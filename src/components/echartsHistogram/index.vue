@@ -1,12 +1,31 @@
 <template>
-  <div id="chartPie1"  class="pie-wrap">
-  </div>
+  <!-- <div id="chartPie1"  class="pie-wrap"> -->
+  <!-- </div> -->
+        <div :id="theid"  class="pie-wrap">
+            <slot></slot>
+        </div>
+        
 </template>
 <script>
+// 两个图的组件写的都不是很好。。。。。有空改一改。凑活着用先
 // 这是柱状图 代码不同
    import * as echarts from 'echarts';
     require('echarts/theme/macarons');//引入主题
 export default {
+     props:{
+            thedata:{
+            type:Array,
+            default:()=>[]
+            },
+            theseries:{
+                type:Array,
+                default:()=>[]
+            },
+            theid:{
+                type:String,
+                default:"",
+            }
+     },
   data() {
     return {
         chartPie:null
@@ -20,13 +39,13 @@ export default {
   methods: {
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
-      this.chartPie = echarts.init(document.getElementById("chartPie1"),'macarons');
+      this.chartPie = echarts.init(document.getElementById(this.theid),'macarons');
       // 绘制图表
       this.chartPie.setOption({
         tooltip: {},
         
         xAxis: {
-          data: ["前端开发", "后端开发", "运维", "IT实习生"]
+          data:this.theseries,
         },
         yAxis: {},
         series: [
@@ -35,12 +54,14 @@ export default {
             type: "bar",
              animationDuration: 900,
              animationEasing: 'cubicInOut',
-            data: [5, 20, 36, 10, 10, 20],
+            data:this.thedata,
           }
         ]
       });
     }
-  }
+  },created() {
+    //   console.log(this.theseries,this.thedata,this.the)
+  },
 };
 </script>
 <style lang='less' scope>

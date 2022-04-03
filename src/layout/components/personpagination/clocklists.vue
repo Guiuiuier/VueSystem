@@ -45,8 +45,8 @@ import searchPerTravel from "@/layout/components/sameLevelJS/search";
 export default {
   data() {
     return {
-      jxNum: "",
-      wcNum: "",
+      jxNum: 0,
+      wcNum: 0,
       sbdkNum: "",
       xbdkNum: "",
       bordered: true,

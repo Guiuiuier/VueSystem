@@ -66,6 +66,7 @@ export default {
       let local = localStorage.getItem("user_info");
       let id = JSON.parse(local).idPer;
       let name = JSON.parse(local).name;
+      let part=JSON.parse(local).part;
       let clockState = "正常";
       let clockType = "下班打卡";
       let monthsTime=year+"-"+month;
@@ -73,7 +74,7 @@ export default {
         if (this.xbdkFlag != false) {
           if (hourMinutes >= "1730" && hourMinutes <= "2400") {
             this.xbdkFlag = false;
-            insertClock(id,name,this.currentTime,monthsTime).then(res=>{
+            insertClock(id,name,this.currentTime,monthsTime,part).then(res=>{
               alert("下班愉快我的宝");
             })
           } else if (hourMinutes >= "1010" && hourMinutes < "1730") {
@@ -90,7 +91,8 @@ export default {
                   name,
                   this.currentTime,
                   clockAdvance,
-                  clockType
+                  clockType,
+                  part
                 ).then(res => {
                   alert("下班愉快");
                   comattendance(id, monthsTime).then(res => {});
@@ -128,11 +130,12 @@ export default {
       let clockStateNormal = "正常";
       let clockStateDelay = "迟到";
       let clockType = "上班打卡";
+      let part=JSON.parse(local).part;
       let monthsTime = year + "-" + month;
       if (this.sbdkFlag != false) {
         if (hourMinutes >= "0930" && hourMinutes <= "1000") {
           this.sbdkFlag = false;
-          clockIn(id, name, this.currentTime, clockStateNormal, clockType).then(
+          clockIn(id, name, this.currentTime, clockStateNormal, clockType,part).then(
             res => {
               alert("打卡成功！上班愉快");
             }
@@ -146,7 +149,8 @@ export default {
             this.currentTime,
             clockStateDelay,
             clockType,
-            monthsTime
+            monthsTime,
+            part,
           ).then(res => {
             alert("打卡成功！您已迟到。");
           });

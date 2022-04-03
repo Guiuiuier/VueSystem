@@ -1,12 +1,14 @@
 <template>
   <div>
-    <!-- <div :id="chartId" style="width:100%;height:400px"></div> -->
-    <div id="chartPie" class="pie-wrap"></div>
+    <div :id="theid"  class="pie-wrap"></div>
+    <!-- <div id="chartPie" class="pie-wrap"></div> -->
     <slot></slot>
   </div>
 </template>
 
 <script>
+// 两个图的组件写的都不是很好。。。。。有空改一改。凑活着用先
+
 // 这是饼状图 不知道为什么这个组件不同类型图之间不能复用，代码不同
     import * as echarts from 'echarts';
     require('echarts/theme/macarons');//引入主题
@@ -17,7 +19,11 @@
             type:Array,
             default:()=>[]
             },
-            thename:{
+            theseries:{
+                type:Array,
+                default:()=>[]
+            },
+            theid:{
                 type:String,
                 default:"",
             }
@@ -25,7 +31,8 @@
     data() {
       return {
            chartId:"",
-        chartPie: null
+        chartPie: null,
+        datas:this.thedata
       }
     },
     mounted() {
@@ -37,7 +44,7 @@
       drawPieChart() {
         let mytextStyle = {
           color: "red",                          
-          fontSize: 18,                            
+          fontSize: 12,                            
         };
         let mylabel = {
           show: true,                 
@@ -46,7 +53,7 @@
           formatter: '{b} : {c} ({d}%)',    
           textStyle: mytextStyle
         };
-        this.chartPie = echarts.init(document.getElementById('chartPie'),'macarons');
+        this.chartPie = echarts.init(document.getElementById(this.theid),'macarons');
         this.chartPie.setOption({
           title: {
             text: '今日部门考勤',
@@ -65,10 +72,7 @@
               type: 'pie',
               radius: ['50%', '70%'],
               center: ['50%', '50%'],
-              data: [
-                {value: 8, name: '测试1'},
-                {value: 1, name: '测试2'},
-              ],
+              data:this.datas,
               animationEasing: 'cubicInOut',
               animationDuration: 900,
               label: {           
@@ -78,7 +82,10 @@
           ]
         });
       }
-    }
+    },
+    created() {
+    //    console.log(this.theid);  
+    },
   }
 </script>
 

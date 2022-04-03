@@ -146,7 +146,7 @@ export const downloadFile_em = (fileName) => requests({
     fileName
   },
 })
-export const clockeventDealy = (id, name, currentTime, clockStateDelay, clockType, monthsTime) => requests({
+export const clockeventDealy = (id, name, currentTime, clockStateDelay, clockType, monthsTime,part) => requests({
   url: "/personnelInfo/persons/clockeventDealy.php",
   method: "post",
   data: {
@@ -155,7 +155,8 @@ export const clockeventDealy = (id, name, currentTime, clockStateDelay, clockTyp
     currentTime,
     clockStateDelay,
     clockType,
-    monthsTime
+    monthsTime,
+    part,
   }
 })
 //删除文件
@@ -190,7 +191,7 @@ export const updatePass = (username, userpass, token) => requests({
 
 
 //考勤打卡
-export const clockIn = (idPer, namePer, clockTime, clockState, clockType) => requests({
+export const clockIn = (idPer, namePer, clockTime, clockState, clockType,part) => requests({
   url: "/personnelInfo/attendance/clockTime.php",
   method: "post",
   data: {
@@ -200,6 +201,7 @@ export const clockIn = (idPer, namePer, clockTime, clockState, clockType) => req
     clockState,
     // monthlateness,
     clockType,
+    part,
   }
 })
 
@@ -460,14 +462,30 @@ export const isClock = (clockTime, id) => requests({
     id,
   }
 })
-export const insertClock = (id, name, currentTime, monthsTime) => requests({
+export const insertClock = (id, name, currentTime, monthsTime,part) => requests({
   method: 'post',
   url: "/personnelInfo/persons/insertClock.php",
   data: {
     id,
     name,
     currentTime,
-    monthsTime
+    monthsTime,
+    part,
+  }
+});
+export const todayDelay = (todayTime,part) => requests({
+  method: 'get',
+  url: "/personnelInfo/attendance/todayDelay.php",
+  params: {
+    todayTime,
+    part,
+  }
+});
+export const positionNum = (part) => requests({
+  method: 'get',
+  url: "/personnelInfo/attendance/positionNum.php",
+  params: {
+    part,
   }
 });
 
@@ -530,5 +548,17 @@ export const myPass = (username) => requests({
   },
   data: {
     username,
+  }
+})
+
+export const Empersons_part = (part) => requests({
+
+  method: "get",
+  url: "/personnelInfo/persons/Empersons_part.php",
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  params: {
+    part,
   }
 })
