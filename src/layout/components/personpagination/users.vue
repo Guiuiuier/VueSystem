@@ -31,7 +31,7 @@
           </b-row>
 
           <b-row class="mb-1 text-center">
-\            <b-col cols="6">权限</b-col>
+           <b-col cols="6">权限</b-col>
           </b-row>
 
           <b-row class="mb-1">

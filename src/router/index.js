@@ -68,8 +68,7 @@ const routes = [{
             path: 'announce',
             component: () => import('@/views/announceMain/announce/index'),
             name: 'announce',
-            meta: {
-            },
+            meta: {},
 
           },
 
@@ -138,7 +137,8 @@ const routes = [{
             component: () => import('@/views/attendanceMain/myattendance/index'),
             name: 'myattendance',
             meta: {
-              title: "我的考勤",
+              title: "我的考勤",  
+              
             },
             children: [{
                 path: 'myleave',
@@ -146,56 +146,60 @@ const routes = [{
                 name: "myleave",
                 meta: {
                   title: "我的请假",
+                  keepAlive:true,
                 },
-                children:[              {
-                  path:'myleaveinfors/:id',
-                  component:()=>import('@/views/attendanceMain/requestContent/index'),
-                  name:'myleaveinfors',
-                  meta:{
-                    title:"请假内容",
-                  }
-                },
-                              {
-                path: 'editMyleaveinfors/:id',
-                component: () => import('@/views/attendanceMain/requestEdit/index'),
-                name: "editMyleaveinfors",
+                children: [{
+                    path: 'myleaveinfors/:id',
+                    component: () => import('@/views/attendanceMain/requestContent/index'),
+                    name: 'myleaveinfors',
+                    meta: {
+                      title: "请假内容",
+                      keepAlive:true,
+                    }
+                  },
+                  {
+                    path: 'editMyleaveinfors/:id',
+                    component: () => import('@/views/attendanceMain/requestEdit/index'),
+                    name: "editMyleaveinfors",
+                    meta: {
+                      title: "编辑内容",
+                        keepAlive:true,
+                    }
+                  },
+                ]
+              },
+              {
+                path: 'approval',
+                component: () => import('@/views/attendanceMain/leaveApproval/index'),
+                name: "approval",
                 meta: {
                   title: "员工审批",
+                  keepAlive:true,
                 }
               },
-  ]
-              },
-              // {
-              //   path: 'approval',
-              //   component: () => import('@/views/attendanceMain/leaveApproval/index'),
-              //   name: "approval",
-              //   meta: {
-              //     title: "员工审批",
-              //   }
-              // },
             ]
           },
 
 
         ]
       },
-    {
-      path:'partment',
-      component:()=>import('@/views/partment/index'),
-      redirect:'partment/mypartment',
-      name:'partment',
-      meta:{
-        title:"部门管理"
+      {
+        path: 'partment',
+        component: () => import('@/views/partment/index'),
+        redirect: 'partment/mypartment',
+        name: 'partment',
+        meta: {
+          title: "部门管理"
+        },
+        children: [{
+          path: 'mypartment',
+          component: () => import('@/views/partment/mypartment/index'),
+          name: 'mypartment',
+          meta: {
+            title: "",
+          }
+        }]
       },
-      children:[{
-        path:'mypartment',
-        component:()=>import('@/views/partment/mypartment/index'),
-        name:'mypartment',
-        meta:{
-          title:"",
-        }
-      }]
-    },
 
 
       {

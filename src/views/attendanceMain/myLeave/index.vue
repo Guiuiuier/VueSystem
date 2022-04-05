@@ -159,6 +159,7 @@
               <div class="content-button">
                 <b-col class="contentbtn">当前批复:{{item.reply}}</b-col>
                 <b-col class="contentbtn">处理时间:{{item.replyTime}}</b-col>
+                <b-col class="contentbtn">当前状态:<span style="color:red; font-weight:bold">{{item.isapproval}}</span></b-col>
                 <b-col class="contentbtn">当前进度:{{item.state}}</b-col>
               </div>
               <div class="content-button">
@@ -410,6 +411,7 @@ export default {
     vacationLists(this.newforms.perId).then(res => {
       this.thedata = res.data;
       this.flag = true;
+      console.log(res.data);
     });
 
     Assessor(this.newforms.part).then(res => {

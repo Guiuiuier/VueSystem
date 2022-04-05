@@ -123,6 +123,29 @@ export const Fileinfors = () => requests({
   method: "get",
 })
 
+export const aprroval = (assessor) => requests({
+  url: "/personnelInfo/attendance/approval.php",
+  method: "get",
+  params: {
+    assessor,
+  }
+})
+
+export const vacationEvent = (id,
+  reply,
+  replyTime,
+  approval, ) => requests({
+  url: "/personnelInfo/attendance/vacationEvent.php",
+  method: "get",
+  params: {
+    id,
+    reply,
+    replyTime,
+    approval,
+  }
+})
+
+
 //下载文件
 export const downloadFile = (fileName) => requests({
   url: "/personnelInfo/contract/downloadFile.php",
@@ -146,7 +169,9 @@ export const downloadFile_em = (fileName) => requests({
     fileName
   },
 })
-export const clockeventDealy = (id, name, currentTime, clockStateDelay, clockType, monthsTime,part) => requests({
+
+
+export const clockeventDealy = (id, name, currentTime, clockStateDelay, clockType, monthsTime, part) => requests({
   url: "/personnelInfo/persons/clockeventDealy.php",
   method: "post",
   data: {
@@ -191,7 +216,7 @@ export const updatePass = (username, userpass, token) => requests({
 
 
 //考勤打卡
-export const clockIn = (idPer, namePer, clockTime, clockState, clockType,part) => requests({
+export const clockIn = (idPer, namePer, clockTime, clockState, clockType, part) => requests({
   url: "/personnelInfo/attendance/clockTime.php",
   method: "post",
   data: {
@@ -462,7 +487,7 @@ export const isClock = (clockTime, id) => requests({
     id,
   }
 })
-export const insertClock = (id, name, currentTime, monthsTime,part) => requests({
+export const insertClock = (id, name, currentTime, monthsTime, part) => requests({
   method: 'post',
   url: "/personnelInfo/persons/insertClock.php",
   data: {
@@ -473,7 +498,7 @@ export const insertClock = (id, name, currentTime, monthsTime,part) => requests(
     part,
   }
 });
-export const todayDelay = (todayTime,part) => requests({
+export const todayDelay = (todayTime, part) => requests({
   method: 'get',
   url: "/personnelInfo/attendance/todayDelay.php",
   params: {

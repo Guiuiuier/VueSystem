@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container fluid class="typography" v-if="isShow">
-      <myScroll v-if="flag" :thedata="thedata" :perpage="10">
+      <myScroll v-if="flag" :thedata="thedata" :perpage="5">
         <template v-slot="{content}">
           <b-row class="topic">
             <b-col class="contentNumber">

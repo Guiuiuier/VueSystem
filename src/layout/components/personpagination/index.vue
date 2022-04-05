@@ -1,6 +1,7 @@
 <template>
   <div class="overflow-auto" v-if="isShow">
-    <MyLists :thedata="thedata" :tablesection="tableSection" :perpage="10">
+    <p style="font-size:18px ;font-weight:bold"> <span style="color:green"> 公司总人数：{{totalPart.length}} </span> <span style="color:red"> 离职人数:{{lizhi}} </span> 资源部总人数：{{zyPart.length}} <span></span>  <span>管理部总人数：{{glPart.length}}</span> <span>开发部总人数：{{kfPart.length}}</span> <span>销售部总人数:{{xsPart.length}}</span></p>
+    <MyLists :thedata="thedata" :tablesection="tableSection" :perpage="8">
       <template v-slot="{btnid}">
         <!-- <b-button @click="edit(btnid)">{{btnid.id}}</b-button> -->
         <b-button type="submit" variant="warning" @click="show=true,perUpdate(btnid)">编辑</b-button>
@@ -125,9 +126,16 @@ export default {
     maxDate.setDate(15);
     return {
       thedata: [],
+      totalPart:[],
+      lizhi:"",
+       //统计各个部门人数
+      zyPart:[],
+      kfPart:[],
+      glPart:[],
+      xsPart:[],
       min: minDate,
       max: maxDate,
-      variantsAge: [
+      variantsAge: [  
         "18",
         "19",
         "20",
@@ -333,6 +341,7 @@ export default {
 
     // 获取编辑内容
     perUpdate: function(item) {
+      // console.log(item);
       var event = event || window.event;
       event.preventDefault();
       this.newforms.perName = item.namePer;
@@ -377,6 +386,36 @@ export default {
   created() {
     personnelInfo().then(res => {
       this.thedata = res.data;
+      let total=res.data.length;
+      // 把那些不符合条件的筛选出去并重新排列下标！
+          let index=0;
+       for(let i=0;i<res.data.length;++i){
+          if(res.data[i].statePer!="离职"){
+             index++
+             let form={};
+             form[index-1]=res.data[i];
+             if(res.data[i].partPer=="资源部"){
+               let zy={};
+               zy[index-1]=res.data[i];
+               this.zyPart.push(form);
+             }else if(res.data[i].partPer=="开发部"){
+                  let kf={};
+                  kf[index-1]=res.data[i];
+                  this.kfPart.push(form);
+             }else if(res.data[i].partPer=="管理部"){
+               let gl={};
+               gl[index-1]=res.data[i];
+               this.glPart.push(form);
+             }else{
+               let xs={};
+               xs[index-1]=res.data[i];
+               this.xsPart.push(form);
+             }
+             this.totalPart.push(form);
+             this.lizhi=total-this.totalPart.length;
+          }
+       }
+      //  console.log(this.totalPart,this.zyPart);
     });
   }
 };

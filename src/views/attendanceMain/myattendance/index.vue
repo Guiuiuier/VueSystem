@@ -5,7 +5,12 @@
     <b-table>adasdas</b-table>
     <!-- 查询 -->
     <personPagination  v-if="isShow"></personPagination>
-  <router-view></router-view>
+    <keep-alive>
+    
+  <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
+
       </div>
   <!-- </div> -->
 </template>
@@ -27,7 +32,7 @@ export default {
     personPagination
   },
   created() {
-       if (this.$route.name === "myleave"||this.$route.name === "myleaveinfors"||this.$route.name==="editMyleaveinfors") {
+       if (this.$route.name === "myleave"||this.$route.name === "myleaveinfors"||this.$route.name==="editMyleaveinfors"||this.$route.name==="approval") {
       this.isShow = false;
     } else {
       this.isShow = true;
@@ -40,7 +45,7 @@ export default {
     $route(to, from) {
       // console.log(to);
       if (
-        to.name === "myleave"||to.name==="myleaveinfors"||to.name==="editMyleaveinfors"
+        to.name === "myleave"||to.name==="myleaveinfors"||to.name==="editMyleaveinfors"||to.name==="approval"
       ) {
         this.isShow = false;
       } else {

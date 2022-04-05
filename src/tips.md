@@ -287,6 +287,26 @@ bug24
       }
     })"
 
+    bug 26 
+     作用于插槽就是可以传递数据的插槽，父组件的模板所有内容都在父级作用域编译，子在子级作用域编译， 为了让其子组件中的数据在父级可以用 v-bind:users="user" 。 
+
+
+
+     bug27
+      //异步请求数据时，有可能父组件还没渲染给子组件子组件就已经渲染完毕了此时会出现bug 可以使用v-if 加flag判断 当异步完毕后 渲染子组件
+
+      bug28 
+       // 把那些不符合条件的筛选出去并重新排列下标！
+          let data=[];
+          let index=0;
+       for(let i=0;i<res.data.length;++i){
+          if(res.data[i].statePer!="离职"){
+             index++
+             let form={};
+             form[index-1]=res.data[i];
+             data.push(form);
+          }
+       }
 ## tips
  package.json中  浏览器自动打开  
 {  </br>

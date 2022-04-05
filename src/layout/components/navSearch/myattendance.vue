@@ -12,6 +12,7 @@
             variant="success"
             type="submit"
             @click="leaveManage"
+            style="margin-left:10px"
           >员工请假审批管理</b-button>
          <b-navbar-nav class="ml-auto">
           <searchContent></searchContent>
