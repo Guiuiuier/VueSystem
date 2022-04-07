@@ -25,7 +25,10 @@ Vue.use(BootstrapVueIcons)
       let userInfo=localStorage.getItem("user_info");
        if(userInfo){
           //如果是登录页面 直接放行 如果是进入后台则异步token
-            next()
+          let role=JSON.parse(userInfo).rolepermission;
+           if(to.meta.roles.includes(role)){
+             next();
+           }
             if(to.path=='/login'){
               next('/index');
             }

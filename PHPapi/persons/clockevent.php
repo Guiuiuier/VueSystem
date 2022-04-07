@@ -6,8 +6,8 @@ header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 ini_set('display_errors','off');
 // $monthsTime=$_GET["monthsTime"];
-$monthsTime="2022-4";
-$username="123456784";
+$monthsTime=$_GET['monthsTime'];
+$username=$_GET['id'];
 // $username=$_GET['id'];
 $clockType="下班打卡";
 $sql ="select  `comattendance`,`lateNumber`,`leaveEarly`,`clockState` from clockin where `clockTime` LIKE '{$monthsTime}%' AND `idPer`={$username} AND `clockType`='{$clockType}' order by id desc limit 2";
@@ -65,10 +65,6 @@ while ($row = $result -> fetch_assoc()) {
                 // 连接数据库并执行
                 $result=$mysqli ->query($updateAttendance);
             }
-
-
-
-
 
 
 

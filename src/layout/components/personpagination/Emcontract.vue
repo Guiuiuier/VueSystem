@@ -289,7 +289,7 @@ export default {
 };
 </script>
 
-<style lang="less" >
+<style lang="less" scope>
 td.align-middle {
   width: 190px;
 }

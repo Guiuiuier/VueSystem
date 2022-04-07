@@ -24,7 +24,7 @@ let toWorkFlag=JSON.parse((sessionStorage.getItem("toWorkFlag")))
   mutations: {
       //更改userinfo
   SET_USERINFO(state,payload){
-    state.userinfo.name=payload;
+    state.userinfo=payload;
   },
   SET_AFTERWORKFLAG(state,payload){
     state.afterWorkFlag=payload;

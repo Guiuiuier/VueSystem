@@ -50,9 +50,9 @@ export default {
       sbdkNum: "",
       xbdkNum: "",
       bordered: true,
-      leaveEarly:"",
-      late:"",
-      comattendance:"",
+      leaveEarly:0,
+      late:0,
+      comattendance:0,
       fixed: true,
       items: [],
       newforms: {},
@@ -91,6 +91,7 @@ export default {
   Emclock(id,thisMonth).then(res=>{
     // console.log(res.data);
     this.comattendance=res.data[0].comattendance;
+    // console.log(res.data);
     this.leaveEarly=res.data[0].leaveEarly;
     if(res.data.lateNumber==null){
       this.late=0;
@@ -148,5 +149,5 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" scope>
 </style>

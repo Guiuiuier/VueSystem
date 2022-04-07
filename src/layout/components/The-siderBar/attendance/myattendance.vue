@@ -12,6 +12,11 @@
 </style>
 <script>
 export default {
+  data(){
+    return{
+        
+    }
+  },
   methods: {
     topage: function() {
       this.$router.push("/index/attendancemain/myattendance");

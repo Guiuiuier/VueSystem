@@ -2,7 +2,7 @@
     <div @click="btnShow(this)" style="    height: 40px;
     line-height:40px
 ">
-    <b-icon icon="flower2" class="iconstyle"></b-icon>部门管理
+    <b-icon icon="flower1" class="iconstyle"></b-icon>部门管理
     <b-icon icon="chevron-up" class="Childiconstyle" v-show="btnshow"></b-icon>
     <b-icon icon="chevron-down" class="Childiconstyle" v-show="btnshowdown"></b-icon>
   </div>

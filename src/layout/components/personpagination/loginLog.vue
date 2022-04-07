@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-auto">
     <!-- es  结构的方式更好 v-slot=slotProps.btnid => {btnid}-->
-<MyLists :thedata="theLogs" :tablesection="tableSection" :perpage="10">
+<MyLists :thedata="theLogs" :tablesection="tableSection" :perpage="20">
   <!-- <template  v-slot="{btnid}"> 
     <b-button @click="edit(btnid)">{{btnid.id}}</b-button>
   </template> -->
@@ -55,6 +55,6 @@ export default {
   }
 };
 </script>
-<style lang="less" scoped>
+<style lang="less" scope>
 
 </style>

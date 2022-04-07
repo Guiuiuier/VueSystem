@@ -391,6 +391,31 @@ export default {
   },
   methods: {
     //   拒绝
+    reject(){
+  var event = event || window.event;
+      event.preventDefault();
+      let isapproval = "不同意";
+      // console.log(this.newforms.id);
+      this.boxOne = "";
+      this.$bvModal.msgBoxConfirm("确认不同意？").then(value => {
+        this.boxOne = value;
+        let flag = String(this.boxOne);
+        if (flag === "true") {
+          vacationEvent(
+            this.newforms.id,
+            this.newforms.text,
+            this.replyTime,
+            isapproval
+          ).then(res => {
+               setTimeout(() => {
+                this.reload();
+            }, 500);
+          });
+        } else {
+          return false;
+        }
+      });
+    },
     rejectInfors(id) {
       var event = event || window.event;
       event.preventDefault();
@@ -422,10 +447,9 @@ export default {
       var event = event || window.event;
       event.preventDefault();
       let isapproval = "同意";
-      let unapproval = "不同意";
       // console.log(this.newforms.id);
       this.boxOne = "";
-      this.$bvModal.msgBoxConfirm("确认修改吗？").then(value => {
+      this.$bvModal.msgBoxConfirm("确认同意吗？").then(value => {
         this.boxOne = value;
         let flag = String(this.boxOne);
         if (flag === "true") {
@@ -436,6 +460,9 @@ export default {
             isapproval
           ).then(res => {
             //   console.log(res.data);
+            setTimeout(() => {
+                this.reload();
+            }, 500);
           });
         } else {
           return false;

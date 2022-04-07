@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container fluid class="typography" v-if="isShow">
-      <myScroll v-if="flag" :thedata="thedata" :perpage="5">
+      <myScroll v-if="flag" :thedata="thedata" :perpage="7">
         <template v-slot="{content}">
           <b-row class="topic">
             <b-col class="contentNumber">
@@ -9,7 +9,7 @@
               <font color="red">{{content.length}}</font>条公告
             </b-col>
             <b-col class="btnNew">
-              <b-button variant="success" @click="newA">新增公告</b-button>
+              <b-button variant="success" @click="newA" v-if="btnshow">新增公告</b-button>
             </b-col>
           </b-row>
           <div class="con" v-for="(item, id) in content" :key="item.id">
@@ -35,8 +35,9 @@
                 v-b-modal.modal-1
                 variant="danger"
                 @click="btnDelet(id)"
+                v-if="btnshow"
               >删除</b-button>
-              <b-button class="contentbtn" variant="warning" @click="btnEdit(id)">编辑文章</b-button>
+              <b-button class="contentbtn" variant="warning"  v-if="btnshow" @click="btnEdit(id)">编辑文章</b-button>
             </div>
           </div>
         </template>
@@ -53,6 +54,7 @@ export default {
   inject: ["reloads"],
   data() {
     return {
+      btnshow:false,
       flag: false,
       page: 1, //当前页数
       pageNum: 5, //每页3条
@@ -121,6 +123,13 @@ export default {
     }
   },
   created() {
+              let local=localStorage.getItem("user_info");
+      let role=JSON.parse(local).rolepermission;
+      if(role=="1"){
+          this.btnshow=true;
+      }
+
+
     allAnnounce().then(res => {
       this.thedata = res.data;
       this.flag = true;

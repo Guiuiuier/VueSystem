@@ -25,8 +25,18 @@ export const personnelInfo = () => requests({
   method: "get",
 })
 
+export const isRegistered = () => requests({
+  url: '/personnelInfo/users/roleid_salary.php',
+  method: "get",
+})
+export const alluser = (part) => requests({
+  url: '/personnelInfo/salary/alluser.php',
+  method: "get",
+  params:{
+    part
+  }
+})
 // 新增人员
-// 曹难怪一直报错
 export const newPer = (perName, gender, age, part, address, contact, perState, position, hireTime) => requests({
   url: '/personnelInfo/persons/newPer.php',
   method: "post",
@@ -40,6 +50,13 @@ export const newPer = (perName, gender, age, part, address, contact, perState, p
     perState,
     position,
     hireTime
+  }
+})
+export const newPer_salary = (roleid, part, position, hireTime,basicSalary,allowance) => requests({
+  url: '/personnelInfo/salary/newuser.php',
+  method: "GET",
+  params: {
+    roleid, part, position, hireTime,basicSalary,allowance
   }
 })
 // 删除
@@ -69,9 +86,18 @@ export const updatePer = (id, perId, perName, gender, age, part, address, contac
     position,
     hireTime,
     fireTime,
+
   }
 })
-
+export const updatePerWages = (id, basicSalary,allowance) => requests({
+  url: '/personnelInfo/persons/updateWages.php',
+  method: "post",
+  data: {
+    id,
+  basicSalary,
+  allowance,
+  }
+})
 
 // 从数据库获取登录日志信息
 
@@ -131,10 +157,7 @@ export const aprroval = (assessor) => requests({
   }
 })
 
-export const vacationEvent = (id,
-  reply,
-  replyTime,
-  approval, ) => requests({
+export const vacationEvent = (id,reply,replyTime,approval) => requests({
   url: "/personnelInfo/attendance/vacationEvent.php",
   method: "get",
   params: {
@@ -145,6 +168,29 @@ export const vacationEvent = (id,
   }
 })
 
+export const salaryLog_user = (roleid) => requests({
+  url: "/personnelInfo/salary/salaryLog_user.php",
+  method: "get",
+  params: {
+    roleid
+  }
+})
+
+export const salaryLog = (part) => requests({
+  url: "/personnelInfo/salary/salaryLog.php",
+  method: "get",
+  params: {
+    part
+  }
+})
+
+export const insertsalary = (roleid,position,basicsalary,allowance,chidao,zaotui,geshui,chuqinday,salaryMonth,salaryTime,totalMoney,part) => requests({
+  url: "/personnelInfo/salary/insertsalary.php",
+  method: "get",
+  params: {
+    roleid,position,basicsalary,allowance,chidao,zaotui,geshui,chuqinday,salaryMonth,salaryTime,totalMoney,part
+  }
+})
 
 //下载文件
 export const downloadFile = (fileName) => requests({
@@ -169,6 +215,9 @@ export const downloadFile_em = (fileName) => requests({
     fileName
   },
 })
+
+
+
 
 
 export const clockeventDealy = (id, name, currentTime, clockStateDelay, clockType, monthsTime, part) => requests({
@@ -468,6 +517,14 @@ export const vacationmyleave = (id, idPer) => requests({
     idPer
   }
 })
+export const deletPer_wages = (id) => requests({
+  method: "get",
+  url: "/personnelInfo/salary/deletPer_wages.php",
+  params:{
+    id,
+  }
+})
+
 
 export const idAll = () => requests({
   method: "get",

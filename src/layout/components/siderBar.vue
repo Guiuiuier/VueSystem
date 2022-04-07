@@ -7,7 +7,7 @@
           <!-- 公告管理 -->
           <announcement></announcement>
           <!-- 人员管理 -->
-          <personal></personal>
+          <personal v-if="show"></personal>
 
           <b-button v-b-toggle.collapse-myattend>
             <!-- 考勤 -->
@@ -17,21 +17,23 @@
           <mySign></mySign>
           <myattendance></myattendance>
           <!-- 折叠管理 -->
+          <div v-if="show">
            <b-button v-b-toggle.collapse-partment>
             <partment></partment>
              </b-button>
              <mypartment></mypartment>
+          </div>
                <b-button v-b-toggle.collapse-mysalary>
             <salary></salary>
             </b-button>
+            <allsalary v-if="show"></allsalary>
             <mysalary></mysalary>
-            <!-- <allsalary></allsalary> -->
           <b-button v-b-toggle.collapse-myfile>
             <!-- 文件管理 -->
             <file></file>
           </b-button>
           <!-- 在职员工合同 -->
-          <Emcontract></Emcontract>
+          <Emcontract v-if="show"></Emcontract>
           <!-- 员工合同 -->
           <contract></contract>
           <!-- 系统管理 -->
@@ -39,10 +41,10 @@
             <systemmanage></systemmanage>
           </b-button>
           <!-- 登陆日志 -->
-          <updatePass></updatePass>
-          <LoginLog></LoginLog>
           <!-- 更改密码 -->
-          <users></users>
+          <updatePass></updatePass>
+          <LoginLog v-if="show"></LoginLog>
+          <users v-if="show"></users>
         </b-button-group>
       </div>
     </div>
@@ -71,7 +73,9 @@ import partment from "./The-siderBar/partment";
 import mypartment from "./The-siderBar/partment/index";
 export default {
   data() {
-    return {};
+    return {
+      show:false,
+    };
   },
   components: {
     announcement,
@@ -91,9 +95,15 @@ export default {
     allsalary,
     mypartment,
     users,
-    allsalary,
   },
   methods: {},
-  mounted() {}
+  mounted() {},
+  created() {
+          let local=localStorage.getItem("user_info");
+      let role=JSON.parse(local).rolepermission;
+      if(role=="1"){
+          this.show=true;
+      }
+  },
 };
 </script>

@@ -13,7 +13,7 @@ $username=$c['name'];
 $currentTime=$c['currentTime'];
 $clockStateDelay=$c['clockStateDelay'];
 $clockType=$c['clockType'];
-
+$part=$c['part'];
 // $username=$_GET['id'];
 // $clockType="上班打卡";
 // $clockState="迟到";
@@ -34,13 +34,13 @@ while ($row = $result -> fetch_assoc()) {
       }
      var_dump($rows);
      if($rows[0]['lateNumber']==null){
-         $insertDelay="INSERT INTO `clockIn`(`idPer`,`namePer`,`clockTime`,`clockState`,`clockType`,`lateNumber`) values ('{$userid}','{$username}','{$currentTime}','{$clockStateDelay}','{$clockType}',1)";
+         $insertDelay="INSERT INTO `clockIn`(`idPer`,`namePer`,`clockTime`,`clockState`,`clockType`,`lateNumber`,`part`) values ('{$userid}','{$username}','{$currentTime}','{$clockStateDelay}','{$clockType}',1,'{$part}')";
            $mysqli -> set_charset(DB_CHARSET);
                 // 连接数据库并执行
                 $result=$mysqli ->query($insertDelay);
         }else{
             $late=$rows[0]['lateNumber'];
-            $insertDelay="INSERT INTO `clockIn`(`idPer`,`namePer`,`clockTime`,`clockState`,`clockType`,`lateNumber`) values ('{$userid}','{$username}','{$currentTime}','{$clockStateDelay}','{$clockType}',{$late}+1)";
+            $insertDelay="INSERT INTO `clockIn`(`idPer`,`namePer`,`clockTime`,`clockState`,`clockType`,`lateNumber`,`part`) values ('{$userid}','{$username}','{$currentTime}','{$clockStateDelay}','{$clockType}',{$late}+1,'{$part}')";
             $mysqli -> set_charset(DB_CHARSET);
             // 连接数据库并执行
             $result=$mysqli ->query($insertDelay);

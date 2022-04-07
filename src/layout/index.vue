@@ -4,7 +4,7 @@
       <siderBar></siderBar>
     </div>
     <div class="navigation">
-      <navigationBar :weathers="weathers" v-if="flag"></navigationBar>
+      <navigationBar :weathers="weathers" :userinfo="userinfo" v-if="flag"></navigationBar>
     </div>
     <div class="sysmain">
       <sysMain :infoName="infoName"></sysMain>
@@ -29,7 +29,8 @@ export default {
       weathers: {},
       flag: "false",
       // 主页名字
-      infoName: {}
+      infoName: {},
+      userinfo:{}
     };
   },
   components: {
@@ -48,6 +49,7 @@ export default {
         JSON.stringify(res.data.weather)
       );
       this.weathers = JSON.parse(sessionStorage.getItem("weather"));
+      this.userinfo=JSON.parse(localStorage.getItem("user_info"));
       this.flag = true;
     });
     //  }

@@ -14,6 +14,7 @@ $monthsTime=$c['monthsTime'];
 $clockState="正常";
 $userid=$c['id'];
 $currentTime=$c['currentTime'];
+$part=$c['part'];
 $sql ="select  `comattendance`,`lateNumber`,`leaveEarly`,`clockState` from clockin where `clockTime` LIKE '{$monthsTime}%' AND `idPer`={$userid} AND comattendance!='' order by id desc limit 1";
 // var_dump($sql);
 if ($mysqli -> connect_error) {
@@ -29,7 +30,7 @@ $result=$mysqli ->query($sql);
 while ($row = $result -> fetch_assoc()) {
     $rows[] = $row;   //$rows中保存personnel表中所有记录
 };
-var_dump($rows);
+// var_dump($rows);
 if($rows[0]['comattendance']==null){
     $comattendance="1";
 }else{
@@ -48,10 +49,10 @@ if($rows[0]['leaveEarly']==null){
 $leaveEarly=$rows['0']['leaveEarly'];
 $leaveEarly=$leaveEarly+1;
 };
-      $insert="INSERT INTO `clockIn`(`idPer`,`namePer`,`clockTime`,`clockState`,`clockType`,`lateNumber`,`leaveEarly`,`comattendance`) values ('{$userid}','{$username}','{$currentTime}','{$clockState}','{$clockType}',{$lateNumber},{$leaveEarly},{$comattendance})";
+      $insert="INSERT INTO `clockIn`(`idPer`,`namePer`,`clockTime`,`clockState`,`clockType`,`lateNumber`,`leaveEarly`,`comattendance`,`part`) values ('{$userid}','{$username}','{$currentTime}','{$clockState}','{$clockType}',{$lateNumber},{$leaveEarly},{$comattendance},'{$part}')";
            $mysqli -> set_charset(DB_CHARSET);
        // 连接数据库并执行
          $result=$mysqli ->query($insert);
-         var_dump($insert);
+        //  var_dump($insert);
 $mysqli->close();
 ?>

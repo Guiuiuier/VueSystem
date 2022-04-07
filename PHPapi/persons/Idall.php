@@ -4,7 +4,7 @@ include "../database/config.inc.php";
 header("Content-type:text/html; charset=utf-8");
 header('Access-Control-Allow-Origin: *');
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-$sql ="select  `roleid` from personnel order by id asc";
+$sql ="select `partPer`,`position`, `idPer`,`roleid`,`hireTime` from personnel order by id asc";
 
 if ($mysqli -> connect_error) {
        die("连接错误：".$mysqli -> connect_error);

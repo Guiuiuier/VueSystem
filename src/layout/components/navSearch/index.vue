@@ -65,7 +65,7 @@
 
             <b-col cols="6">
               <b-form-group>
-                <b-form-select v-model="newforms.part" :options="variantsPart"></b-form-select>
+                <b-form-select  @change="changePosition(newforms.part)"  v-model="newforms.part" :options="variantsPart"></b-form-select>
               </b-form-group>
             </b-col>
           </b-row>
@@ -163,9 +163,7 @@ export default {
         // perId: "",
         part: ""
       },
-      variantsPosition: [
-        { label: "开发部", options: ["前端开发工程师", "后端开发工程师"]},{label:"管理部", options:["管理部经理","行政主管","行政专员","人事专员","培训主管"]},{label:"资源部", options:["物料员","物料总监"]},{label:"销售部", options:["销售专员","销售主管"] }
-      ],
+      variantsPosition: [ ],
       variants: [{ text: "男", value: "男" }, "女", "其他"],
       variantsState: [{ text: "在职", value: "在职" }, "待入职"],
       variantsPart: [
@@ -253,6 +251,22 @@ export default {
     searchContent //查询组件
   },
   methods: {
+     changePosition:function(part){
+        if(part=="开发部"){
+            this.variantsPosition=[ { label: "开发部", options: ["前端开发工程师", "后端开发工程师"]}];
+            // console.log(this.newforms.position);
+        }else if(part=="销售部"){
+            this.variantsPosition=[{label:"销售部", options:["销售专员","销售主管"]}]
+        }else if(part=="管理部"){
+            this.variantsPosition=[{label:"管理部", options:["管理部经理","行政主管","行政专员","人事专员","培训主管"]}]
+        }else if(part=="资源部"){
+            this.variantsPosition=[{label:"资源部", options:["物料员","物料总监"]}]
+       }else{
+            // this.variantsPosition=[]
+    
+    }
+ },
+
     sub: function() {
       var event = event || window.event;
       event.preventDefault();

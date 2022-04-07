@@ -12,6 +12,7 @@
             variant="success"
             type="submit"
             @click="leaveManage"
+            v-if="btnshow"
             style="margin-left:10px"
           >员工请假审批管理</b-button>
          <b-navbar-nav class="ml-auto">
@@ -37,7 +38,7 @@ import searchContent from "@/components/searchBox/index";
 export default {
   data() {
     return {
-
+btnshow:false,
       show: false,
       sucessShow: false
     };
@@ -55,7 +56,11 @@ export default {
 
   },
   created() {
-    
+             let local=localStorage.getItem("user_info");
+      let role=JSON.parse(local).rolepermission;
+      if(role=="1"){
+          this.btnshow=true;
+      }
   },
 
 

@@ -227,6 +227,9 @@ export default {
                 JSON.stringify(res.data.weather)
               );
             });
+                        //更改vuex 的userinfo 的值 实现动态改变
+            // this.SET_USERINFO(userdata.name);
+            this.$st
             //登录定时器
             setTimeout(() => {
               this.progressMode = true;

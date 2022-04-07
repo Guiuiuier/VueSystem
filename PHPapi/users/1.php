@@ -11,7 +11,7 @@ session_start();
 //  unset($_SESSION['views']);
 // $time=time();
 
-$str=$_SESSION['825126416@qq.com'];
+$str=$_SESSION['123@qq.com'];
 echo $str;
 // // echo $qwe;
 // echo f3($str); //返回你好

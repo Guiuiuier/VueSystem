@@ -15,7 +15,8 @@ $namePer=$c['namePer'];
 $clockState=$c['clockState'];
 $clockTime=$c['clockTime'];
 $clockType=$c['clockType'];
-$sql="INSERT  INTO `clockin`(`idPer`,`namePer`,`clockTime`,`clockState`,`clockType`) values('{$idPer}','{$namePer}','{$clockTime}','{$clockState}','{$clockType}')";
+$part=$c['part'];
+$sql="INSERT  INTO `clockin`(`idPer`,`namePer`,`clockTime`,`clockState`,`clockType`,`part`,`comattendance`) values('{$idPer}','{$namePer}','{$clockTime}','{$clockState}','{$clockType}','{$part}',1)";
 // var_dump($sql);
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 if ($mysqli -> connect_error) {

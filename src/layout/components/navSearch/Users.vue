@@ -21,6 +21,7 @@
                   :options="userId"
                   :state="stateUser"
                   trim
+                  @change="changePart(newforms.perId)"
                 ></b-form-select>
               </b-form-group>
             </b-col>
@@ -37,7 +38,7 @@
             </b-col>
             <b-col cols="6">
               <b-form-group>
-                <b-form-select v-model="newforms.part" :options="variantsPart"></b-form-select>
+                <b-form-input id="input-1" v-model="newforms.part" disabled></b-form-input>
               </b-form-group>
             </b-col>
           </b-row>
@@ -133,6 +134,7 @@ export default {
   data() {
     return {
       show: false,
+      items:[],
       boxOne: "",
       sucessShow: false,
       allusername: [],
@@ -148,12 +150,7 @@ export default {
         email:"",
       },
       variants: [{ text: "管理员", value: "管理员" }, "员工"],
-      variantsPart: [
-        { text: "开发部", value: "开发部" },
-        "管理部",
-        "资源部",
-        "销售部"
-      ],
+
       form: {
         field: ""
       },
@@ -199,6 +196,13 @@ export default {
     }
   },
   methods: {
+    changePart(id){
+     for(let i=0;i<this.items.length;++i){
+       if(this.items[i].roleid.includes(id)){
+         this.newforms.part=this.items[i].partPer
+       }
+     }
+    },
     sub: function() {
       var event = event || window.event;
       event.preventDefault();
@@ -275,16 +279,19 @@ export default {
   },
   created() {
     idAll().then(res => {
-      // console.log(res)
+      // console.log(res.data)
+      this.items=res.data;
       for (let i = 0; i < res.data.length; i++) {
         this.userId.push(res.data[i].roleid);
+        
       }
     });
     allUsername().then(res => {
+      // console.log(res.data);
+     
       for (let i = 0; i < res.data.length; i++) {
         this.allusername.push(res.data[i].username);
         this.allroleid.push(res.data[i].roleid);
-        // console.log(this.allroleid)
       }
     });
   }

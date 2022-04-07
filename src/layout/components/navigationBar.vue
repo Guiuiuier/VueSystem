@@ -38,11 +38,11 @@
 @import "/public/nav.less";
 </style>
 <script>
-import { mapState, mapGetters } from "vuex";
 export default {
   props: {
     //  天气组件
-    weathers: Object
+    weathers: Object,
+    userinfo:Object,
   },
   data() {
     return {};
@@ -53,16 +53,15 @@ export default {
     quit: function() {
       localStorage.clear();
       sessionStorage.clear();
-      this.$router.push("../../login/index");
+      this.$router.push("../../login");
     }
 
     
   },
   created() {
-    // console.log(this.weathers);
+    // console.log(this.userinfo);
   },
   computed: {
-    ...mapState(["userinfo"]),
     breadCrumbList() {
       return this.$route.matched;
     }
