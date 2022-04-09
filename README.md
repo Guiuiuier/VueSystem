@@ -11,7 +11,7 @@
 
  安装的时候要注意版本否则会报getoptions is not functions 所以这里安装5版本  
   bootstrap的版本要4.5.3的否则会样式冲突   
- 引入bootstrap模板 
+ 引入bootstrap模板 1
 
   npm install vue bootstrap-vue bootstrap@4.5.3
 
